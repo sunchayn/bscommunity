@@ -1,0 +1,384 @@
+/* the original stylesheet from jQuery TE 1.4.0 
+edited by mazen touati to fit the bloodstone community theme */
+@import "../../scss/modules/all";
+/* editor's general field */
+.jqte {
+	border: 1px solid darken($color3, 9%);
+	//overflow:hidden;
+	position: relative;
+}
+
+.jqte_focused {
+	border: 1px solid lighten($pre-black2, 40%);
+}
+/* toolbar */
+.jqte_toolbar {
+	overflow: hidden;
+	width: 100%;
+	-webkit-box-shadow: 0 1px 10px 0 darken($color3, 5%);
+	box-shadow: 0 1px 10px 0 darken($color3, 5%);
+	border-bottom: 1px solid darken($color3, 5%);
+}
+.jqte_tool {
+	display: inline-block;
+	cursor: pointer;
+}
+.jqte_tool, .jqte_tool_icon, .jqte_tool_label {
+ 	& a {
+		padding: .6em .8em;
+		&:hover {
+			color: $white;
+			background-color: $color5;
+			text-decoration: none;
+		}			
+ 	}
+}
+.jqte_hiddenField {
+	display:none
+}
+.jqte_tool_icon {
+	font-family: "bloodstone";
+  	vertical-align: middle;
+	speak: none;
+	display: inline-block;
+	text-decoration: inherit;
+	font-style: normal;
+	text-align: center;
+	font-variant: normal;
+	text-transform: none;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	vertical-align: middle;
+    cursor: pointer;
+    &:hover{
+      text-decoration: none;
+    }
+}
+.jqte_tool.jqte_tool_1 .jqte_tool_label {overflow:hidden;}
+
+//editor icons
+.jqte_tool.jqte_tool_2 .jqte_tool_icon:before  {content: '\e80c';}
+.jqte_tool.jqte_tool_3 .jqte_tool_icon:before  {content: '\e84c';}
+.jqte_tool.jqte_tool_4 .jqte_tool_icon:before {content: '\e868';}
+.jqte_tool.jqte_tool_5 .jqte_tool_icon:before  {content: '\e869';}
+.jqte_tool.jqte_tool_6 .jqte_tool_icon:before  {content: '\e86d';}
+.jqte_tool.jqte_tool_7 .jqte_tool_icon:before  {content: '\e868';}
+.jqte_tool.jqte_tool_8 .jqte_tool_icon:before  {content: '\e86e';}
+.jqte_tool.jqte_tool_9 .jqte_tool_icon:before  {content: '\e86a';}
+.jqte_tool.jqte_tool_10 .jqte_tool_icon:before  {content: '\e86b';}
+.jqte_tool.jqte_tool_11 .jqte_tool_icon:before  {content: '\e868';}
+.jqte_tool.jqte_tool_12 .jqte_tool_icon:before  {content: '\e868';}
+.jqte_tool.jqte_tool_13 .jqte_tool_icon:before  {content: '\e865';}
+.jqte_tool.jqte_tool_14 .jqte_tool_icon:before  {content: '\e866';}
+.jqte_tool.jqte_tool_15 .jqte_tool_icon:before  {content: '\e867';}
+.jqte_tool.jqte_tool_16 .jqte_tool_icon:before  {content: '\e86c';}
+.jqte_tool.jqte_tool_17 .jqte_tool_icon:before  {content: '\e857';}
+.jqte_tool.jqte_tool_18 .jqte_tool_icon:before  {content: '\e80a';}
+.jqte_tool.jqte_tool_19 .jqte_tool_icon:before  {content: '\e868';}
+.jqte_tool.jqte_tool_20 .jqte_tool_icon:before  {content: '\e802';}
+.jqte_tool.jqte_tool_21 .jqte_tool_icon:before  {content: '\e81b';}
+//editor icons
+
+.jqte_tool.jqte_tool_1:hover .jqte_tool_icon, .jqte_tool.jqte_tool_1:active .jqte_tool_icon { border:none }
+
+.jqte_tool_depressed {
+	background-color: darken($color3, 5%);
+	&:hover {
+		background-color: darken($color3, 2%);
+	}
+}
+
+/* link form area */
+.jqte_linkform {
+	padding: .3em .4em;
+	background: $color3;
+	border-bottom: 1px solid darken($color3, 5%);
+}
+.jqte_linktypeselect {
+	position:relative;
+	float:left;
+	width:130px;
+	cursor:pointer;
+	&:active {
+		background-color: $white;
+	}
+}
+.jqte_linktypeview {
+	padding: .2em .4em;
+	border: 1px solid darken($color3, 10%);
+	color: $pre-black2;
+	outline: none;
+	background-color: $white;
+}
+.jqte_linktypetext {
+	font-size: 12px;
+}
+
+.jqte_linktypes {
+	display: none;
+	position: absolute;
+	top: 22px;
+	width: 130px;
+	background-color: $white;
+	border: 1px solid darken($color3, 10%);
+	border-top: none;
+}
+.jqte_linktypes a {
+	display: block;
+	text-decoration: none;
+	padding: 4px 5px;
+	font-size: 12px;
+	&:hover {
+		background-color: darken($color3, 3%);
+	}
+}
+
+.jqte_linkinput {
+	float:left;
+	margin:0 5px;
+	padding: .2em .4em;
+	width:300px;
+	border:1px solid darken($color3, 10%);
+	color: $pre-black2;
+	font-size:12px;
+	outline:none;
+	&:focus, &:hover {
+		border-color: darken($color3, 15%);
+	}
+}
+
+.jqte_linkbutton {
+	float:left;
+	padding: .2em .8em;
+	color : $white;
+	background-color:darken($color5, 2%);
+	cursor: pointer;
+	border: none;
+	&:hover {
+		text-decoration: none;
+		background-color:darken($color5, 10%);
+	}
+	&:active {
+		background-color:darken($color5, 4%);
+	}
+}
+
+/* text format menu */
+.jqte_formats {
+	display:none;
+	position:absolute;
+	top:30px;
+	overflow-y:auto;
+	background:#FFF;
+	border:1px solid darken($color3, 5%);
+	z-index:100;
+	min-width: 160px;
+    max-height: 220px;
+	&::-webkit-scrollbar {
+	    width: 8px;
+	}
+	&::-webkit-scrollbar-track {
+	    background-color: lighten($color5, 25%);
+	}
+	&::-webkit-scrollbar-thumb {
+	    background-color: darken($color5, 4%);
+	}
+	&::-webkit-scrollbar-thumb:hover {
+	    background-color: lighten($color5,1%);
+	}
+}
+.jqte_format {
+	display: block;
+	padding: 4px 7px;
+	font-size: 13px;
+	&:hover {
+		background-color: $color3;
+	}
+}
+
+.jqte_format_1, .jqte_format_2, .jqte_format_3, .jqte_format_4, .jqte_format_5, .jqte_format_6 {
+	font-weight:bold;
+}
+.jqte_format_1 {
+	font-size:22px;
+}
+.jqte_format_2 {
+	font-size:20px;
+}
+.jqte_format_3 {
+	font-size:18px;
+}
+.jqte_format_4 {
+	font-size:16px;
+}
+.jqte_format_5 {
+	font-size:14px;
+}
+.jqte_format_6 {
+	font-size:12px;
+}
+.jqte_format_7 {
+	font-family:"Courier New", Courier, monospace;
+}
+
+/* font size menu */
+.jqte_fontsizes {
+	@extend  .jqte_formats;
+}
+.jqte_fontsize {
+	display:block;
+	padding:3px 7px;
+	&:hover {
+		background-color: $color3;
+	}
+}
+
+/* color pallette */
+.jqte_cpalette {
+	display: none;
+	position: absolute;
+	padding: .3em .4em;
+	max-width: 180px;
+	background: $white;
+	border: 1px solid darken($color3, 5%);
+
+}
+.jqte_color {
+	display: block;
+	float: left;
+	width: 10px;
+	height: 10px;
+	border: 1px solid $white;
+}
+.jqte_colorSeperator {
+    float: none;
+    clear: both;
+    height: 7px;
+}
+
+/* editor area */
+.jqte_editor, .jqte_source {
+	padding: .4em .6em;
+	min-height: 250px;
+	max-height: 500px;
+	overflow: auto;
+	outline: none;
+	word-wrap: break-word; -ms-word-wrap: break-word;
+	resize: vertical;
+	&::-webkit-scrollbar {
+	    width: 8px;
+	}
+	&::-webkit-scrollbar-track {
+	    background-color: lighten($color5, 25%);
+	}
+	&::-webkit-scrollbar-thumb {
+	    background-color: darken($color5, 4%);
+	}
+	&::-webkit-scrollbar-thumb:hover {
+	    background-color: lighten($color5,1%);
+	}
+}
+.jqte_editor div, .jqte_editor p {
+	margin: 0 0 7px;
+}
+.jqte_editor a:link, .jqte_editor a:link * {
+	color: #0066FF !important;
+	text-decoration: underline;
+}
+.jqte_editor blockquote {
+	margin-top: 0;
+	margin-bottom: 7px;
+}
+.jqte_editor img {
+    float: left;
+	margin: 0 10px 5px 0;
+}
+.jqte_editor a[jqte-setlink], .jqte_editor a[jqte-setlink] * {
+	background: #3297FD !important;
+	color: #FFF !important;
+}
+.jqte_editor h1, .jqte_editor h2, .jqte_editor h3, .jqte_editor h4, .jqte_editor h5, .jqte_editor h6, .jqte_editor pre {
+	display: block;
+	margin: 0 0 3px;
+}
+.jqte_editor h1, .jqte_editor h1 * {
+	font-size: 26px;
+}
+.jqte_editor h2, .jqte_editor h2 * {
+	font-size: 24px;
+}
+.jqte_editor h3, .jqte_editor h3 * {
+	font-size: 22px;
+}
+.jqte_editor h4, .jqte_editor h4 * {
+	font-size: 20px;
+}
+.jqte_editor h5, .jqte_editor h5 * {
+	font-size: 18px;
+}
+.jqte_editor h6, .jqte_editor h6 * {
+	font-size: 15px;
+}
+.jqte_editor pre, .jqte_editor pre * {
+	font-family: "Courier New", Courier, monospace;
+}
+
+/* source area */
+.jqte_source, .jqte_source textarea {
+	background: #FFF1E8;
+}
+.jqte_source textarea {
+	margin: 0 !important;
+	padding: 0 !important;
+	display: block !important;
+	width: 100% !important;
+	min-height: 100px;
+	font-family: Courier, Arial, sans-serif !important;
+	font-weight: normal;
+	font-size: 15px;
+	overflow: hidden !important;
+	outline: none;
+	resize: none;
+}
+.jqte_source textarea, .jqte_source textarea:focus {
+	background: none !important;
+	border: none !important;
+}
+
+/* title box */
+.jqte_title {
+	display: none;
+	position: absolute;
+	z-index: 9999;
+}
+.jqte_titleArrow {
+	position: relative;
+}
+
+.jqte_titleText {
+	padding: 5px 7px;
+	margin-top: 0;
+	min-width: 5px;
+	min-height: 1px;
+	max-width: 400px;
+	background: #000;
+	border-radius: 3px; -webkit-border-radius:3px; -moz-border-radius:3px;
+	word-wrap: break-word; -ms-word-wrap: break-word
+}
+.jqte_titleText, .jqte_titleText * {
+	color: $white;
+	font-size: 11px
+}
+
+/* placeholder */
+.jqte_placeholder {
+	position: relative;
+	display: none;
+}
+.jqte_placeholder_text {
+	position: absolute;
+	top: 43px;
+	left: 10px;
+	font-size: 14px;
+	color: #ccc;
+}

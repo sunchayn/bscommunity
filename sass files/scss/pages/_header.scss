@@ -1,0 +1,180 @@
+header .top-nav{
+	padding: .2em 0;
+	margin: 0;
+	background-color: $color1;
+	color: #fff;
+	position: relative;
+	& .sub-wrapper {
+		position: relative;
+	}
+	& nav , & span {
+		display: inline-block;
+	}
+
+	& > div{
+		padding: .5 0;
+	}
+	
+	& nav > a {
+		display:inline-block;
+		padding:0.9em 1em;
+  		&#username{
+			padding-left : 0em;
+		}
+		&#unread-report {
+			color: lighten($color5, 22%);
+		}
+	}
+
+	& .input-to-toggle {
+		background-color: $color1;
+		//placeholder color
+		::-webkit-input-placeholder { color: darken($pre-black, 9%);}
+		:-moz-placeholder { color: darken($pre-black, 9%); opacity: 1; }
+		::-moz-placeholder { color: darken($pre-black, 9%); opacity: 1; }
+		:-ms-input-placeholder {color: darken($pre-black, 9%);}
+		//end - placeholder color
+		padding: .2em .4em;
+	}
+
+
+	& .second-panel{
+		
+		& nav.member-pref > a {
+			padding: .1em .5em;
+			&[class^='icon-']{
+				color: darken($white, 40%);
+				&:hover {
+					color: darken($white, 20%);
+				}
+
+				&.active-dd {
+					color: darken($white, 20%);
+				}
+			}
+
+			&:hover {
+				text-decoration: none;
+			}
+		}
+
+	}
+}
+
+.res-nav {
+	padding: .2em 0;
+	margin: 0;
+	background-color: $color1;
+	color: lighten($pre-black2, 10%);
+	&>div {text-align: center;}
+
+	& .field-with-icon {
+		display: block;
+		width: 80%;
+		margin: .2em auto;
+		form {
+			display: block;
+			& span {
+				@extend .f-left;
+				&.field {
+					width: 90%;
+				}
+			}
+		}
+	}
+
+	& .user-panel {
+
+		& > a[class^='icon-']{
+			color: darken($white, 40%);
+			&:hover {
+				color: darken($white, 20%);
+			}
+
+			&.active-dd {
+				color: darken($white, 20%);
+			}
+		}
+
+	}
+
+	& .res-menu {
+		position: fixed;
+		bottom: 0;
+		background-color: $color1;
+		border-top: 2px solid $color5;
+		z-index: 9999;
+		& a {
+			display: block;
+			@extend .f-left;
+			color: darken($white, 20%);
+			font-size: 15px;
+			padding: .2em .3em;
+			text-align: center;
+			&:hover {
+				color: $white;
+				background-color: lighten($color1, 10%);
+			}
+		}
+	}
+}
+
+.resp-login {
+	display: none;
+	background-color: darken($color1,4%);
+	border-top: .3em solid darken($color1,6%);
+	padding: .3em .4em;
+	color: $pre-black2;
+	& .ajax-loader {
+		padding: .2em 0;
+		& ul li {
+			color: lighten($color5, 15%);
+		}
+	}
+	& .login-label {
+		padding: .2em 0;
+		& input[type="password"], & input[type="text"] {
+			display: block;
+			width: 100%;
+			background-color: darken($color1,8%);
+			border: none;
+		}
+	}
+}
+
+.wide-zone{
+	background:#eee url('../img/bgMain.jpg') center fixed no-repeat;
+	background-size: cover;
+	color: #fff;
+	border-bottom: 3px solid #333;
+	
+	&>div:first-child {
+		text-align: center;
+	}
+
+	& #title {
+		display: inline-block;
+		padding:0.8em 1em;
+		font-size: 40px;
+		border: 5px solid #fff;
+		margin: 1em 0;
+		color: $white;
+	}
+}
+
+.sm-userpanel {
+	background-color: darken($color1,4%);
+	border-top: .3em solid darken($color1,6%);
+	text-align: center;
+	color: $pre-black2;
+	display: none;
+	& a {
+		display: block;
+		padding: .6em .5em;
+		font-size: 1.1em;
+		&:hover {
+			background-color: $color1;
+			text-decoration: none;
+		}
+	}
+}

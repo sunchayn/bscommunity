@@ -1,0 +1,45 @@
+.members-page {
+
+	& .members-list {
+		padding: .3em .4em;
+		border: 1px dotted lighten($pre-black2, 50%);
+		margin-bottom: .3em;
+
+		& .members-row {
+
+			&:nth-child(odd){
+				& > .member-modal:nth-child(even){
+					background-color: $color3;
+				}
+			}
+
+			&:nth-child(even){
+				& > .member-modal:nth-child(odd){
+					background-color: $color3;
+				}
+			}
+		}
+
+		& .member-modal {
+			position: relative;
+			padding: .3em .4em;
+
+			& small {
+				padding: .3em 0;
+				display: block;
+			}
+			
+			& span {
+				margin: .3em 0;
+			}
+		}
+
+		& .member-search {
+			& input {
+				padding: .3em .4em;
+				margin: 0;
+			}
+		}
+	}
+
+}

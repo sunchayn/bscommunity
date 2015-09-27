@@ -1,0 +1,279 @@
+
+.profile {
+
+	.profile-header {
+		padding: 2em 0;
+		color: $white;
+		text-align: center;
+		& img {
+			border: .3em solid $pre-black2;
+			padding: .2em;
+		}
+
+	}
+
+	& .profile-menu {
+		padding-top: .4em;
+		margin: 0 auto;
+		text-align: center;
+		& nav {
+			margin: 0 auto;
+			display: inline-block;
+			padding: .3em .6em;
+			color: $pre-black;
+			& a {
+				display: inline-block;
+				padding: .3em .5em;
+
+				&.checked{
+					color: $color5;
+					text-decoration: none;
+				}
+			}
+		}
+	}
+
+	& .grid-section>div {
+		margin: .5em 0;
+	}
+	
+	&.profile-general-page .skills, & .interests{
+		& span {
+			display: inline-block;
+			cursor: pointer;
+			padding: .3em .5em;
+			background-color: $color3;
+			@extend .rad2;
+			@if $direction == ltr{margin-right:.5em;}@else{margin-left:.5em;}
+			&:last-child {
+				margin: none;
+			}
+		}	
+	}
+
+	&.profile-general-page {
+		& .area {
+			& .user-stats{
+				&>div {
+					text-align : center;
+					padding: .5em .7em;
+					background-color: $color3;
+					&>h3 {
+						color: $color1;
+					}
+
+					&>span {
+						color: $color5;
+					}
+				}
+			}
+
+			& .user-last-thread {
+				@if $direction == ltr{border-left: 2px solid $color5;}@else{border-right: 2px solid $color5;}
+				&:nth-child(even)
+				{
+					background-color: $color3;
+				}
+				&>div {
+					padding: .2em .4em;
+					& p {
+						margin: 0;
+						padding: 0;
+					}
+				}
+			}
+
+			& .user-achievement {	
+				line-height: 1.4em;
+
+				& .achievement-holder {
+					width: 125px;
+					background-color: $color4;
+					display: inline-block;
+					margin-bottom: .4em;
+					& span {
+						display: block;
+						background-color: $color5;
+						color: $white;
+						padding: .4em .5em;
+						text-align: center;
+					}
+					
+				}
+			}
+
+			& .education {
+				padding:0 .4em;
+				@if $direction == ltr{border-left: 2px solid $color5;}@else{border-right: 2px solid $color5;}
+				&:nth-child(even)
+				{
+					background-color: $color3;
+				}
+				& .one-title {
+					padding: .4em .5em;
+					margin-bottom: .4em;
+				}		
+			}
+			
+		}
+	}
+
+	&.profile-threads-page {
+		& .threads-heading {
+			&>div {
+				padding: 0.5em;
+				margin-top: 0;
+			}
+			margin-top: .5em;
+		}
+
+		& .threads-body {
+			margin-bottom: .5em;
+			.thread {
+				&>div {
+					padding: 0.5em;
+				}	
+
+				&:nth-child(even) {
+					background-color: $color3;
+				}
+			}	
+		}
+	}
+
+	&.profile-achiev-page {
+		& .achievement {
+			background-color: $color4;
+			& .ach-title {
+				background-color: $color5;
+				color: $white;
+				padding: .4em .5em;
+			}
+
+		}
+	}
+
+	&.profile-about-page {
+
+		line-height: 1.5em;
+
+		& .sub-wrapper>div {
+			margin-bottom: .4em;
+		}
+
+		& .about-heading {
+			padding: .4em .5em;
+			@if $direction == ltr{border-left: 2px solid $color5;}@else{border-right: 2px solid $color5;}
+			background-color: $color3;
+		}
+
+		& .about-content {
+				@if $direction == ltr{padding-left: .2em;}@else{padding-right: .2em;}
+		}
+		
+		& .general-info {
+			&>.box {
+				padding: .4em 0 .4em 0;
+			}
+		}
+
+		& .base-info>div>div {
+			padding: .4em .5em;
+		}
+
+		& .base-info>div:nth-child(even) {
+			background-color: $color3;
+		}
+
+		& .quote {
+			& i {
+				padding: 0 .4em;
+		  		vertical-align: top;
+		  		font-size: 8px;
+		  		color: $pre-black2;
+			}
+		}
+
+		& .ed-title {
+			padding: .5em 0;
+			margin: .5em 0;
+		}
+
+		& .skill-box {
+			&>div {
+				padding: .4em 0;
+			}
+		}
+	} 
+
+	&.profile-statis-page {
+		& .sub-wrapper>div {
+			margin-bottom: .4em;
+		}
+
+		& .general {
+			&>div {
+				text-align: center;
+				line-height: 2em;
+				border-left: 1px solid darken($color3, 5%);
+				&:first-child {
+					border-left: 0;
+				}
+				& span {
+					color: lighten($pre-black, 5%);
+				}
+			}
+		}
+
+		& .hits {
+			&>div {
+				text-align: center;
+				&>div {
+					padding: .4em .6em;
+				}
+			}
+
+			& .caption {
+				&>div{
+					font-weight: bold;
+				}
+			}
+
+			& .body {
+				&>div {padding: 0;}
+				&>div:nth-child(even) {
+					background-color: $color3;
+				}
+
+				& .v-middle>div {
+					padding: .4em .6em;
+				}
+			}
+		}
+
+		& .recent-act {
+			&>div {
+				padding: .4em .6em .4em 0;
+			}
+		}
+
+		& .top-topic {
+			padding : .4em .6em;
+			& a {
+				padding: .4em .5em;
+				border-left: 2px solid $color5;
+			}
+		}
+
+		& .activity-per-day {
+			&>div{
+				&>div {
+					padding: .4em .5em;
+					text-align: center;
+					line-height: 2em;
+					background-color: $color3;
+				}
+			}
+		}
+	}	
+}

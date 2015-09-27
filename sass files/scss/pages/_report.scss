@@ -1,0 +1,51 @@
+.report-page {
+
+	& .report {
+
+		&:nth-child(even) {
+			background-color: $color3;
+		}
+
+		&:hover {
+			background-color: darken($color3, 1%);
+		}
+
+		&.unseen {
+			background-color: $warning;
+			&:hover {
+				background-color: lighten($warning, 3%);
+			}
+		}
+
+		& > div {
+			padding: .6em;
+		}
+	}
+
+	& .reported-item {
+		& > div {
+			background-color: darken($color3, 1%);
+			padding: .4em;
+			margin: .4em auto;
+		}
+		
+		& p {
+			padding: .4em .5em;
+		}
+	}
+
+	& .reports {
+		padding: .4em;
+
+		& .one-report {
+
+			border-bottom: 2px solid darken($color3, 2%);
+
+			& .report-core {
+				padding: .4em .5em;
+				background-color: $color3;
+			}
+		}
+
+	}
+}

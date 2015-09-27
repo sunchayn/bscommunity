@@ -1,0 +1,17 @@
+.term-page {
+
+	& h3 { color: $pre-black; }
+
+	& p { color: $pre-black2; padding: .2em 0;}
+
+	& .terms {
+		padding: .4em .2em;
+
+		& .term {
+			@if $direction == ltr{border-left: 3px solid darken($color3, 6%);}@else{border-right: 3px solid darken($color3, 6%);}
+			padding: .4em;
+			margin: .4em 0;
+		}
+	}
+
+}

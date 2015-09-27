@@ -1,0 +1,84 @@
+@mixin borderRadius($radAmount){
+	border-radius : $radAmount;
+	-webkit-border-radius : $radAmount;
+	-moz-border-radius : $radAmount;
+	-o-border-radius : $radAmount;
+	-ms-border-radius : $radAmount;
+}
+
+@mixin borderRadiusRight($radAmount){
+  border-radius : 0 $radAmount $radAmount 0;
+  -webkit-border-radius : 0 $radAmount $radAmount 0;
+  -moz-border-radius : 0 $radAmount $radAmount 0;
+  -o-border-radius : 0 $radAmount $radAmount 0;
+  -ms-border-radius : 0 $radAmount $radAmount 0;
+}
+
+@mixin borderRadiusLeft($radAmount){
+  border-radius :  $radAmount 0 0 $radAmount ;
+  -webkit-border-radius :  $radAmount 0 0 $radAmount ;
+  -moz-border-radius :  $radAmount 0 0 $radAmount ;
+  -o-border-radius :  $radAmount 0 0 $radAmount ;
+  -ms-border-radius :  $radAmount 0 0 $radAmount ;
+}
+
+
+@mixin keyframes($animation-name) {
+  @-webkit-keyframes $animation-name {
+    @content;
+  }
+  @-moz-keyframes $animation-name {
+    @content;
+  }  
+  @-ms-keyframes $animation-name {
+    @content;
+  }
+  @-o-keyframes $animation-name {
+    @content;
+  }  
+  @keyframes $animation-name {
+    @content;
+  }
+}
+
+@mixin animation($str) {
+  -webkit-animation: #{$str};
+  -moz-animation: #{$str};
+  -ms-animation: #{$str};
+  -o-animation: #{$str};
+  animation: #{$str};      
+}
+
+@mixin transition($args) {
+  -webkit-transition: $args;
+  -moz-transition: $args;
+  -ms-transition: $args;
+  -o-transition: $args;
+  transition: $args;
+}
+
+@mixin opacity($opacity) {
+  opacity: $opacity;
+  $opacity-ie: $opacity * 100;
+  filter: alpha(opacity=$opacity-ie); //IE8
+}
+
+%clearfix {
+  *zoom: 1;
+  &:before, &:after {
+    content: " ";
+    display: table;
+  }
+  &:after {
+    clear: both;
+  }
+}
+
+
+@mixin transform-rotate($val){
+    -webkit-transform: rotate($val + deg) ;
+    -moz-transform   : rotate($val + deg) ;
+    -o-transform     : rotate($val + deg) ;
+    -ms-transform    : rotate($val + deg) ;
+    transform        : rotate($val + deg) ;
+}

@@ -1,0 +1,5 @@
+.about-page {
+	& .field-label:nth-child(odd) {
+		background-color:  $color3;
+	}
+}

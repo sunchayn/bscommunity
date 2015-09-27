@@ -1,0 +1,27 @@
+.nav-bar  {
+	padding: 0;
+	& .page-title {
+		background-color: $color5;
+		text-align: center;
+		padding: 1.5em .8em;
+		padding-bottom: calc(1.5em + 2px);
+		& h3 {
+			color: $white;
+		}
+	}
+	& .pure-nav {
+		background-color: $white;
+		border-bottom: 2px solid $color3;
+		& a {
+			color: $pre-black;
+		}
+
+		& .label a{
+			color: $white;
+		}
+		& nav > span {
+			display: inline-block;
+			padding: 1.5em .8em;
+		}
+	}
+}

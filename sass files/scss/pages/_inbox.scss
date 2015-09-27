@@ -1,0 +1,124 @@
+.inbox-page {
+	&>.area {
+		padding: 0;
+	}
+
+	& .inbox-panel {
+		background-color: $color4;
+		color: $white;
+		padding: 0;
+		& #checked {
+			@if $direction == ltr{border-left: 5px solid $white;}@else{border-right: 5px solid $white;}
+		}
+		& #new-msg {
+			display: block;
+			width: 60%;
+			margin: 1em auto;
+			background-color: $color5;
+			padding: .6em .7em;
+			text-align: center;
+		}
+
+		&>div a {
+			display: block;
+			padding: .6em .7em;
+
+			&:hover {
+				background-color: darken($color4, 5%);
+				text-decoration: none;
+			}
+		}
+	}
+
+	& .inbox-content {
+		padding: .6em .7em .6em 1.6%;
+		margin:0;
+		& .heading {
+			color: $pre-black2;
+			padding: .3em 0;
+			margin: 0;
+
+			& h2 {
+				margin: 0 .3em;
+			}
+		}
+
+		& .messages {
+
+			& .msg-model {
+				padding: .4em 0;
+				@if $direction == ltr{border-left: 1px solid transparent;}@else{border-right: 1px solid transparent;}
+
+				&:hover {
+					border-color: $color5;
+				}
+
+				&:nth-child(odd) {
+					background-color: $color3;
+				}
+
+				& a {
+					&:hover {
+						text-decoration: none;
+					}
+				}
+
+				&>div, &>a>div>div{
+					padding: .4em .5em;
+				}
+
+				&.unread {
+					background-color: darken($color3, 3%);
+					border-color: $color1;
+					&:hover {
+						background-color: darken($color3, 1%);
+					}
+				}
+
+				&.checked {
+					background-color: $warning;
+					&:hover {
+						background-color: $warning;
+					}
+				}
+
+			} 
+		}
+
+		& .msg-core {
+			margin : .4em auto;
+			background-color: $color3;
+			padding: .7em .5em;
+			color: $pre-black;
+		}
+
+		& .sub-inbox {
+			margin: .4em 0;
+			& .sub-message {
+				@if $direction == ltr{border-left: .7em solid darken($color3, 3%);}@else{border-right: .7em solid darken($color3, 3%);}
+				padding: .4em;
+				margin: .3em 0;
+				& .sub-content{
+					padding: .3em;
+				}
+				&:nth-child(even){
+					background-color: lighten($color3, 1%);
+				}
+			}
+		}
+
+		& .reply-box {
+			padding: 0;
+			& textarea {
+				width: 100%;
+			}
+
+			& .btn {
+				margin: 0;
+			}
+		}
+
+
+				
+	}
+}

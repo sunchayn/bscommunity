@@ -1,0 +1,93 @@
+.grid-section {
+	@extend %clearfix;
+	padding: 0px;
+	margin: 0px;
+}
+
+.clearfix {
+	@extend %clearfix;
+}
+
+.col {
+	display: block;
+	@if $direction == ltr{float:left;}@else{float:right;}
+	margin: 1% 0 1% 1.6%;
+}
+
+.col-m {
+	display: block;
+	@if $direction == ltr{float:left;}@else{float:right;}
+	@if $direction == ltr{margin: 0 0 0 1.6%;}@else{margin: 0 1.6% 0 0;}
+}
+
+.margin {
+	@if $direction == ltr{margin: 0 0 0 1.6%;}@else{margin: 0 1.6% 0 0;}
+}
+
+.col:first-child, .col-m:first-child { @if $direction == ltr{margin-left: 0}@else{margin-right: 0} } 
+
+.col-m.col-12:first-child {
+	margin-top: 0;
+}
+.col-12 {
+	width: 100%;
+	@if $direction == ltr{margin-left: 0}@else{margin-right: 0} 
+}
+
+.col-11 {
+	width: 91.53%;
+}
+
+.col-10 {
+	width: 83.06%;
+}
+
+.col-9 {
+	width: 74.6%;
+}
+
+.col-8 {
+	width: 66.13%;
+}
+
+.col-7 {
+	width: 57.66%; 
+}
+
+.col-6 {
+	width: 49.2%; 
+}
+
+.col-5 {
+	width: 40.73%; 
+}
+
+.col-4 {
+	width: 32.26%; 
+}
+
+.col-3 {
+	width: 23.8%;
+}
+
+.col-2 {
+	width: 15.33%; 
+}
+
+.col-1 {
+	width: 6.86%; 
+}
+
+
+.full-1 {width: 8.33%;}
+.full-2 {width: 16.66%;}
+.full-3 {width: 24.99%;}
+.full-4 {width: 33.33%;}
+.full-5 {width: 41.66%;}
+.full-6 {width: 49.99%;}
+.full-7 {width: 58.33%;}
+.full-8 {width: 66.66%;}
+.full-9 {width: 74.99%;}
+.full-10 {width: 83.33%;}
+.full-11 {width: 91.66%;}
+.full-12 {width: 100%;}

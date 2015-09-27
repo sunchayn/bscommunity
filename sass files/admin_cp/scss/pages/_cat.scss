@@ -1,0 +1,23 @@
+.categories-page {
+
+	& .categories-wrapper {
+		padding: .1em;
+
+		& .cat-modal {
+
+			padding: .3em;
+			margin: .5em 0;
+			background-color: $color3;
+			border-bottom: 1px solid darken($color3, 5%);
+
+			& p {
+				padding: .8em 0;
+			}
+
+			& .options {
+				font-weight: bold;
+			}
+
+		}
+	}
+}

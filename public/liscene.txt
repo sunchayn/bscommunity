@@ -1,0 +1,4 @@
+﻿# BloodStone community #
+Licensed under the Apache License v2.0 - http://www.apache.org/licenses/LICENSE-2.0
+By Mazen Touati As "MazenDesigns ~ GoldenEmpire"
+- Copyright ©2015 -

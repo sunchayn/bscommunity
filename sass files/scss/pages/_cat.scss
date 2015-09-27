@@ -1,0 +1,57 @@
+.cat-page {
+	& .area {
+		& .cat-heading {
+			& .cat-title {
+				border-bottom: 1px solid #d9d9d9;
+				margin-bottom: .5em;
+			}
+
+			& .cat-desc {
+				& p {
+					line-height: 1.3em;
+					font-size: 15px;
+				}
+			}
+		}
+
+		& .cat-forums {
+			& .c-caption {
+				background-color: $color3;
+				border-bottom: 2px solid darken($color3, 6%);
+				font-size: 1em;
+				color: $pre-black2;
+				font-weight: bold;
+				&>div {
+					padding: .4em .6em;
+
+				}
+			}
+
+			& .c-body {
+
+				& p {
+					margin : 0;
+					padding : 0;
+				}
+
+				& .o-forum {
+					&>div {
+						padding: 0.5em;
+					}
+					&:nth-child(even) {
+						background-color: $color3;
+						& .small-counters {
+							background-color: $white;
+						}
+					}
+				}
+			}
+
+			& .small-counters {
+				background-color: $color3;
+				color: $pre-black2;
+				padding: .2em .4em;
+			}
+		}
+	}
+}

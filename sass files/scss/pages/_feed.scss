@@ -1,0 +1,11 @@
+.feed-page {
+	
+	& .feed-body {
+		& .feed-modal {
+			padding: .4em .3em;
+			&:nth-child(even){
+				background-color: $color3;
+			}
+		}
+	}
+}

@@ -1,0 +1,14 @@
+.welcome {
+	padding: .4em;
+	& > div {
+		padding: .4em;
+		background-color: $color3;
+	}
+
+	& p {
+		padding: .4em .5em;
+		& a {
+			color: $color5;
+		}
+	}
+}

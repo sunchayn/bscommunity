@@ -1,0 +1,89 @@
+.account-page {
+
+	& aside {
+		& a {
+			display : block;
+			padding: .6em .7em;
+
+			&#checked-setting {
+				background-color: $color3;
+  				text-decoration: underline;
+			}
+		}
+	}
+
+	& .content {
+			
+			@if $direction == ltr{padding: .6em .7em .6em 1.6%;}@else{padding: .6em 1.6% .6em .7em;}
+			margin:0;
+			@if $direction == ltr{border-left:1px dashed darken($color3, 10%);}@else{border-right:1px dashed darken($color3, 10%);}
+			& .content-body {
+
+				& .field-label {
+
+					& .prof-pic {
+						border: 1px dashed lighten($pre-black2,40%);
+						cursor: pointer;
+					}
+
+					& > div:last-child, & form > div:last-child {
+						@extend .a-right;
+					}
+				}
+
+				& .section-caption {
+					padding: .7em 0 .4em;
+					color: lighten($pre-black2,20%);
+				}
+
+				& #desactivate-acc{
+					display: block;
+					margin-top: 1em;
+					color: lighten($color5, 20%);
+				}
+
+				& .blocked-list {
+					&>div:nth-child(even) {
+						background-color: $color3;
+					}
+
+					&>div {
+						padding: .4em .6em;
+						& .unblock {
+							color: lighten($color5, 20%);
+						}
+					}
+				}
+
+				& .followers-wrapper {
+					padding: 0;
+					border: 1px dashed $pre-black;
+					& .follower-model{
+						padding: .3em .4em;
+					}
+					& .sub-follower {
+						padding: 0;
+						max-height: 300px;
+						overflow-y: auto;
+						&>.follower-model:nth-child(odd) {
+							background-color: $color3;
+						}
+					}
+				}
+
+				& .load-more {
+					display: block;
+					padding: .4em .6em;
+					text-align: center;
+					background-color: darken($color3, 4%);
+					color: $pre-black2;
+					&:hover {
+						text-decoration: none;
+						background-color: darken($color3, 6%);
+					}
+				}
+
+			}
+
+	}
+}

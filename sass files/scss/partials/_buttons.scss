@@ -1,0 +1,89 @@
+
+@mixin disabledButton($bgcolor){
+  color: lighten($white, 10%);
+  background-color:desaturate(fitColor($bgcolor),10%);
+}
+
+.btn {
+	padding: .3em .5em;
+	display: inline-block;
+	color : lighten($black, 20%);
+	background-color: darken($white, 5%);
+	cursor: pointer;
+	margin: .1em;
+	border: none;
+	&.btn-disabled {
+		position: relative;
+		@include disabledButton($black);
+		&:hover {
+			@include disabledButton($black);
+		}
+		&:active {
+			@include disabledButton($black);
+		}
+	}
+
+	&:hover {
+		text-decoration: none;
+		background-color:darken($white, 10%);
+	}
+
+	&:active {
+		background-color:darken($white, 15%);
+	}
+
+
+	@for $i from 1 through 8 {
+		&.btn-color#{$i} {
+			background-color:nth($colors,$i);
+			color: $white;
+			&:hover {
+				background-color:darken(nth($colors,$i), 2%);
+			}	
+
+			&:active {
+				background-color:darken(nth($colors,$i), 4%);
+			}
+		}
+
+  	}
+}
+
+.label {
+	font-size: 13px;
+	margin: .1em;
+	padding: .1em .2em;
+	color: $white;
+	display: inline-block;
+
+	&.disabled{
+		color: lighten($white, 10%);
+  		background-color:desaturate(fitColor($color5),10%);
+	}
+}
+
+.label-with-icon {
+	& a[class^="icon-"], & i, & span{
+		display: inline-block;
+		padding: .2em .3em;
+		vertical-align: middle;
+		color: $white;
+		font-size: inherit;
+	}
+
+	& a[class^="icon-"]{
+		@include opacity(0.8);
+		&:hover {
+			@include opacity(1);
+		}
+	}
+}
+
+a.receiverHolder {
+	padding: .3em .4em;
+	@extend .rad2;
+	background-color: darken($color3, 4%);
+	&:hover{
+		text-decoration: none;
+	}
+}

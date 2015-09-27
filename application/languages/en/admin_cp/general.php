@@ -1,0 +1,50 @@
+<?php
+return [
+    'title' => 'admin cPanel',
+    'heading' => 'admin panel',
+    'welcome' => 'welcome',
+    'logout' => 'logout',
+    'breads' => [
+        'cp' => 'admin cPanel',
+        'general' => 'general',
+        'settings' => 'settings',
+        'variables' => 'global variables',
+        'filter' => 'words filter',
+        'categories' => 'categories',
+        'mCategories' => 'manage categories',
+        'mForums' => 'manage forums',
+        'users' => 'users',
+        'mUsers' => 'manage users',
+        'mRoles' => 'manage roles',
+        'about' => 'about',
+        'support' => 'support center',
+        'seo' => 'SEO helper',
+        'username' => 'username requests',
+        'rules' => 'forum rules',
+    ],
+    'sidebar' => [
+        'general' => 'general',
+        'settings' => [
+            'heading' => 'settings',
+            'general' => 'general settings',
+            'variables' => 'global variables',
+            'filter' => 'words filter',
+        ],
+        'categories' => [
+            'heading' => 'categories',
+            'categories' => 'manage categories',
+            'forums' => 'manage forums',
+            'forums-rules' => 'forums rules',
+        ],
+        'users' => [
+            'heading' => 'users',
+            'users' => 'manage users',
+            'roles' => 'manage roles',
+            'username' => 'username requests',
+        ],
+        'rules' => 'site rules',
+        'support' => 'support center',
+        'seo' => 'SEO helper',
+        'about' => 'about version',
+    ]
+];

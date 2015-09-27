@@ -1,0 +1,104 @@
+footer {
+	color: $pre-black2;
+	& .level1{
+		padding: .5em;
+		& .heading {
+			padding-bottom : 0.5em;
+			border-bottom: 1px solid darken($pre-black2 , 9%);
+			margin-bottom: 0.5em;
+
+			& h2 {
+				color: $pre-black;
+				display: inline-block;
+			}
+			small {
+				font-size: 14px;
+				color: $pre-black2;
+			}
+		}
+
+		& .letter-sub{
+
+			& p {
+				padding-bottom: .4em;
+			}
+
+			& .lettre-sub-field {
+				//placeholder color
+				::-webkit-input-placeholder { color: darken($pre-black, 9%);}
+				:-moz-placeholder { color: darken($pre-black, 9%); opacity: 1; }
+				::-moz-placeholder { color: darken($pre-black, 9%); opacity: 1; }
+				:-ms-input-placeholder {color: darken($pre-black, 9%);}
+				//end - placeholder color
+				background-color: rgba(0, 0, 0, .2);
+				& input[type="text"] {
+					background-color: transparent;
+				}
+			}
+		}
+
+		& .split-dashed {
+			border-color: darken($pre-black2, 15%);
+			margin: .5em 0;
+		}
+	}
+	& h3 {
+		margin:0;
+		color: $pre-black;
+		font-weight: semi-bold;
+	}
+	background-color: $color1;
+	& .copyright{
+		@extend .a-left;
+		padding: .8em 0 ;
+		background-color: darken($color1,4%);
+
+	}
+
+	& .social-links {
+		& .social-circle {
+			display: inline-block;
+			width: 25px;
+			height: 25px;
+			font-size: 18px;
+			padding: 1px;
+			@if $direction == ltr{margin-left: .1em;}@else{margin-right: .1em;}
+			text-align: center;
+			background-color: #fff;
+			& i {
+				color: $white;
+			}
+			&#facebook {
+				background-color: #3b5998;
+			}
+
+			&#twitter {
+				background-color: #00aced;
+			}
+
+			&#youtube {
+				background-color: #bb0000;
+			}
+
+
+		}
+	}
+
+	& .language-selector {
+
+		& .langs {
+			text-align: center;
+			& a {
+				display: inline-block;
+				width: 48%;
+				text-align: center;
+				padding: 3em 0;
+				background-color: darken($color3, 2%);
+				&:hover {
+					text-decoration: none;
+					background-color: darken($color3, 4%);
+				}
+			}
+		}
+	}
+}

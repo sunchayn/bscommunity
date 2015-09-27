@@ -1,0 +1,77 @@
+.forum-page {
+	& .area {
+		& .forum-heading {
+			padding: .3em 0;
+		}
+
+		& .forum-title {
+			margin-bottom: .5em;
+			& > div {
+				padding: 0 .4em;
+			}
+		}
+
+		& .pagination {
+			& i {
+				color: $pre-black2;
+			}
+		}
+		
+		& .heading {
+			&>div {
+				padding: 0.5em;
+			}
+
+			margin-top: .5em;
+			background-color: $color5;
+			color: #fff;
+		}
+
+		& .caption {
+			background-color: darken($color3, 2%);
+			border-bottom: 2px solid darken($color3, 6%);
+			color: $pre-black2;
+			font-weight: bold;
+			font-size: 1em;
+			&>div {
+				padding: .4em .6em;
+			}
+		}
+
+		& .body {
+			border-bottom: 1px solid $color2;
+			.thread {
+				&>div {
+					padding: 0.5em;
+				}	
+
+				&:nth-child(even) {
+					background-color: $color3;
+					& .small-counters {
+						background-color: $white;
+					}
+				}
+			}
+
+			.pinned {
+				border-bottom: 5px solid  $color2;
+
+				& .thread-title:before{
+					content:" ";
+					display:inline-block;
+					width: 5px;
+					height: 5px;
+					background-color: $color5;
+					vertical-align: middle;
+					@if $direction == ltr{margin-right:.3em;}@else{margin-left:.3em;}
+				}
+			}
+
+			& .small-counters {
+				background-color: $color3;
+				color: $pre-black2;
+				padding: .2em .4em;
+			}
+		}
+	}
+}

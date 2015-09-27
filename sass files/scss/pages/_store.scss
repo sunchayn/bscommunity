@@ -1,0 +1,83 @@
+.store-page {
+	& .store-heading {
+		padding: .4em .6em;
+		background-color: $succ;
+		color: $white;
+		@include borderRadius($radiusAmount2);
+
+		& h2 {
+			color: $white;
+		}
+	}
+
+	& .items-search {
+		padding: .4em .6em;
+		margin: .2em;
+		& input {
+			width: 100%;
+		}
+	}
+
+	& .store-pagination {
+		padding: .4em .6em;
+		margin: 0;
+	}
+
+	& .items-row {
+
+		&:nth-child(odd){
+			& > .item:nth-child(even){
+				background-color: $color3;
+			}
+		}
+
+		&:nth-child(even){
+			& > .item:nth-child(odd){
+				background-color: $color3;
+			}
+		}
+	}
+	
+	& .item {
+		padding: .4em .6em;
+		margin-bottom: .4em;
+		& .item-picture {
+			display: inline-block;
+			height: 120px;
+			width: 120px;
+			max-height: 120px;
+			max-width: 120px;
+			background-color: $color4;
+			@include borderRadius($radiusAmount2);
+			overflow: hidden;
+		}
+
+		& .item-info {
+			padding: .4em .6em;
+			& p {
+				color: lighten($pre-black2, 20%);
+				padding: .3em 0;
+				margin: 0;
+				white-space: pre-wrap;
+			}
+
+			& .item-label {
+				display: inline-block;
+				background-color: $color2;
+				color: $white;
+				padding: .2em 1em;
+				margin: .2em 0;
+				@include borderRadius($radiusAmount);
+			}
+
+			& span {
+				display: inline-block;
+				background-color: $color5;
+				color: $white;
+				padding: .1em 1em;
+				margin: .3em 0;
+				@include borderRadius($radiusAmount);
+			}
+		}
+	}
+}

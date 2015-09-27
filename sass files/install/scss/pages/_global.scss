@@ -1,0 +1,50 @@
+.install-page {
+	& .area {
+		padding: .4em;
+	}
+
+	& .heading {
+		line-height: 1.3em;
+		& h3 {
+			padding: .4em 0;
+		}
+
+		& span {
+			color: $color5;
+		}
+	}
+
+	& .ar {
+		direction: rtl;
+	}
+
+	& .steps {
+		background-color: $color3;
+		padding: .4em;
+		& ul li span{
+			vertical-align: middle;
+			&.fail {
+				color: $color5;
+				padding: 0 .4em;
+				font-weight: bold;
+			}
+
+			&.done {
+				color: $succ;
+				padding: 0 .4em;
+				font-weight: bold;
+			}
+
+			&.war {
+				color: darken($succ, 10%);
+				font-weight: bold;
+				padding: 0 .4em;
+			}
+		}
+		& .ajax-result {
+			display: none;
+			padding: 0 .4em;
+
+		}
+	}
+}

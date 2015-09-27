@@ -1,0 +1,173 @@
+.overlay {
+	position: fixed;
+	left:0;
+	top:0;
+	height : 100%;
+	width : 100%;
+	background-color: rgba(0, 0, 0, .4);
+	cursor: pointer;
+	display: none;
+	z-index: 777;
+}
+
+.modal {
+	position: fixed;
+	width: 80%;
+	height: 80%;
+	left: 10%;
+	top: 10%;
+	margin: 0 auto;
+	z-index: 888;
+	background-color: $white;
+	display: none;
+
+	.modal-head {
+		background-color: darken($color3, 5%);
+		border-bottom :1px solid darken($color3, 10%);
+		padding: .3em .4em;
+		color: $pre-black2;
+	}
+
+	.modal-body {
+		padding: .3em .4em;
+		overflow-y: auto;
+		&::-webkit-scrollbar {
+		    width: 12px;
+		}
+		&::-webkit-scrollbar-track {
+		    background-color: darken($color3, 5%);
+		}
+		&::-webkit-scrollbar-thumb {
+		    background-color: lighten($pre-black2, 15%);
+		}
+		&::-webkit-scrollbar-thumb:hover {
+		    background-color: darken($pre-black,5%);
+		}
+	}
+
+	.modal-footer {
+		position: absolute;
+		padding: .4em .5em;
+		bottom: 0;
+		width: 100%;
+		background-color: darken($color3, 5%);
+		border-top :1px solid darken($color3, 10%);
+	}
+
+}
+
+.confirm-modal {
+	position: fixed;
+	width: 30%;
+	top: 50%;
+	left: 35%;
+	z-index: 888;
+	background-color: $white;
+	display: none;
+	padding: .4em;
+	& .cf-modal-content {
+		padding: .6em .4em;
+		background-color: $color3;
+		& p {
+			color: $pre-black2;
+		}
+
+	}
+	.modal-buttons {
+		position: relative;
+		bottom: 0;
+		width: 100%;
+		& a {
+			text-align: center;
+			width: 50%;
+			padding: .4em .5em;
+			display: block;
+			color: $white;
+			@extend .f-left;
+			&.c-confirm {
+				background-color: $succ;
+				&:hover {
+					text-decoration: none;
+					background-color: darken($succ, 5%);
+				}
+			}
+			&.c-cancel {
+				background-color: $fail;
+				&:hover {
+					text-decoration: none;
+					background-color: darken($fail, 5%);
+				}
+			}
+		}
+	}
+}
+
+.result-modal {
+	display: none;
+	position: fixed;
+	z-index: 888;
+	bottom: 1.5em;
+	@if $direction == ltr{right: 1.5em;}@else{left: 1.5em;}
+	padding: .8em .6em;
+	background-color: $white;
+	color: $white;
+	border: 1px solid;
+	&.succ {
+		background-color: $succ;
+		border-color: darken($succ, 4%);
+	}
+
+	&.fail {
+		background-color: $fail;
+		border-color: darken($fail, 4%);
+
+	}
+} 
+
+.usersInModal{
+	border-bottom: 1px solid darken($color3, 4%);
+	padding: .5em .3em;
+	&:nth-child(even) {
+		background-color: $color3;
+	}
+	&:last-child{
+		border-bottom: 0;
+	}
+}
+
+.panel {
+	position: fixed;
+	width: 60%;
+	margin: 0;
+	z-index: 888;
+	background-color: $color3;
+	display: none;
+	overflow-y: auto;
+	max-height: 80%;
+	& .ajax-loader {
+		//padding: 0;
+	}
+	& .panel-head {
+		padding: .3em .4em;
+		color: $pre-black2;
+	}
+
+	& .panel-content {
+		padding: .7em 1.4em;
+		overflow-y: auto;
+		& .login-label {
+		padding: .2em 0;
+			& input[type="password"], & input[type="text"] {
+				display: block;
+				width: 100%;
+			}
+		}
+	}
+
+	& .panel-footer{
+		text-align: center;
+		color: $pre-black2;
+		margin-top: .4em;
+		padding: .4em .5em;
+	}
+}

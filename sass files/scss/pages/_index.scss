@@ -1,0 +1,96 @@
+.index-page {
+	& .sub-wrapper {
+		background-color: $white;
+	}
+
+	& .general-welcome {
+		padding: .4em;
+
+		& a {
+			color: $pre-black2;
+			text-decoration: underline;
+		}
+
+		& p {
+			padding: .4em .2em;
+		}
+	}
+
+	& .category-section{
+		padding: .4em;
+		margin-bottom: .5em;
+
+		& .category {
+			margin: .5em 0;
+			& .cat-heading {
+				background-color: $color3;
+				border-bottom: 2px solid darken($color3, 6%);
+				padding: 1em .4em;
+
+				& a:hover { text-decoration: none; }
+
+				& .trigger-fs { font-weight: bold; }
+
+				& p { 
+					padding: .4em 0;
+					color: $pre-black2;
+				}
+
+				& h2 { color: $pre-black; }
+			}
+		}
+	}
+
+	& .forums {
+		& .forum {
+			margin: .2em 0;
+			padding: .4em .3em;
+			border-bottom: 1px dashed darken($color3, 6%);
+			&:last-child { border: none; }
+			&:hover {
+				background-color: lighten($color3, 1%);
+			}
+
+			& > div:first-child{
+				& > span {
+					line-height: 1.4em;
+				}
+			}
+
+			& h2 {
+				color: lighten($pre-black2, 12%);
+				font-weight: 500;
+			}
+
+			& .label {
+				background-color: $color3;
+				color: $pre-black2;
+				& i, & span {
+					color: $pre-black2;
+				}
+				@extend .rad2;
+			}
+
+			& .forum-stats {
+				display: inline-block;
+			}
+		}
+	}
+
+	& .stats-board {
+		padding: 0.5em;
+		border-top : 5px solid $color4;
+		color: $pre-black;
+		h3{
+			display: inline-block;
+		}
+
+		& .records {
+			&>div {
+				background-color: $color3;
+				text-align: center;
+				padding: .4em .6em;
+			}
+		}
+	}
+}

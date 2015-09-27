@@ -1,0 +1,17 @@
+.search-page {
+
+
+	& .search-member, & .search-hint {
+		padding: .4em .3em;
+		color: $pre-black2;
+	}
+
+	& .search-modal {
+		padding: .4em .3em;
+		&:nth-child(odd){
+			background-color: $color3;
+		}
+	}
+
+}
+

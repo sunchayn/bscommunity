@@ -1,0 +1,45 @@
+.support-page {
+
+	& .ticket-wrapper {
+		&>div {
+			border-left: 1px solid transparent;
+			& > div {
+				padding: .4em .5em;
+			}
+		}
+
+		& .ticket {
+			color: $pre-black;
+			&:hover {
+				border-color: $color5;
+			}
+			&>div {
+				padding: .4em .5em;
+			}
+			&:nth-child(odd) {
+				background-color: $color3;
+			}
+
+			&.checked {
+				background-color: $warning;
+			}
+            
+            &.unread {
+				border-color: $succ;
+                &>div:nth-child(2):before{
+                    content: "* ";
+                    font-weight: semi-bold;
+					font-size: 1em;
+                    color: $succ;
+                }
+            }
+		}
+	}
+
+	& .ticket-core {
+		& .ticket-content {
+			background-color: $color3;
+			padding: .8em .4em;
+		}
+	}
+}

@@ -1,0 +1,33 @@
+.inventory-page {
+
+	& .inventory {
+		margin: .2em 0;
+		& .inventory-case {
+			&:nth-child(even) {
+				background-color: $color3;
+			}
+			padding: .3em .1em;
+			
+			& .case-img {
+				width: 100px;
+				height: 100px;
+				overflow: hidden;
+				background-color: darken($color3, 3%);
+			}
+			& .case-desc {
+				padding: .4em .6em;
+				& p {
+					color: lighten($pre-black2, 20%);
+					padding: .3em 0;
+					margin: 0;
+				}
+
+				& .gift-item {
+					color: $color5;
+				}
+			}
+		} 
+	}
+
+}
+

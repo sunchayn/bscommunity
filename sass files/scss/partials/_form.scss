@@ -1,0 +1,216 @@
+form { margin: 0px auto; }
+input {
+	color: $pre-black;
+	padding: 0.4em .5em;
+	border:1px solid darken($color3, 9%);
+	&:focus{
+		outline: none;
+		border-color: lighten($pre-black2, 40%);
+	}
+
+	&[type=radio],
+	&[type='checkbox'] {
+	  	display: none;
+	}
+	&[type='checkbox']+ label, &[type=radio] + label, &[type='checkbox'] + .anchorCheckLabel{
+	  	display: inline-block;
+		cursor: pointer;
+	}
+	&[type='checkbox'] + label:not(.anchorCheckLabel):before,
+	&[type='radio'] + label:before {
+		display: inline-block;
+		font-family: bloodstone;
+		-webkit-font-smoothing: antialiased;
+		@if $direction == ltr{padding-right: .3em;}@else{padding-left: .3em;}
+		vertical-align: middle;
+		color: lighten($pre-black2, 10%);
+	}
+	&[type=radio] + label:before {
+		content: "\e804";
+	}
+	&[type=radio]:checked + label:before {
+		content: "\e83f";
+		color: $pre-black;
+	}
+	&[type="checkbox"] + label:not(.anchorCheckLabel):before {
+		content: "\e842";
+	}
+	&[type="checkbox"]:checked + label:not(.anchorCheckLabel):before {
+		content: "\e809";
+		color: $pre-black;
+	}
+
+	&[type='checkbox']:checked + label.anchorCheckLabel {
+		color: nth($colors, 7);
+	}
+}
+
+textarea {
+	padding: 0.4em .5em;
+	resize: vertical;
+	border:1px solid darken($color3, 9%);
+	color: $pre-black;
+	&:focus{
+		outline: none;
+		border-color: lighten($pre-black2, 40%);
+	}
+}
+
+select {
+	&:focus{
+		outline: none;
+		border-color: lighten($pre-black2, 40%);
+	}
+}
+
+//placeholder color
+::-webkit-input-placeholder { color: darken($color3, 15%);}
+
+:-moz-placeholder {
+   color: darken($color3, 15%);
+   opacity: 1;
+}
+::-moz-placeholder {
+   color: darken($color3, 15%);
+   opacity: 1;
+}
+:-ms-input-placeholder {color: darken($color3, 15%);}
+//end - placeholder color
+
+
+label {
+	cursor: pointer;
+	color: inherit;
+}
+
+.anchorCheckLabel {
+	color: lighten($color5, 15%);
+}
+
+
+.inner-button-field {
+	border: 1px solid $color2;
+	padding: 1px;
+	background-color: $white;
+	& input.inner-field {
+		border: none;
+		color: $pre-black2;
+	}
+	
+	@for $i from 1 through 8 {
+	 &.focus-color-#{$i} {
+	  	&.focused {
+	 	   border-color: nth($colors,$i);
+		}
+	  }
+	}
+
+	& .btn {
+		@extend .margin;
+		padding: 0.4em .5em;
+	}
+}
+
+
+
+.field-with-icon {
+	border: 1px solid darken($color1,5%);
+	background-color: darken($color1,4%);
+	color: $pre-black2;
+	padding: .1em .4em;
+	display: inline-block;
+
+	& form {
+		display: inline-block;
+	}
+
+	& .field {
+		overflow: hidden;
+		display: inline-block;
+		vertical-align: middle;
+		& input {
+			border: none;
+			color: $pre-black2;
+			padding: .3em .4em;
+			background-color: darken($color1,4%);
+			display: inline-block;
+			width: 100%;
+		}
+	}
+
+	& .icon{
+		display: inline-block;
+		vertical-align: middle;
+		padding: .3em .4em;
+	}
+}
+
+.field-label {
+	padding: 2em 0;
+	& input {
+		margin-bottom: .1em;
+	}
+	& h5 , & h3, & h4{
+		color: lighten($pre-black2,20%);
+	}
+
+	& .label-desc {
+		color: lighten($pre-black2,30%);
+	}
+
+}
+
+.ajax-loader {
+	display:none;
+	& ul {
+		padding: .3em .4em;
+		& li {
+			color: $color5;
+		}
+	}
+
+	& span {
+		color: $succ;
+	}
+}
+
+
+.input-to-toggle-wrapper {
+	position: relative;
+	& .input-to-toggle {
+		display: none;
+		background-color: $white;
+		color: $pre-black2;
+		position: absolute;
+		top: 0;
+	    bottom: 0;
+	    left: 0;
+	    right: 0;
+	    margin: 0;
+	    z-index: 677;
+		& > div {
+			text-align: center;
+		}
+		& input {
+			border: none;
+			display: block;
+			width: 95%;
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			background-color: transparent;
+			padding: 0;
+		}
+
+		& a {
+			position: absolute;
+			@if $direction == ltr{right: 1em;}@else{left: 1em;}
+			top: 35%;
+		}
+	}
+}
+
+
+.error {
+	border-color: $color5 !important;
+}

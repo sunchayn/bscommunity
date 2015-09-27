@@ -1,0 +1,61 @@
+//$black: #212121;
+$black: #111;
+$white: #fff;
+// //BloodStone Color Palette
+$color1: #1C1C1C; //gray
+$color2: #262626; //little-bit-low-gray
+$color3: #f9f9f9; //pre-white
+$color4: #263545; // sort of blue 
+$color5: #C41C2D; // red
+$pre-black : #666;
+$pre-black2 : #565656;
+$blue: #197bce;
+//alert Color (Yellow ,Red and Green);
+$fail:#9C3034; //RED
+$succ:#00da91; //Green
+$warning:#ffc; //Yellow
+//########################
+//colors Array
+$colors : $color1 $color2 $color3 $color4 $color5 $fail $succ $warning;
+
+@function fitColor($color) {
+  @if (lightness($color) > 50) {
+    @return darken($color, 20%);
+  } @else {
+   // @return lighten($color, 30%);
+    @return lighten($color, 20%);
+  }
+}
+
+@for $i from 1 through 8 {
+  .color-#{$i} {
+    color: nth($colors,$i);
+  }
+}
+
+@for $i from 1 through 8 {
+  .bg-color-#{$i} {
+    background-color: nth($colors,$i);
+  }
+}
+
+@for $i from 1 through 8 {
+  .border-color-#{$i} {
+    border-color: nth($colors,$i);
+  }
+}
+
+.color-white {
+  color: $white;
+}
+
+/*
+.pieColor1 {background-color: #FF5A5E;}
+.pieColor2 {background-color: #46BFBD;}
+.pieColor3 {background-color: #F7464A;}
+.pieColor4 {background-color: #46BFBD;}
+*/
+.pieColor1 {background-color: #16a085;}
+.pieColor2 {background-color: #c0392b;}
+.pieColor3 {background-color: #9b59b6;}
+.pieColor4 {background-color: #95a5a6;}

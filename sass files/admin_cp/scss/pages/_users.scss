@@ -1,0 +1,9 @@
+.users-page {
+	.users-wrapper {
+		&>div {
+			&>div {
+				padding: .4em .5em;
+			}
+		}
+	}
+}

@@ -1,0 +1,20 @@
+.reply-page {
+	& .hint a{
+		display: block;
+		padding: .3em .5em;
+		background-color: lighten($color5, 10%);
+		color: $white;
+		text-align: center;
+		&:hover {
+			text-decoration: none;
+		}
+	}
+
+	& .the-reply {
+		& p {
+			padding: .3em .6em;
+			background-color: $color3;
+			color: $pre-black2;
+		}
+	}
+}
