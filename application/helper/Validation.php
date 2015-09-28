@@ -9,12 +9,26 @@
  */
 class Validation {
 
+    /**
+     * @param $string
+     * @return bool
+     */
     public static function isRestrictEntry($string)
     {
         //soon
         return false;
     }
 
+    /**
+     * @param $input
+     * @param int $length
+     * @return bool
+     */
+    public static function isShort($input, $length = 6)
+    {
+        $input = str_replace(' ', '', $input);
+        return !isset(strip_tags($input)[--$length]);
+    }
     /**
      * @param array $array
      * @return bool

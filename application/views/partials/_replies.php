@@ -16,12 +16,14 @@
     <div class="col-m col-10 reply-core">
         <div class="col-m col-12 a-left"><a href="reply/<?=$reply->id;?>">#<?=$x;?></a></div>
         <div class="col-m col-12 reply-content">
-            <span class="col-m col-1 reply-rate a-center">
-                <span><a class='icon-angle-up normalAJAX'  data-url="ajax/rateUpReply" data-content='id=<?=$reply->id;?>&token=<?=$global["token"];?>' href='#rateReply'></a></span>
-                <span><?=$reply->rate;?></span>
-                <span><a class='icon-angle-down normalAJAX'  data-url="ajax/rateDownReply" data-content='id=<?=$reply->id;?>&token=<?=$global["token"];?>' href='#rateReply'></a></span>
-            </span>
-            <p class="col-m col-11"><?=$reply->content;?></p>
+            <div class="col-m col-1 a-center reply-rate">
+                <span>
+                    <span><a class='icon-angle-up normalAJAX'  data-url="ajax/rateUpReply" data-content='id=<?=$reply->id;?>&token=<?=$global["token"];?>' href='#rateReply'></a></span>
+                    <span><?=$reply->rate;?></span>
+                    <span><a class='icon-angle-down normalAJAX'  data-url="ajax/rateDownReply" data-content='id=<?=$reply->id;?>&token=<?=$global["token"];?>' href='#rateReply'></a></span>
+                </span>
+            </div>
+            <div class="col-m col-11"><?=$reply->content;?></div>
         </div>
         <div class="col-m col-12 reply-footer">
             <span>

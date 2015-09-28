@@ -100,6 +100,26 @@ $(".sub-menu>a.checked").children(".toggle").toggleTwoClass("icon-angle-down", "
             });
         });
     });
+    //edit forum
+    $('.edit-forum').on('click',function(e){
+        e.preventDefault();
+        var target = $(this),
+            content = target.data('content');
+        target.ajaxRequest({url : 'ajax/getForum', data : content}, function(response){
+            $panel = $('#edit-forum');
+            if (response['done'])
+            {
+                var forum = response['done'];
+                $panel.find('#title').val(forum.title);
+                $panel.find('#logo').val(forum.logo);
+                $panel.find('#desc').val(forum.desc);
+                $panel.find('#cat_id').val(forum.cat_id);
+                $panel.find('#id').val(forum.id);
+            }
+            else
+                $panel.find('.cat-fields').html(response['error']);
+        });
+    });
     //delete category
     $('.delete-forum').on('click',function(e){
         e.preventDefault();

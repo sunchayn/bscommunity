@@ -6,11 +6,16 @@
             xhr.abort();
         isProcessing = true;
     });
-    $(document).ajaxComplete(function() { isProcessing = false; });
+    $(document).ajaxComplete(function(e) {  isProcessing = false; });
     //form submitter
     $('.formSubmit').on("click",function(e){
         e.preventDefault();
         $(this).closest('form').submit();
+    });
+    //setup ajax
+    $(document).ajaxError(function(e, x) {
+        if (x.status == 500)
+            $('.result-modal').removeClass('succ').addClass('fail').html('<p> sorry there\'s an Internel Server Error 500 </p>').fadeIn(400).delay(3000).fadeOut(400);
     });
     $('form.ajax').ajaxSubmit();
     $('form.ajaxModal').ajaxSubmitWithModal();

@@ -50,7 +50,7 @@ class thanksAPI extends databaseAPI
     public function getThanksForThread($thread)
     {
         $join = "INNER JOIN users ON thanks.`thank_user` = users.`id`";
-        return parent::selectData('thanks.*, users.username', [ ['thread_id', '=', $thread] ], [$this->_table, $join]);
+        return parent::selectData('thanks.*, users.username, users.level', [ ['thread_id', '=', $thread] ], [$this->_table, $join]);
     }
 
     /**

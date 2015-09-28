@@ -145,14 +145,14 @@ class repliesAPI extends databaseAPI{
         if (!threadsAPI::getInstance()->isExist(($data['thread_id'])))
             $errors['thread'][] =  Controller::$language->invokeOutput("no-thread");
         //if short content
-        if (!isset(strip_tags($data['content'])[6]))
+        if (Validation::isShort($data['content']))
             $errors['content'][] =  Controller::$language->invokeOutput("content1");
         // -- end check for errors
         //if an error has occurred return the error array
         if (!empty($errors))
             return $errors;
         //format the content
-        $data['content'] = trim($data['content']);
+        $data['content'] = HTML::clean($data['content']);
         //add the reply
         $add = parent::insertData($this->_table, $fieldsArray, array_values($data));
         //update the author posts count
@@ -248,9 +248,9 @@ class repliesAPI extends databaseAPI{
         if (isset($data['content']) && trim($data['content']) != $getReply->content)
         {
             //if short content
-            if (!isset(strip_tags($data['content'])[6]))
+            if (Validation::isShort($data['content']))
                 $errors['content'][] = Controller::$language->invokeOutput("content1");
-            $values['content'] = trim($data['content']);
+            $values['content'] = HTML::clean(trim($data['content']));
         }
         //if there's no changes
         if (empty($values))

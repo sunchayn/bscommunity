@@ -427,6 +427,9 @@
             },
             error: function(){
                 $('.result-modal').addClass('fail').html('<p>error 0x0001</p>').fadeIn(400).delay(3000).fadeOut(400);
+            },
+            fail : function(){
+            	$('.result-modal').addClass('fail').html('<p> server return an error, check the console </p>').fadeIn(400).delay(3000).fadeOut(400);
             }
         });
 	}

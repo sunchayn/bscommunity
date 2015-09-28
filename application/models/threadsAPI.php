@@ -224,16 +224,16 @@ class threadsAPI extends databaseAPI{
         $errors = [];
         // -- check for errors
         //if short title
-        if (mb_strlen($data['title'], 'UTF-8') < 6)
+        if (Validation::isShort($data['title']))
             $errors['title'][] =  Controller::$language->invokeOutput("title1");
         //if title have disallowed words
         if (Validation::isRestrictEntry($data['title'], Controller::$db))
             $errors['title'][] =  Controller::$language->invokeOutput("title2");
-        $data['content'] = renderOutput(htmlspecialchars_decode($data['content']));
+        $data['content'] = HTML::clean($data['content']);
         //if short content
-        if (mb_strlen(strip_tags($data['content']), 'UTF-8') < 6)
+        if (Validation::isShort($data['content']))
             $errors['content'][] =  Controller::$language->invokeOutput("content1");
-        if (mb_strlen($data['keywords'], 'UTF-8') != 0)
+        if (isset($data['keywords'][1]))
         {
             if (!preg_match('/^([A-z\s\d,])+$/', $data['keywords']))
                 $errors['keywords'][] =  Controller::$language->invokeOutput("keywords");
@@ -241,7 +241,8 @@ class threadsAPI extends databaseAPI{
         }
         // -- end check for errors
         //if an error has occurred return
-        if (!empty($errors))return $errors;
+        if (!empty($errors))
+            return $errors;
         //check if the user doesn't exceed the limit
         $getLimitThreads = variablesAPI::getInstance()->getVariableValue('limit', 'threads');
         if ($this->getAuthorThreadsToday($data['author_id'], $data['forum_id']) >= $getLimitThreads)
@@ -318,18 +319,19 @@ class threadsAPI extends databaseAPI{
         if (isset($data['title']) && $data['title'] != $getThread->title)
         {
             //if short title
-            if (!isset($data['title'][6]))
+            if (Validation::isShort($data['title']))
                 $errors['title'][] = Controller::$language->invokeOutput("title1");
             //if title have disallowed words
             if (Validation::isRestrictEntry($data['title'], Controller::$db))
                 $errors['title'][] = Controller::$language->invokeOutput("title2");
             $values['title'] = $data['title'];
         }
+
         if (isset($data['content']) && $data['content'] != $getThread->content)
         {
-            $data['content'] = renderOutput(htmlspecialchars_decode($data['content']));
+            $data['content'] = HTML::clean($data['content']);
             //if short content
-            if (!isset(strip_tags($data['content'])[6]))
+            if (Validation::isShort($data['content']))
                 $errors['content'][] = Controller::$language->invokeOutput("content1");
             $values['content'] = $data['content'];
         }

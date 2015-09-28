@@ -98,7 +98,7 @@
                                         <h4>
                                             <a href="profile/<?=$thank->thank_user;?>"><?=$thank->username;?></a>
                                         </h4>
-                                        <small>senior member</small>
+                                        <small><?=language::invokeOutput('frequent/level').' '.$thank->level;?></small>
                                     </div>
                                 <?php } ?>
                             </div>
