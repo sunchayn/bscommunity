@@ -146,7 +146,7 @@
                         if (!empty($data['main']))
                         {
                             echo "<div class='col-m col-12 top-topic side-padding'>
-                                <a href='forum/{$data['main'][0]->id}'>{$data['main'][0]->title}</a><small>(<strong>{$data['main'][0]->cnt}</strong> " . Language::invokeOutput('frequent/threads') . ")</small>
+                                <bdo dir=".DIRECTION_CODE."><a href='forum/{$data['main'][0]->id}'>{$data['main'][0]->title}</a><small>(" . Language::invokeOutput('frequent/threads') . " : <strong>{$data['main'][0]->cnt}</strong>)</small></bdo>
                               </div>";
                         }else{
                             echo '<span class="no-data">' . Language::invokeOutput('frequent/no-threads') . '</span>';

@@ -261,7 +261,7 @@
 			padding : .4em .6em;
 			& a {
 				padding: .4em .5em;
-				border-left: 2px solid $color5;
+				@if $direction == ltr{border-left: 2px solid $color5;}@else{border-right: 2px solid $color5;}
 			}
 		}
 
