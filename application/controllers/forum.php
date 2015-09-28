@@ -33,7 +33,7 @@ class forum extends Controller{
                 $data['page-title'] = self::$GLOBAL['site_name'];
                 //set the order preference
                 if (isset($_GET['order']))
-                    Order::setOrder(null, false);
+                    Order::setOrder(false);
                 //get the order type
                 $gedOrderType = Order::getOrder(false, false);
                 //check the order selected type's anchor

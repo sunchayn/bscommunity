@@ -43,15 +43,13 @@
                     if (isset_get( $forum, 'noThreads' ) === true){
                         echo '<div class="no-data">' . Language::invokeOutput('no-threads') .'</div>';
                     } else { ?>
-                        <img src="<?=$forum->lastThreadAuthor->profile_picture;?>" alt="user icon" class="last-topic v-col hide-sm img img-circel" height="50" width="50">
+                        <img src="<?=$forum->LastThread->profile_picture;?>" alt="user icon" class="last-topic v-col hide-sm img img-circel" height="50" width="50">
                         <p class="v-col">
-                            <a href="thread/<?=$forum->lastThreadID;?>">
-                                <small><?=$forum->lastThreadTitle;?></small>
+                            <a href="thread/<?=$forum->LastThread->id;?>">
+                                <small><?=$forum->LastThread->title;?></small>
                             </a>
                             <br/>
-                            <small>
-                               <?=language::invokeOutput('frequent/by');?> <a href="profile/<?=$forum->lastThreadAuthorID;?>"><?=$forum->lastThreadAuthor->username;?></a>
-                            </small>
+                            <small><?=language::invokeOutput('frequent/by');?> <a href="profile/<?=$forum->LastThread->UID;?>"><?=$forum->LastThread->username;?></a></small>
                         </p>
                         <div class="clear"></div>
                     <?php } ?>

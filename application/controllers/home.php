@@ -58,14 +58,8 @@ class Home extends Controller
                     {
                         //get the number of threads
                         $forum->threadsCount = $getForumThreads->cID;
-                        //get last thread ID
-                        $forum->lastThreadID = $getForumThreads->id;
-                        //get last thread title
-                        $forum->lastThreadTitle = $getForumThreads->title;
-                        //get last thread author iD
-                        $forum->lastThreadAuthorID = $getForumThreads->author_id;
-                        //fetch author by his ID
-                        $forum->lastThreadAuthor = usersAPI::getInstance()->getUserById($getForumThreads->author_id, 'username, profile_picture')[0];
+                        //get last thread
+                        $forum->LastThread = threadsAPI::getInstance()->getLastThreads('threads.`id`, threads.`title`, users.`profile_picture`,users.`username`,users.`id` as UID',[ ['forum_id','=',$forum->id]],1,true)[0];
                     }else{
                         //if no threads has found in this forum
                         $forum->noThreads = true;

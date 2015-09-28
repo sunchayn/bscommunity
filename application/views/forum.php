@@ -37,9 +37,6 @@
                         <a href="forum/<?=$data['forum']->id;?>/?order=active" <?=isset_get($data, 'active', '');?>>
                             <?=Language::invokeOutput('order/active');?>
                         </a> -
-                        <a href="forum/<?=$data['forum']->id;?>/?order=rate" <?=isset_get($data, 'rate', '');?>>
-                            <?=Language::invokeOutput('order/rate');?>
-                        </a> -
                         <a href="forum/<?=$data['forum']->id;?>/?order=popular" <?=isset_get($data, 'popular', '');?>>
                             <?=Language::invokeOutput('order/popular');?>
                         </a>
