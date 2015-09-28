@@ -215,9 +215,9 @@
 			&>div {
 				text-align: center;
 				line-height: 2em;
-				border-left: 1px solid darken($color3, 5%);
+				@if $direction == ltr{border-left: 1px solid darken($color3, 5%);}@else{border-right: 1px solid darken($color3, 5%);}
 				&:first-child {
-					border-left: 0;
+					@if $direction == ltr{border-left: 0;}@else{border-right: 0;}
 				}
 				& span {
 					color: lighten($pre-black, 5%);
