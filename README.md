@@ -11,4 +11,4 @@ go to __your_domain/install
 PHP 5.5
 
 ### DEMO
-http://bloodstone.esy.es/
+http://bscmm.com/demo/
