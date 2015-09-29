@@ -7,9 +7,75 @@ $bold: 600;
 // Font
 $base-font-family: tahoma,arial;
 $base-font-weight: $regular;
-$base-font-size: 13px;
+$base-font-size: 14px;
+$md-font-size: 13px;
+$sm-font-size: 12px;
 $base-line-height: normal;
-$smallestFontSize: 10px;
-$biggestFontSize: 16px;
+$sm-line-height: 2em;
+$md-line-height: 1.5em;
 // Headings
 $header-font-weight: $bold;
+$header-sm-font-weight: $regular;
+//scale font
+$breakpoints: (
+  small : 480px,
+  medium: 924px,
+  large : 1024px
+);
+$h1-font-sizes: (
+  null  : 2em,
+  large  : 2em,
+  medium : 1.75em,
+  small : 1.5em,
+);
+$h2-font-sizes: (
+  null  : 1.5em,
+  large  : 1.5em,
+  medium : 1.25em,
+  small : 1.17em,
+);
+$h3-font-sizes: (
+  null  : 1.17em,
+  large  : 1.17em,
+  medium : 1.10em,
+  small : 1em,
+);
+$h4-font-sizes: (
+  null  : 1em,
+  large  : 1em,
+  medium : .92em,
+  small : .83em,
+);
+$h5-font-sizes: (
+  null  : .83em,
+  large  : .83em,
+  medium : .72em,
+  small : .67em,
+);
+$h6-font-sizes: (
+  null  : .67em,
+  large  : .67em,
+  medium : .60em,
+  small : .55em,
+);
+$p-font-sizes: (
+  null  : $base-font-size,
+  large  : $base-font-size,
+  medium : $md-font-size,
+  small : $sm-font-size,
+);
+
+//
+p, ul, ol,span { @include font-size($p-font-sizes); }
+
+h1 { @include font-size($h1-font-sizes); }
+
+h2 { @include font-size($h2-font-sizes); }
+
+h3 { @include font-size($h3-font-sizes); }
+
+h4 { @include font-size($h4-font-sizes); }
+
+h5 { @include font-size($h5-font-sizes); }
+
+h6 { @include font-size($h6-font-sizes); }

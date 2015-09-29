@@ -155,7 +155,6 @@ class ajax extends Controller
         {
             echo json_encode(['displayError' => self::$language->invokeOutput('frequent/badRequest')]);
         }else{
-            unset($_POST['token']);
             $updateReply = repliesAPI::getInstance()->updateReply($_POST);
             if (is_string($updateReply) )
             {

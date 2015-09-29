@@ -29,10 +29,7 @@ header .top-nav{
 	& .input-to-toggle {
 		background-color: $color1;
 		//placeholder color
-		::-webkit-input-placeholder { color: darken($pre-black, 9%);}
-		:-moz-placeholder { color: darken($pre-black, 9%); opacity: 1; }
-		::-moz-placeholder { color: darken($pre-black, 9%); opacity: 1; }
-		:-ms-input-placeholder {color: darken($pre-black, 9%);}
+		@extend .placeholder;
 		//end - placeholder color
 		padding: .2em .4em;
 	}
@@ -72,13 +69,12 @@ header .top-nav{
 		display: block;
 		width: 80%;
 		margin: .2em auto;
+		//placeholder color
+		@extend .placeholder;
 		form {
 			display: block;
-			& span {
-				@extend .f-left;
-				&.field {
-					width: 90%;
-				}
+			& .field {
+				width: 80%;
 			}
 		}
 	}

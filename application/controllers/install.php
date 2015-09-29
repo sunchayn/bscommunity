@@ -443,7 +443,7 @@ class install extends Controller
                       `webmaster_email` varchar(255) NOT NULL,
                       `logo_url` varchar(255) NOT NULL,
                       `favicon_url` varchar(255) NOT NULL,
-                      `is_close` int(1) NOT NULL,
+                      `is_close` int(1) NOT NULL '0',
                       `close_msg` text NOT NULL,
                       `social` varchar(255) DEFAULT NULL,
                       `site_tag` varchar(255) NOT NULL,

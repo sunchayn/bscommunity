@@ -23,6 +23,9 @@ class Paginator extends databaseAPI{
         $this->setDataBase($db);
     }
 
+    /**
+     * @param $table
+     */
     public function setPagesLimit($table)
     {
         if (is_array($table))
@@ -45,6 +48,15 @@ class Paginator extends databaseAPI{
         if (self::$per_page == 0) self::$per_page = 10;
     }
 
+    /**
+     * @param $table
+     * @param $url
+     * @param string $rows
+     * @param null $where
+     * @param string $order
+     * @param string $param
+     * @return $this
+     */
     public function getData($table, $url, $rows = "*", $where = null, $order = 'order by id desc', $param = '?')
     {
         $this->setPagesLimit($table);
@@ -62,11 +74,17 @@ class Paginator extends databaseAPI{
         return $this;
     }
 
+    /**
+     * @return bool
+     */
     public function isBadPage()
     {
         return $this->_page > $this->_pages;
     }
 
+    /**
+     * @return string
+     */
     public function renderPages()
     {
         $reverse = (DIRECTION == 'left') ? 'right' : 'left';
@@ -130,6 +148,9 @@ class Paginator extends databaseAPI{
         return $links;
     }
 
+    /**
+     * @return string
+     */
     public function getInboxPages()
     {
         Controller::$language->load('paginator');
@@ -158,6 +179,9 @@ class Paginator extends databaseAPI{
 
     }
 
+    /**
+     * @return string
+     */
     public function getSelectLinks()
     {
         Controller::$language->load('paginator');
@@ -171,6 +195,9 @@ class Paginator extends databaseAPI{
         return $links;
     }
 
+    /**
+     * @return string
+     */
     public function getInboxSelectPages()
     {
         Controller::$language->load('paginator');

@@ -29,33 +29,50 @@ class attemptAPI extends databaseAPI{
         $this->setDataBase($db);
     }
 
+    /**
+     * @param $id
+     * @return bool
+     */
     public function createAttempt($id)
     {
        return parent::insertData($this->_table, ['user_id'], [$id]);
     }
 
-
+    /**
+     * @param $id
+     * @return mixed
+     */
     public function getAttempts($id)
     {
         $whereInject = "DATE_ADD(attempts.time, INTERVAL 5 MINUTE) > now()";
         return parent::selectData('count(*) as cnt', [ ['user_id', '=', $id], $whereInject], $this->_table);
     }
 
+    /**
+     * @param $id
+     * @return bool
+     */
     public function checkAttempts($id)
     {
         return ($this->countAttempts($id) > 5) ? false : true;
     }
 
+    /**
+     * @param $id
+     * @return int
+     */
     public function countAttempts($id)
     {
         $getAttempt = $this->getAttempts($id);
         if (empty($getAttempt)) return 0; else return $getAttempt[0]->cnt;
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
     public function clearAttempts($id)
     {
         return parent::deleteData($this->_table, ['field'=> 'user_id', 'value' => $id]);
     }
-
-
 }

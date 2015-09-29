@@ -5,7 +5,6 @@ class Controller {
     static $GLOBAL;
     static $language;
 
-
     /**
      * @param bool|true $newToken
      * @param bool|false $close
@@ -64,6 +63,11 @@ class Controller {
         }
     }
 
+    /**
+     * @param $object
+     * @param array $data
+     * @param array $reference
+     */
     public static function fillDataByReference($object, &$data = array(), $reference = array())
     {
         foreach ($object as $record)
@@ -76,9 +80,9 @@ class Controller {
     }
 
     /**
-     * Loads the wanted "model".
      * @param $model
-     * @return object models
+     * @param bool|false $returnInstance
+     * @return mixed
      */
     public function loadModel($model, $returnInstance = false)
     {

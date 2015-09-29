@@ -39,14 +39,14 @@
                             <p><?=Language::invokeOutput('footer/subscribe-desc');?></p>
                             <div class="col-m col-12 v-middle">
                                 <div class="col-12 v-col inner-button-field no-margin lettre-sub-field">
-                                    <input type="text" placeholder="<?=Language::invokeOutput('input-placeholder/email');?>" class="col-m col-8 inner-field" />
-                                    <a href="#soon" class="col-m col-4 btn btn-color2 a-center disabled"><?=Language::invokeOutput('footer/subscribe-btn');?></a>
+                                    <input type="text" placeholder="<?=Language::invokeOutput('input-placeholder/email');?>" class="f-left inner-field full-md" />
+                                    <a href="#soon" class="f-left btn btn-color2 a-center disabled full-md"><?=Language::invokeOutput('footer/subscribe-btn');?></a>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-m col-12 split-dashed show-sm"></div>
-                    <div class="col-m col-4">
+                    <div class="col-m col-3">
                         <h3><?=Language::invokeOutput('footer/helpSupport');?></h3>
                         <ul>
                             <li><i class="icon-angle-<?=DIRECTION;?>"></i>&nbsp;<a href="FAQ"><?=Language::invokeOutput('footer/help-menu/FAQ');?></a></li>
@@ -56,7 +56,7 @@
                         </ul>
                     </div>
                     <div class="col-m col-12 split-dashed show-sm"></div>
-                    <div class="col-m col-5">
+                    <div class="col-m col-6">
                         <h3><?=Language::invokeOutput('footer/about');?></h3>
                         <p><?=isset_get($global, 'site_desc');?></p>
                     </div>

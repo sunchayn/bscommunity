@@ -96,7 +96,6 @@ class accessAPI extends databaseAPI{
         return !empty(parent::selectData('id', [['name_ar', '=', $name]], $this->_table, null, ' LIMIT 1'));
     }
 
-
     /**
      * @param $access
      * @return bool

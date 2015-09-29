@@ -25,14 +25,18 @@ footer {
 
 			& .lettre-sub-field {
 				//placeholder color
-				::-webkit-input-placeholder { color: darken($pre-black, 9%);}
-				:-moz-placeholder { color: darken($pre-black, 9%); opacity: 1; }
-				::-moz-placeholder { color: darken($pre-black, 9%); opacity: 1; }
-				:-ms-input-placeholder {color: darken($pre-black, 9%);}
+				@extend .placeholder;
 				//end - placeholder color
 				background-color: rgba(0, 0, 0, .2);
 				& input[type="text"] {
 					background-color: transparent;
+					width: 70%;
+					//padding: 0.4em .5em;
+				}
+
+				& .btn {
+					width: 25%;
+					@if $direction == rtl {margin: 1px 5% 1px 0;} @else {margin: 1px 0 1px 5%;}
 				}
 			}
 		}

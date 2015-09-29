@@ -32,8 +32,9 @@ function rrmdir($dir) {
 }
 
 /** renderOutput()
- * remove javascript & css codes from a given string
+ * remove bad script from the string to prevent XSS1
  * @param $input
+ * @param bool|false $escape
  * @return mixed
  */
 function renderOutput($input, $escape = false)

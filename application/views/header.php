@@ -41,7 +41,7 @@
             ?>
         <div class="wide-zone grid-section">
             <div class="sub-wrapper">
-                <div class="col-m col-12"><h2 id="title"><?=isset_get($data, 'page-title');?></h2></div>
+                <div class="col-m col-12"><h1 id="title"><?=isset_get($data, 'page-title');?></h1></div>
             </div>
         </div>
     </header>

@@ -34,7 +34,7 @@
                                 <div class="col-m col-7">
                                     <div class="col-m col-12 input-to-toggle">
                                         <form action="ajax/updateSettings" method="POST" class="ajaxModal">
-                                            <input type="text" name="site_name" value="<?=isset_get($global, 'site_name');?>">
+                                            <input type="text" name="site_name" value="<?=isset_get($global, 'site_name', '');?>">
                                             <input type="hidden" name="token" value="<?=$global['token'];?>">
                                             <a class="icon-cancel toggle-back"></a>
                                         </form>
@@ -56,7 +56,7 @@
                                 <div class="col-m col-7">
                                     <div class="col-m col-12 input-to-toggle">
                                         <form action="ajax/updateSettings" method="POST" class="ajaxModal">
-                                            <input type="text" name="site_tag" value="<?=isset_get($global, 'site_tag');?>">
+                                            <input type="text" name="site_tag" value="<?=isset_get($global, 'site_tag', '');?>">
                                             <input type="hidden" name="token" value="<?=$global['token'];?>">
                                             <a class="icon-cancel toggle-back"></a>
                                         </form>
@@ -79,7 +79,7 @@
                                 <div class="col-m col-7">
                                     <div class="col-m col-12 input-to-toggle">
                                         <form action="ajax/updateSettings" method="POST" class="ajaxModal">
-                                            <input type="text" name="webmaster_email" value="<?=isset_get($global, 'webmaster_email');?>">
+                                            <input type="text" name="webmaster_email" value="<?=isset_get($global, 'webmaster_email', '');?>">
                                             <input type="hidden" name="token" value="<?=$global['token'];?>">
                                             <a class="icon-cancel toggle-back"></a>
                                         </form>
@@ -137,7 +137,7 @@
                                 <div class="col-m col-7">
                                     <div class="col-m col-12 input-to-toggle">
                                         <form action="ajax/updateSettings" method="POST" class="ajaxModal">
-                                            <input type="text" name="site_keywords" value="<?=isset_get($global, 'site_keywords');?>">
+                                            <input type="text" name="site_keywords" value="<?=isset_get($global, 'site_keywords', '');?>">
                                             <input type="hidden" name="token" value="<?=$global['token'];?>">
                                             <a class="icon-cancel toggle-back"></a>
                                         </form>
@@ -160,7 +160,7 @@
                                 <div class="col-m col-7">
                                     <div class="col-m col-12 input-to-toggle">
                                         <form action="ajax/updateSettings" method="POST" class="ajaxModal">
-                                            <input type="text" name="logo_url" value="<?=isset_get($global, 'logo_url');?>">
+                                            <input type="text" name="logo_url" value="<?=isset_get($global, 'logo_url', '');?>">
                                             <input type="hidden" name="token" value="<?=$global['token'];?>">
                                             <a class="icon-cancel toggle-back"></a>
                                         </form>
@@ -183,7 +183,7 @@
                                 <div class="col-m col-7">
                                     <div class="col-m col-12 input-to-toggle">
                                         <form action="ajax/updateSettings" method="POST" class="ajaxModal">
-                                            <input type="text" name="favicon_url" value="<?=isset_get($global, 'favicon_url');?>">
+                                            <input type="text" name="favicon_url" value="<?=isset_get($global, 'favicon_url', '');?>">
                                             <input type="hidden" name="token" value="<?=$global['token'];?>">
                                             <a class="icon-cancel toggle-back"></a>
                                         </form>
@@ -226,7 +226,7 @@
                                 <div class="col-m col-7">
                                     <div class="col-m col-12 input-to-toggle">
                                         <form action="ajax/updateSettings" method="POST" class="ajaxModal">
-                                            <input type="text" name="close_msg" value="<?=isset_get($global, 'close_msg');?>">
+                                            <input type="text" name="close_msg" value="<?=isset_get($global, 'close_msg', '');?>">
                                             <input type="hidden" name="token" value="<?=$global['token'];?>">
                                             <a class="icon-cancel toggle-back"></a>
                                         </form>

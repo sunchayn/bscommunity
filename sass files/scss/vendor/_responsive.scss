@@ -24,6 +24,10 @@
 	@if $direction == ltr{margin: 0 0 0 1.6%;}@else{margin: 0 1.6% 0 0;}
 }
 
+.margin2 {
+	@if $direction == ltr{margin: 0 0 0 1%;}@else{margin: 0 1% 0 0;}
+}
+
 .col:first-child, .col-m:first-child { @if $direction == ltr{margin-left: 0}@else{margin-right: 0} } 
 
 .col-m.col-12:first-child {

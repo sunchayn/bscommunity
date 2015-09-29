@@ -1,138 +1,176 @@
-<div class="page account-page">
-    <div class="area sub-wrapper">
-        <div class="grid-section">
+<div class="page profile profile-general-page">
+    <div class="sub-wrapper area">
+        <div class="grid-section sub-wrapper">
+            <?php
+                include_once('_header.php');
+            ?>
             <div class="col-m col-12">
-                <?php include_once '_side.php'; ?>
-                <div class="col-m col-9 content">
-                    <!-- general settings -->
-                    <div class="col-m col-12 content-heading">
-                        <h2><?=Language::invokeOutput('heading/general');?></h2>
-                        <p class="section-desc"><?=Language::invokeOutput('desc/general');?></p>
+                <h3><?=Language::invokeOutput('captions/general');?></h3>
+            </div>
+            <div class="col-m col-12">
+                <div class="col-m col-12 user-stats resp-margin">
+                    <div class="col-m col-3">
+                        <h3><?=Language::invokeOutput('stats/threads');?></h3>
+                        <span><?=isset_get($data['stats'], 'threads');?></span>
                     </div>
-                    <div class="col-m col-12 content-body">
-                        <!-- one label -->
-                        <div class="col-m col-12 field-label input-to-toggle-wrapper">
-                            <div class="col-m col-4">
-                                <h5><?=Language::invokeOutput('labels/name');?></h5>
-                                <small class="label-desc">
-                                   <?=Language::invokeOutput('label-desc/name');?>
-                                </small>
-                            </div>
-                            <div class="col-m col-7">
-                                <div class="col-m col-12 input-to-toggle">
-                                    <form action="ajax/updateUser" method="POST" class="ajaxModal">
-                                        <input type="text" name ="fullName" value="<?=isset_get($data['user'], 'first_name', '') . ' ' . isset_get($data['user'], 'last_name', '');?>">
-                                        <input type="hidden" name="token" value="<?=$global['token'];?>">
-                                        <a class="icon-cancel toggle-back"></a>
-                                    </form>
-                                </div>
-                                <?=isset_get($data['user'], 'first_name') . ' ' . isset_get($data['user'], 'last_name');?>
-                            </div>
-                            <div class="col-m col-1">
-                                <a href="#" class="toggle-input"><?=Language::invokeOutput('edit-label');?></a>
-                            </div>
-                        </div>
-                        <div class="col-m col-12 split"></div>
-                        <!-- end - one label -->
-                        <!-- ########## -->
-                        <!-- one label -->
-                        <div class="col-m col-12 field-label input-to-toggle-wrapper">
-                            <div class="col-m col-4">
-                                <h5><?=Language::invokeOutput('labels/birthday');?></h5>
-                                <small class="label-desc"><?=Language::invokeOutput('label-desc/birthday');?></small>
-                            </div>
-                            <div class="col-m col-7">
-                                <?=isset_get($data['user'], 'birthday');?>
-                            </div>
-                            <div class="col-m col-1">
-                                <a href="#" class="disabled"><?=Language::invokeOutput('edit-label');?></a>
-                            </div>
-                        </div>
-                        <div class="col-m col-12 split"></div>
-                        <!-- end - one label -->
-                        <!-- ########## -->
-                        <!-- one label -->
-                        <div class="col-m col-12 field-label input-to-toggle-wrapper">
-                            <div class="col-m col-4">
-                                <h5><?=Language::invokeOutput('labels/country');?></h5>
-                                <small class="label-desc"><?=Language::invokeOutput('label-desc/country');?></small>
-                            </div>
-                            <div class="col-m col-7">
-                                <div class="col-m col-12 input-to-toggle">
-                                    <form action="ajax/updateUser" method="POST" class="ajaxModal">
-                                        <input type="text" name ="country" value="<?=isset_get($data['user'], 'country', '');?>">
-                                        <input type="hidden" name="token" value="<?=$global['token'];?>">
-                                        <a class="icon-cancel toggle-back"></a>
-                                    </form>
-                                </div>
-                                <?=isset_get($data['user'], 'country');?>
-                            </div>
-                            <div class="col-m col-1">
-                                <a href="#" class="toggle-input"><?=Language::invokeOutput('edit-label');?></a>
-                            </div>
-                        </div>
-                        <div class="col-m col-12 split"></div>
-                        <!-- end - one label -->
-                        <!-- ########## -->
-                        <!-- one label -->
-                        <div class="col-m col-12 field-label input-to-toggle-wrapper">
-                            <div class="col-m col-4">
-                                <h5><?=Language::invokeOutput('labels/gender');?></h5>
-                                <small class="label-desc"><?=Language::invokeOutput('label-desc/gender');?></small>
-                            </div>
-                            <div class="col-m col-7">
-                               <?=usersAPI::getGender(isset_get($data['user'], 'sexe'));?>
-                            </div>
-                            <div class="col-m col-1">
-                                <a href="#" class="disabled"><?=Language::invokeOutput('edit-label');?></a>
-                            </div>
-                        </div>
-                        <div class="col-m col-12 split"></div>
-                        <!-- end - one label -->
-                        <div class="col-m col-12 field-label input-to-toggle-wrapper">
-                            <div class="col-m col-4">
-                                <h5><?=Language::invokeOutput('labels/picture');?></h5>
-                                <small class="label-desc"><?=Language::invokeOutput('label-desc/picture');?></small>
-                            </div>
-                            <div class="col-m col-7 box">
-                                <img src="<?=isset_get($data['user'], 'profile_picture', 'notfound');?>" alt="current-profile-picture" height="100" width="100" class="prof-pic triggerPanel" data-panel="picture-change">
-                            </div>
-                            <div>&nbsp;</div>
-                        </div>
-                        <!-- end - profile-picture -->
-                        <!-- ########## -->
-                        <div class="overlay hide-sm"></div>
-                        <div class="panel profile-picture" id="picture-change">
-                            <div class="panel-head">
-                                <a href="#" class="icon-cancel cancel f-right"></a>
-                            </div>
-                            <div class="panel-content grid-section">
-                                <div class="col-m col-12">
-                                    <h2 class="content-heading"><?=Language::invokeOutput('profile-picture/heading');?></h2>
-                                    <p class="section-desc"><?=Language::invokeOutput('profile-picture/desc');?></p>
-                                </div>
-                                <form action="ajax/updateUserPicture" method="POST" class="ajax noScroll">
-                                    <div class="col-m col-12 ajax-loader"></div>
-                                    <div class="col-m col-12 login-label">
-                                        <div class="col-m col-12 box">
-                                            <h4><?=Language::invokeOutput('profile-picture/label');?></h4>
-                                        </div>
-                                        <div class="col-m col-12">
-                                            <input type="text" name="profile_picture" value="<?=isset_get($data['user'], 'profile_picture', '');?>" class="rad2" tabindex="1"/>
-                                            <input type="hidden" name="token" value="<?=$global['token'];?>" />
-                                            <small><?=Language::invokeOutput('profile-picture/update');?></small>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                        <!-- ########## -->
-                        <!-- profile-picture -->
+                    <div class="col-m col-3">
+                        <h3><?=Language::invokeOutput('stats/replies');?></h3>
+                        <span><?=isset_get($data['stats'], 'replies', '');?></span>
                     </div>
-                    <!-- end - general settings -->
-                    <!-- ########## -->
+                    <div class="col-m col-3">
+                        <h3><?=Language::invokeOutput('stats/level');?></h3>
+                        <span><?=isset_get($data['user'], 'level');?></span>
+                    </div>
+                    <div class="col-m col-3">
+                        <h3><?=Language::invokeOutput('stats/thanked');?></h3>
+                        <span><?=isset_get($data['stats'], 'thanked');?></span>
+                    </div>
+                </div>
+                <div class="col-m col-12 user-stats resp-margin">
+                    <div class="col-m col-3">
+                        <h3><?=Language::invokeOutput('stats/country');?></h3>
+                        <span><?=isset_get($data['user'], 'country');?></span>
+                    </div>
+                    <div class="col-m col-3">
+                        <h3><?=Language::invokeOutput('stats/sexe');?></h3>
+                        <span><?=usersAPI::getGender(isset_get($data['user'], 'sexe'))?></span>
+                    </div>
+                    <div class="col-m col-3">
+                        <h3><?=Language::invokeOutput('stats/age');?></h3>
+                        <span><?=usersAPI::getAge(isset_get($data['user'], 'birthday'));?></span>
+                    </div>
+                    <div class="col-m col-3">
+                        <h3><?=Language::invokeOutput('stats/id');?></h3>
+                        <span>#<?=isset_get($data['user'], 'id', '');?></span>
+                    </div>
                 </div>
             </div>
+            <div class="col-m col-12">
+                <small>
+                    <?=isset_get($data['user'], 'username');?>, <?=Language::invokeOutput('date/1') . isset_get($data['user'], 'create_date', '') . ' ('. usersAPI::getDays(isset_get($data['user'], 'create_date')) . ' ' . Language::invokeOutput('frequent/days') .')';?> .
+                </small>
+            </div>
+            <div class="col-m col-12 split"></div>
+            <!-- # last threads # !-->
+            <div class="col-m col-12">
+                <h3><?=Language::invokeOutput('captions/threads');?></h3>
+            </div>
+            <?php
+                if ($data['stats']['threads'] == 0)
+                {
+                    echo "<div class='col-m col-12 no-data'>" . Language::invokeOutput('no-threads') . "</div>";
+                }else{
+                    foreach($data['threads'] as $thread)
+                    {
+                    ?>
+                        <div class="col-m col-12 user-last-thread">
+                            <div class="col-m col-12 thread-heading">
+                                <h2><a href="thread/<?=$thread->id;?>"><?=$thread->title;?></a></h2>
+                            </div>
+                            <div class="col-m col-12 thread-body">
+                                <p>
+                                    <?=mb_substr(strip_tags($thread->content), 0, 100, 'UTF-8') . '... ';?>
+                                    <small>
+                                        <a href="thread/<?=$thread->id;?>">
+                                            <?=Language::invokeOutput('see-more/full-threads') ;?>
+                                        </a>
+                                    </small>
+                                </p>
+                                <small><?=Language::invokeOutput('date/0') . $thread->create;?> .</small>
+                            </div>
+                        </div>
+                <?php } ?>
+                <div class="col-m col-12 see-all">
+                    <a href="profile/threads/<?=isset_get($data['user'], 'id');?>">
+                        <?=Language::invokeOutput('see-more/threads') . ' ( '.  isset_get($data['stats'], 'threads') . ' )';?>
+                    </a>
+                </div>
+            <?php } ?>
+            <!-- #end last threads # !-->
+            <div class="col-m col-12 split"></div>
+            <!-- # about user # !-->
+            <div class="col-m col-12">
+                <h3><?=Language::invokeOutput('captions/about');?></h3>
+            </div>
+            <div class="col-m col-12 about-user">
+                <p>
+                    <?=isset_get($data['user'], 'about');?>
+                </p>
+            </div>
+            <!-- # end- about user # !-->
+            <!-- # ~~~~~~~~ # !-->
+            <div class="col-m col-12 split"></div>
+            <!-- # user education# !-->
+            <div class="col-m col-12">
+                <h3><?=Language::invokeOutput('captions/education');?></h3>
+            </div>
+            <?php
+            if (empty($data['education']))
+            {
+                echo "<div class='col-m col-12 no-data'>" . Language::invokeOutput('no-education') . "</div>";
+            }else{
+                foreach($data['education'] as $title)
+                {
+                    $years = $title->years[1] - $title->years[0];
+            ?>
+                    <div class="col-m col-12 education">
+                        <!-- # one-title # !-->
+                        <div class="col-m col-12 one-title">
+                            <h3><?=$title->title;?></h3>
+                            <h4><?=$title->department;?></h4>
+                            <h5>
+                                <?=$title->years[0] . ' - ' . $title->years[1] . ' ( ' . $years . ' ' . Language::invokeOutput('frequent/years') .' )';?>
+                            </h5>
+                        </div>
+                        <!-- # end one-title # !-->
+                    </div>
+            <?php
+                }
+            }
+            ?>
+            <!-- # end- user education# !-->
+            <!-- # ~~~~~~~~ # !-->
+            <div class="col-m col-12 split"></div>
+            <!-- # user skills# !-->
+            <div class="col-m col-12">
+                <h3><?=Language::invokeOutput('captions/skills');?></h3>
+            </div>
+            <?php
+            if (empty($data['skills']))
+            {
+                echo "<div class='col-m col-12 no-data'>" . Language::invokeOutput('no-skills') . "</div>";
+            }else{
+                echo "<div class='col-m col-12 skills'>";
+                foreach($data['skills'] as $skill)
+                    echo '<span>' . $skill->label . '</span>';
+                echo "</div>";
+            }
+            ?>
+            <!-- # end- user skills# !-->
+            <!-- # ~~~~~~~~ # !-->
+            <div class="col-m col-12 split"></div>
+            <!-- # user interest# !-->
+            <div class="col-m col-12">
+                <h3><?=Language::invokeOutput('captions/interests');?></h3>
+            </div>
+            <?php
+            if (empty($data['interests']))
+            {
+                echo "<div class='col-m col-12 no-data'>" . Language::invokeOutput('no-interests') . "</div>";
+            }else{
+                echo "<div class='col-m col-12 interests'>";
+                foreach($data['interests'] as $interest)
+                    echo '<span>' . $interest . '</span>';
+                echo "</div>";
+            }
+            ?>
+            <!-- # end- user interest# !-->
+            <!-- # ~~~~~~~~ # !-->
+            <div class="col-m col-12 a-right">
+                <small>
+                    <?=Language::invokeOutput('views/0'). ' ' . isset_get($data['user'], 'views') . ' ' . Language::invokeOutput('views/1');?>
+                </small>
+            </div>
         </div>
-    </div>
-</div>
+    </div><!-- # end sub-wrapper # -->
+</div><!-- # end user-page # -->

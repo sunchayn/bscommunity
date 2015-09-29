@@ -20,7 +20,7 @@
                 </div>
                 <!-- end -  AJAX LOADER -->
                 <div class="col-m col-12 box">
-                    <input type="text" name="title" placeholder=<?=Language::invokeOutput('placeholder/thread')?>" class="col-12">
+                    <input type="text" name="title" placeholder="<?=Language::invokeOutput('placeholder/thread')?>" class="col-12">
                 </div>
                 <div class="col-m col-12 box">
                     <textarea id="bseContentHolder" name="content" class="col-12 bse" rows="17" placeholder="<?=Language::invokeOutput('content/thread')?>"></textarea>

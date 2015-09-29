@@ -29,7 +29,6 @@ class forumsAPI extends databaseAPI{
         $this->setDataBase($db);
     }
 
-
     /**
      * @param string $rows
      * @param null $where

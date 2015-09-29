@@ -23,25 +23,17 @@
 <!-- # Wrapper # -->
 <div class="wrapper">
     <div class="overlay"></div>
-    <div class="scroll-up hide-sm">
-        <i class="icon-up-dir"></i>
-    </div>
-    <div class="scroll-up-res">
-        <i class="icon-up-dir"></i>
-    </div>
+    <div class="scroll-up hide-sm"><i class="icon-up-dir"></i></div>
+    <div class="scroll-up-res"><i class="icon-up-dir"></i></div>
     <div class="box-page">
         <div class="central-box login-page v-middle grid-section">
-            <div class="col-m col-12 a-center">
-                <img src="<?=$global['logo_url'];?>" alt="site_logo" class="x-100">
-            </div>
+            <div class="col-m col-12 a-center"><img src="<?=$global['logo_url'];?>" alt="site_logo" class="x-100"></div>
             <form action="ajax/login" method="POST" class="ajax noScroll col-m col-12">
                 <div class="ajax-loader"></div>
                 <div class="col-m col-12 login-label">
                     <div class="col-m col-12 box">
                         <h4><?=Language::invokeOutput('login/identifier');?></h4>
-                        <small>
-                            <?=Language::invokeOutput('login/identifier-desc');?>
-                        </small>
+                        <small><?=Language::invokeOutput('login/identifier-desc');?></small>
                     </div>
                     <div class="col-m col-12">
                         <input type="text" id="username" name="username" placeholder="<?=Language::invokeOutput('login/identifier');?>" class="rad2 col-12" tabindex="1"/>
@@ -49,14 +41,13 @@
                 </div>
                 <div class="col-m col-12 login-label">
                     <div class="col-m col-12 box">
-                        <h4 class="inline-b"><?=Language::invokeOutput('login/password');?></h4> (
+                        <h4 class="inline-b"><?=Language::invokeOutput('login/password');?></h4>&nbps;
+                        (
                         <input type="checkbox" id="remember2" name="remember" class="anchorCheckBox" />
                         <label for="remember2" class="anchorCheckLabel anchorCheck"><?=Language::invokeOutput('login/remember');?></label>
                         )
                         <br />
-                        <small>
-                            <?=Language::invokeOutput('login/password-desc');?>
-                        </small>
+                        <small><?=Language::invokeOutput('login/password-desc');?></small>
                     </div>
                     <div class="col-m col-12">
                         <input type="password" id="password" name="password" placeholder="<?=Language::invokeOutput('login/password');?>" class="rad2 anchorCheckBox col-12" tabindex="2" />

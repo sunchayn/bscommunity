@@ -133,7 +133,7 @@ ul {
 .v-middle {
 	display: table;
 	& .v-col{
-		@extend .margin; 
+		@extend .margin2; 
 		&:first-child{
 			margin:0;
 		}
@@ -145,7 +145,7 @@ ul {
 .v-top {
 	display: table;
 	& .v-col{
-		@extend .margin;
+		@extend .margin2;
 		&:first-child{
 			margin:0;
 		}
@@ -159,7 +159,7 @@ ul {
     border-spacing: 0;
     border-collapse: collapse;
 	& .v-col{
-   		@extend .margin;
+   		@extend .margin2;
 		&:first-child{
 			margin:0;
 		}
@@ -275,6 +275,13 @@ ul {
 	background-size: cover;
 }
 
+
+.placeholder {
+	::-webkit-input-placeholder { color: darken($pre-black, 9%);}
+	:-moz-placeholder { color: darken($pre-black, 9%); opacity: 1; }
+	::-moz-placeholder { color: darken($pre-black, 9%); opacity: 1; }
+	:-ms-input-placeholder {color: darken($pre-black, 9%);}
+}
 
 /* end - general pages styles */
 
@@ -399,8 +406,7 @@ ul {
 }
 
 .scroll-up-res {
-	padding: .2em .8em;
-	font-size: 10px;
+	padding: .2em 1em;
 	display: none;
 	text-align: center;
 	position: fixed;

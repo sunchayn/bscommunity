@@ -218,11 +218,11 @@ class databaseAPI{
         //var_dump($bindData);
         return $query->execute($bindData);
     }
+
     /**
      * @return mixed
      */
     public function setCharset(){
         return Controller::$db->exec("SET NAMES '{$this->_charset}'");
     }
-
 }

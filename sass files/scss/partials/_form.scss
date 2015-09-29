@@ -95,6 +95,7 @@ label {
 	& input.inner-field {
 		border: none;
 		color: $pre-black2;
+		padding: 0.4em .5em;
 	}
 	
 	@for $i from 1 through 8 {
@@ -106,7 +107,7 @@ label {
 	}
 
 	& .btn {
-		@extend .margin;
+		//@extend .margin;
 		padding: 0.4em .5em;
 	}
 }
@@ -119,10 +120,6 @@ label {
 	color: $pre-black2;
 	padding: .1em .4em;
 	display: inline-block;
-
-	& form {
-		display: inline-block;
-	}
 
 	& .field {
 		overflow: hidden;
