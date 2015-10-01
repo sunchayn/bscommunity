@@ -1,9 +1,7 @@
 <div class="page profile profile-about-page grid-section ">
     <div class="sub-wrapper area">
         <div class="sub-wrapper">
-            <?php
-                include_once('_header.php');
-            ?>
+            <?php include_once('_header.php'); ?>
             <div class="col-m col-12 ">
                 <h3><?=Language::invokeOutput('about-p/captions/about') . ' ' . $data['user']->username;?></h3>
             </div>
@@ -18,7 +16,6 @@
                 <div class="col-m col-12 box">
                     <h4><?=Language::invokeOutput('about-p/quote');?></h4>
                     <p class="quote">
-
                         <?php
                         $reverse = (DIRECTION == 'left') ? 'right' : 'left';
                         echo '<i class="icon-quote-'.$reverse.'"></i>';

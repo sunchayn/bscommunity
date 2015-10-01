@@ -81,7 +81,8 @@ class thanksAPI extends databaseAPI
                     {$this->_table} AS t
                 GROUP BY t.author_id
                 HAVING c >= cnt";
-        return count(parent::executeQuery($sql));
+        $c = count(parent::executeQuery($sql));
+        return ($c) ? $c : 1;
     }
 
     /**

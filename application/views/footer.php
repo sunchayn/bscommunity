@@ -11,7 +11,7 @@
                     </h2>
                 </div>
                 <div class="col-m col-12">
-                    <div class="col-m col-3">
+                    <div class="col-m col-5">
                         <div class="col-m col-12">
                             <h3><?=Language::invokeOutput('footer/follow');?></h3>
                             <div class="social-links box">
@@ -56,7 +56,7 @@
                         </ul>
                     </div>
                     <div class="col-m col-12 split-dashed show-sm"></div>
-                    <div class="col-m col-6">
+                    <div class="col-m col-3">
                         <h3><?=Language::invokeOutput('footer/about');?></h3>
                         <p><?=isset_get($global, 'site_desc');?></p>
                     </div>

@@ -1,8 +1,8 @@
 ## compression ##
 <IfModule mod_deflate.c>
 AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/x-javascript
-## compression ##
 </IfModule>
+## compression ##
 ## EXPIRES CACHING ##
 <IfModule mod_expires.c>
     # Enable expirations

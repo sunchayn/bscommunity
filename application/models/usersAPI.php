@@ -844,7 +844,8 @@ class usersAPI extends databaseAPI{
                     {$table} AS r
                 GROUP BY r.author_id
                 HAVING c >= cnt";
-        return count(parent::executeQuery($sql));
+        $c = count(parent::executeQuery($sql));
+        return ($c) ? $c : 1;
     }
 
     /**

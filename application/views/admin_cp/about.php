@@ -47,14 +47,14 @@
                         <!-- one label -->
                         <div class="col-m col-12 field-label">
                             <div class="col-m col-4"><?=Language::invokeOutput('supp');?></div>
-                            <div class="col-m col-8"><a href="http://bscommunity.cf/">bscommunity</a></div>
+                            <div class="col-m col-8"><a href="http://bscmm.com">www.bscmm.com</a></div>
                         </div>
                         <!-- end - one label -->
                         <!-- ###### -->
                         <!-- one label -->
                         <div class="col-m col-12 field-label">
                             <div class="col-m col-4"><?=Language::invokeOutput('donation');?></div>
-                            <div class="col-m col-8"><a href="#">Asnad Store</a></div>
+                            <div class="col-m col-8"><a href="https://asnadstore.com/p/lssk">Asnad Store</a></div>
                         </div>
                         <!-- end - one label -->
                         <!-- ###### -->
