@@ -67,7 +67,8 @@ class settingsAPI extends databaseAPI{
         //- if update keywords
         if (isset($data['site_keywords']))
         {
-            $data['site_keywords'] = preg_replace(['/[,،\s]*$/u', '/^[,،\s]*/u', '/[\s]*/u'], '', $data['site_keywords']);
+            $data['site_keywords'] = preg_replace(['/[,،\s]*$/u', '/^[,،\s]*/u'], '', $data['site_keywords']);
+            $data['site_keywords'] = preg_replace('/[,،]+/u',',', $data['site_keywords']);
             if ($data['site_keywords'] == Controller::$GLOBAL['site_keywords'])
                 return [Controller::$language->invokeOutput("no-change")];
             if (!preg_match('/^([A-z\p{Arabic}\s\d,،])+$/u', $data['site_keywords']))
@@ -108,7 +109,8 @@ class settingsAPI extends databaseAPI{
         //if email not valid
         if (!filter_var($data['webmaster_email'],FILTER_VALIDATE_EMAIL))
             $errors['webmaster_email'][] = Controller::$language->invokeOutput("email1");
-        $data['site_keywords'] = preg_replace(['/[,،\s]*$/u', '/^[,،\s]*/u', '/[,،\s]*/'], '', $data['site_keywords']);
+        $data['site_keywords'] = preg_replace(['/[,،\s]*$/u', '/^[,،\s]*/u'], '', $data['site_keywords']);
+        $data['site_keywords'] = preg_replace('/[,،]+/u',',', $data['site_keywords']);
         if (isset($data['site_keywords'][1]) && !preg_match('/^([A-z\p{Arabic}\s\d,،])+$/u', $data['site_keywords']))
             $errors['site_keywords'][] =  Controller::$language->invokeOutput("keywords");
         // -- end check for errors
