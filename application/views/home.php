@@ -62,7 +62,7 @@
                                     foreach ($data['recent-threads'] as $thread)
                                     {
                                 ?>
-                                        <li><i class="icon-angle-<?=DIRECTION;?>"></i>&nbsp;<a href="thread/<?=$thread->id;?>"><?=$thread->title;?></a></li>
+                                        <li><i class="icon-angle-<?=DIRECTION;?>"></i>&nbsp;<a class="middle" href="thread/<?=$thread->id;?>"><?=$thread->title;?></a></li>
                                 <?php
                                     }
                                 }else{
@@ -80,9 +80,9 @@
                                     foreach ($data['hot-threads'] as $thread)
                                     {
                                         ?>
-                                        <li><i class="icon-angle-<?=DIRECTION;?>"></i>&nbsp;
+                                        <li><i class="icon-angle-<?=DIRECTION;?>"></i>
                                             <bdo dir="<?=DIRECTION_CODE;?>">
-                                                <a href="thread/<?=$thread->id;?>"><?=$thread->title?></a>
+                                                <a href="thread/<?=$thread->id;?>" class="middle"><?=$thread->title?></a>
                                                 <small>( <?=$thread->Cnt.' '.Language::invokeOutput('statistics/hot-threads-replies');?> )</small>
                                             </bdo>
                                         </li>

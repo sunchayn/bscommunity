@@ -116,7 +116,7 @@
 <div class="col-m col-12 show-sm res-nav">
     <div class="col-m col-12 a-center box user-panel">
         <img src="<?=$global['logo_url'];?>" alt="logo" height="50" width="50" class="middle">
-        <a href="#panel" class="checked trigger-sm-userpanel"><?=$global['logged']->username;?></a>,
+        <a href="#panel" class="small-username trigger-sm-userpanel"><?=$global['logged']->username;?></a>
         <?php
         if ($global['inboxCount'] <= 0)
         {
@@ -127,6 +127,7 @@
             <span><?=$global['inboxCount'];?></span>
         </div>
         <?php } ?>
+        <div class="clear"></div>
     </div>
     <div class="field-with-icon rad2">
         <form action="search" method="get" class="clearfix">
