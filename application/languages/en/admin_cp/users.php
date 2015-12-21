@@ -30,8 +30,6 @@ return [
         'desc' => 'choose the new user rule and hit submit to save the update .',
     ],
     'addRole' => [
-        'heading' => 'add a new role',
-        'desc' => 'fill the blanks bellow to create a new role .',
         'name_ar' => 'role arabic name',
         'name_en' => 'role english name',
         'permission' => 'role permissions',
@@ -44,10 +42,7 @@ return [
         'report-center' => 'manage reports',
         'pin-threads' => 'pin threads',
     ],
-    'editRole' => [
-        'heading' => 'update a role',
-        'desc' => 'change the fields bellow to update the role .',
-    ],
     'approve' => 'approve',
     'decline' => 'decline',
+    'back-to-list' => 'back to roles list',
 ];

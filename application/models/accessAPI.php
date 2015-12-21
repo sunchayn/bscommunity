@@ -7,6 +7,7 @@
  * @author Mazen Touati
  * @version 1.0.0
  */
+
 class accessAPI extends databaseAPI{
     /**
      * @var  string
@@ -57,6 +58,20 @@ class accessAPI extends databaseAPI{
             return false;
         $getUser = usersAPI::getInstance()->getUserById(Controller::$GLOBAL['logged']->id);
         if (empty($getUser) || $getUser[0]->role != 3)
+            return false;
+        return true;
+    }
+
+
+    /**
+     * @return bool
+     */
+    public static function is_Administration()
+    {
+        if (!usersAPI::isLogged())
+            return false;
+        $getUser = usersAPI::getInstance()->getUserById(Controller::$GLOBAL['logged']->id);
+        if (empty($getUser) || ( $getUser[0]->role != 3 && $getUser[0]->role != 2 ))
             return false;
         return true;
     }
@@ -122,6 +137,10 @@ class accessAPI extends databaseAPI{
      */
     public function addRole($data)
     {
+        //only admins can access to this method
+        if (!accessAPI::is_admin())
+            return false;
+        //-- ## --//
         Controller::$language->load('validation/role');
         //array that hold errors
         $errors = [];
@@ -160,6 +179,10 @@ class accessAPI extends databaseAPI{
      */
     public function deleteRole($id)
     {
+        //only admins can access to this method
+        if (!accessAPI::is_admin())
+            return false;
+        //-- ## --//
         Controller::$language->load('validation/role');
         # prevent deleting basic roles
         if (in_array($id, [1,2,3]))
@@ -176,6 +199,10 @@ class accessAPI extends databaseAPI{
      */
     public function updateRole($data = array())
     {
+        //only admins can access to this method
+        if (!accessAPI::is_admin())
+            return false;
+        //-- ## --//
         if (empty($data))
             return false;
         $id = $data['id'];

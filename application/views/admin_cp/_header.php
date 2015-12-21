@@ -64,7 +64,7 @@
 										    <a href="#" class="icon-mail dropdown-trigger" data-id="empty-inbox"></a>
 									    </span>
                                     <?php } else { ?>
-                                        <div class="label label-with-icon rad2 middle bg-color-5">
+                                        <div class="label label-with-icon rad2 middle bg-color-5 no-cut">
                                             <a href="#" data-id="inbox-menu" class="icon-mail-alt dropdown-trigger"></a>
                                             <span><?=$global['inboxCount'];?></span>
                                         </div>
@@ -91,7 +91,7 @@
                                         <?php
                                     }else{
                                         ?>
-                                        <div class="label label-with-icon rad2 middle bg-color-5">
+                                        <div class="label label-with-icon rad2 middle bg-color-5 no-cut">
                                             <a href="#notification" data-id="notify-menu" class="icon-bell-alt dropdown-trigger notifications"></a>
                                             <span><?=$global['notificationsCount'];?></span>
                                         </div>

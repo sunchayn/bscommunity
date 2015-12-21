@@ -1,7 +1,7 @@
 <?php
 return [
     'title' => [
-        'thread' => 'تحديد موضوع',
+        'thread' => 'تحديث موضوع',
         'reply' => 'تحديث رد',
     ],
     'update' => [
@@ -24,4 +24,11 @@ return [
     ],
     'cancel' => 'إلغاء',
     'addReplyTo' => 'رد على : ',
+    'attach' => [
+        "add" => "إضافة مرفقات :",
+        "chose" => "إختيار الملفات",
+        "upload" => "رفع المرفقات",
+    ],
+    'curr-attachments' => 'المرفقات الحالية',
+    'delete-curr-attch' => 'حذف المرفقات الحالية',
 ];

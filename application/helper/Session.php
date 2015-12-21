@@ -1,4 +1,10 @@
 <?php
+/**
+ * bloodstone community V1.0.0
+ * @link https://www.facebook.com/Mazn.touati
+ * @author Mazen Touati
+ * @version 1.0.0
+ */
 
 class Session {
 
@@ -24,7 +30,7 @@ class Session {
         if (++$_SESSION[SESSION_PREFIX.'regen'] >= 10)
         {
             self::set('regen', 0);
-            session_regenerate_id(true);
+            @session_regenerate_id(true);
         }
     }
 

@@ -1,4 +1,11 @@
 <?php
+/**
+ * bloodstone community V1.0.0
+ * @link https://www.facebook.com/Mazn.touati
+ * @author Mazen Touati
+ * @version 1.0.0
+ */
+
 //if the host run an older php version - show an update error !
 if (version_compare(PHP_VERSION, '5.5.0') < 0) {
     die ('please update your php version to 5.5.0 or higher, you current version is : '.PHP_VERSION);

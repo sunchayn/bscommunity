@@ -24,4 +24,11 @@ return [
     ],
     'cancel' => 'cancel',
     'addReplyTo' => 'reply to : ',
+    'attach' => [
+        "add" => "add attachment :",
+        "chose" => "chose files",
+        "upload" => "upload attachment",
+    ],
+    'curr-attachments' => 'current attachments',
+    'delete-curr-attch' => 'delete current attachments',
 ];

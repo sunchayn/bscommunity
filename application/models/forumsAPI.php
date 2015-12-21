@@ -7,6 +7,7 @@
  * @author Mazen Touati
  * @version 1.0.0
  */
+
 class forumsAPI extends databaseAPI{
     /**
      * @var  string
@@ -49,14 +50,16 @@ class forumsAPI extends databaseAPI{
         return parent::selectData($rows, [['cat_id', '=', $parentID]],$this->_table, 'order by id');
     }
 
+
     /**
-     * @param forumTitle
+     * @param $forumTitle
+     * @param string $lang
      * @param string $row
      * @return mixed
      */
-    public function getForumByTitle($forumTitle, $row = "*")
+    public function getForumByTitle($forumTitle, $row = "*", $lang = '_ar')
     {
-        return parent::selectData($row, [['title', '=', $forumTitle]], $this->_table, null, ' LIMIT 1');
+        return parent::selectData($row, [['title'.$lang, '=', $forumTitle]], $this->_table, null, ' LIMIT 1');
     }
 
     /**
@@ -108,6 +111,10 @@ class forumsAPI extends databaseAPI{
      */
     public function addRule($data)
     {
+        //only admins can access to this method
+        if (!accessAPI::is_admin())
+            return false;
+        //-- ## --//
         Controller::$language->load('validation/rules');
         //get the array of fields
         $fieldsArray = array_keys($data);
@@ -128,18 +135,12 @@ class forumsAPI extends databaseAPI{
         //if empty title
         if (!isset($data['title_en'][1]))
             $errors['title_en'][] = Controller::$language->invokeOutput('title_en2');
-        //if title have disallowed words
-        if (Validation::isRestrictEntry($data['title_en'], Controller::$db))
-            $errors['title_en'][] = Controller::$language->invokeOutput('title_en3');
         //if forum title exist
         if ($this->isRuleHeadingExist($data['title_ar'], true))
             $errors['title_ar'][] = Controller::$language->invokeOutput('title_ar1');
         //if empty title
         if (!isset($data['title_ar'][1]))
             $errors['title_ar'][] = Controller::$language->invokeOutput('title_ar2');
-        //if title have disallowed words
-        if (Validation::isRestrictEntry($data['title_ar'], Controller::$db))
-            $errors['title_ar'][] = Controller::$language->invokeOutput('title_ar3');
         //if empty description
         if (!isset($data['description_ar'][6]))
             $errors['description_ar'][] = Controller::$language->invokeOutput('desc2');
@@ -161,6 +162,10 @@ class forumsAPI extends databaseAPI{
      */
     public function deleteRule($id)
     {
+        //only admins can access to this method
+        if (!accessAPI::is_admin())
+            return false;
+        //-- ## --//
         Controller::$language->load('validation/rules');
         return (parent::deleteData($this->_table2, ['field'=> 'id', 'value' => $id])) ? Controller::$language->invokeOutput('delete') : false;
     }
@@ -171,6 +176,10 @@ class forumsAPI extends databaseAPI{
      */
     public function updateRule($data = array())
     {
+        //only admins can access to this method
+        if (!accessAPI::is_admin())
+            return false;
+        //-- ## --//
         if (empty($data))
             return false;
         $id = $data['id'];
@@ -234,13 +243,16 @@ class forumsAPI extends databaseAPI{
         return (count($this->getForumByID($id)) == 0  ) ? false : true;
     }
 
+
     /**
      * @param $title
+     * @param string $lang
+     * @param string $rows
      * @return bool
      */
-    public function isTitleExist($title)
+    public function isTitleExist($title, $lang = '_ar', $rows="*")
     {
-        return (count($this->getForumByTitle($title)) == 0  ) ? false : true;
+        return (count($this->getForumByTitle($title, $rows, $lang)) == 0  ) ? false : true;
     }
 
     /**
@@ -249,11 +261,15 @@ class forumsAPI extends databaseAPI{
      */
     public function createForum($data = array())
     {
+        //only admins can access to this method
+        if (!accessAPI::is_admin())
+            return false;
+        //-- ## --//
         Controller::$language->load('validation/forum');
         //get the array of fields
         $fieldsArray = array_keys($data);
         //set the required fields
-        $requireData = ['title','desc','cat_id'];
+        $requireData = ['title_ar','desc_ar', 'title_en', 'desc_en','cat_id'];
         //array that hold errors
         $errors = [];
         //check for errors
@@ -264,17 +280,20 @@ class forumsAPI extends databaseAPI{
         if (!categoryAPI::getInstance()->isExist(($data['cat_id'])))
             $errors['general'][] = Controller::$language->invokeOutput('no-cat');
         //if forum title exist
-        if ($this->isTitleExist($data['title']))
-            $errors['title'][] = Controller::$language->invokeOutput('title1');
+        if ($this->isTitleExist($data['title_ar']))
+            $errors['title_ar'][] = Controller::$language->invokeOutput('title1');
+        if ($this->isTitleExist($data['title_en'], '_en'))
+            $errors['title_en'][] = Controller::$language->invokeOutput('title1-1');
         //if empty title
-        if (!isset($data['title'][1]))
-            $errors['title'][] = Controller::$language->invokeOutput('title2');
-        //if title have disallowed words
-        if (Validation::isRestrictEntry($data['title'], Controller::$db))
-            $errors['title'][] = Controller::$language->invokeOutput('title3');
-        //if empty description
-        if (!isset($data['desc'][6]))
-            $errors['desc'][] = Controller::$language->invokeOutput('desc1');
+        if (!isset($data['title_ar'][1]))
+            $errors['title_ar'][] = Controller::$language->invokeOutput('title2');
+        if (!isset($data['title_en'][1]))
+            $errors['title_en'][] = Controller::$language->invokeOutput('title2-2');
+        //if short description
+        if (!isset($data['desc_ar'][6]))
+            $errors['desc_ar'][] = Controller::$language->invokeOutput('desc1');
+        if (!isset($data['desc_en'][6]))
+            $errors['desc_en'][] = Controller::$language->invokeOutput('desc1-1');
         // -- end check for errors
         //if an error has occurred return the error array
         if (!empty($errors))
@@ -292,6 +311,10 @@ class forumsAPI extends databaseAPI{
      */
     public function deleteForum($id)
     {
+        //only admins can access to this method
+        if (!accessAPI::is_admin())
+            return false;
+        //-- ## --//
         Controller::$language->load('validation/forum');
         //first of all delete all forum threads
         $getThreads = threadsAPI::getInstance()->getThreads('id', [ ['forum_id', '=', $id] ]);
@@ -308,6 +331,10 @@ class forumsAPI extends databaseAPI{
      */
     public function closeForum($id)
     {
+        //only admins can access to this method
+        if (!accessAPI::is_admin())
+            return false;
+        //-- ## --//
         Controller::$language->load('validation/forum');
         return (parent::updateData( $this->_table, ['field' => 'id', 'value' => $id], ['status' => 0])) ? Controller::$language->invokeOutput('close') : false;
     }
@@ -318,6 +345,10 @@ class forumsAPI extends databaseAPI{
      */
     public function openForum($id)
     {
+        //only admins can access to this method
+        if (!accessAPI::is_admin())
+            return false;
+        //-- ## --//
         Controller::$language->load('validation/forum');
         return (parent::updateData( $this->_table, ['field' => 'id', 'value' => $id], ['status' => 1])) ? Controller::$language->invokeOutput('open') : false;
     }
@@ -328,6 +359,10 @@ class forumsAPI extends databaseAPI{
      */
     public function updateForum($data = array())
     {
+        //only admins can access to this method
+        if (!accessAPI::is_admin())
+            return false;
+        //-- ## --//
         if (empty($data))
             return false;
         $id = $data['id'];
@@ -341,26 +376,40 @@ class forumsAPI extends databaseAPI{
         $values = [];
         //seek for errors
         //->update title
-        if (isset($data['title']) && $data['title'] != $forum->title)
+        if (isset($data['title_ar']) && $data['title_ar'] != $forum->title_ar)
         {
+            //if forum title exist
+            if ($this->isTitleExist($data['title_ar']))
+                $errors['title_ar'][] = Controller::$language->invokeOutput('title1');
             //if empty title
-            if (!isset($data['title'][1]))
-                $errors['title'][] = Controller::$language->invokeOutput('title2');
-            //if category title exist
-            if ($this->isTitleExist($data['title']))
-                $errors['title'][] = Controller::$language->invokeOutput('title1');
-            //if title have disallowed words
-            if (Validation::isRestrictEntry($data['title'], Controller::$db))
-                $errors['title'][] = Controller::$language->invokeOutput('title3');
-            $values['title'] = $data['title'];
+            if (!isset($data['title_ar'][1]))
+                $errors['title_ar'][] = Controller::$language->invokeOutput('title2');
+            $values['title_ar'] = $data['title_ar'];
+        }
+        if (isset($data['title_en']) && $data['title_en'] != $forum->title_en)
+        {
+            //if forum title exist
+            if ($this->isTitleExist($data['title_en']))
+                $errors['title_en'][] = Controller::$language->invokeOutput('title1-1');
+            //if empty title
+            if (!isset($data['title_en'][1]))
+                $errors['title_en'][] = Controller::$language->invokeOutput('title2-2');
+            $values['title_en'] = $data['title_en'];
         }
         //->update desc
-        if (isset($data['desc']) && $data['desc'] != $forum->desc)
+        if (isset($data['desc_ar']) && $data['desc_ar'] != $forum->desc_ar)
         {
             //if description too short
-            if (!isset($data['desc'][6]))
-                $errors['desc'][] = Controller::$language->invokeOutput('desc1');
-            $values['desc'] = $data['desc'];
+            if (!isset($data['desc_ar'][6]))
+                $errors['desc_ar'][] = Controller::$language->invokeOutput('desc1');
+            $values['desc_ar'] = $data['desc_ar'];
+        }
+        if (isset($data['desc_en']) && $data['desc_en'] != $forum->desc_en)
+        {
+            //if description too short
+            if (!isset($data['desc_en'][6]))
+                $errors['desc_en'][] = Controller::$language->invokeOutput('desc1-1');
+            $values['desc_en'] = $data['desc_en'];
         }
         //->update logo
         if (isset($data['logo']) && $data['logo'] != $forum->logo)

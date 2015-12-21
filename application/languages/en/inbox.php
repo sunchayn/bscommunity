@@ -27,4 +27,5 @@ return [
         'response' => 'response'
     ],
     'sub-inbox' => 'sub inbox messages :',
+    'draft-delay' => 'drafts only saved for 7 days',
 ];

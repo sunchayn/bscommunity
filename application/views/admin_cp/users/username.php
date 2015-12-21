@@ -31,7 +31,7 @@
                                 echo '<div class="no-data">'. Language::invokeOutput('no-username') .'</div>';
                             }else{
                                 ?>
-                                <div class="col-m col-12 cf-list-cap v-middle">
+                                <div class="col-m col-12 cf-list-cap v-middle hide-sm">
                                     <div class="col-1 v-col"><?=language::invokeOutput('captions/id');?></div>
                                     <div class="col-3 v-col"><?=language::invokeOutput('captions/old-username');?></div>
                                     <div class="col-3 v-col"><?=language::invokeOutput('captions/new-username');?></div>

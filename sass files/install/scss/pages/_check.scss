@@ -1,0 +1,21 @@
+.check {
+	& .pre-group {
+		padding: .5em 0;
+		& > div {
+			padding: .3em 0;
+		}
+	}
+
+	& .ajax-result {
+		padding: .3em 0 0;
+		font-weight: $bold;
+
+		&.fail {
+			color: $fail;
+		}
+
+		&.succ {
+			color: $succ;
+		}
+	}
+}

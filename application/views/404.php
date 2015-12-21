@@ -36,7 +36,10 @@
                 </div>
             </div>
             <footer>
-                <script src="<?=URL?>js/min/all.js"></script>
+                <script src="<?=URL;?>vendor/jquery.js"></script>
+                <script src="<?=URL;?>js/functions_full.js"></script>
+                <script src="<?=URL;?>js/style.js"></script>
+                <script src="<?=URL;?>js/global_full.js"></script>
             </footer>
         </div>
     </body>

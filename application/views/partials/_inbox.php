@@ -3,7 +3,7 @@
         <input type="checkbox" class="middle checkboxTickets" name="select[]" value="<?=$message->id;?>" id="msg<?=$message->id;?>">
         <label for="msg<?=$message->id;?>"></label>
     </div>
-    <a href="message/<?=$message->id;?>" class="col-11 v-col">
+    <a href="<?=($data['postfix'] != '3')? 'message' : 'draft/inbox' ?>/<?=$message->id;?>" class="col-11 v-col">
         <div class="col-m col-12 v-middle">
             <div class="col-2 v-col">
                 <?php
@@ -17,7 +17,9 @@
                 <?=$prefix;?>
                 <h3 class="inline-b">
                     <?php
-                        if (mb_strlen($message->title, 'UTF-8') > 30)
+                        if (!isset($message->title[1]))
+                            echo '<small>[ '.language::invokeOutput('frequent/unset').' ]</small>';
+                        else if (mb_strlen($message->title, 'UTF-8') > 30)
                             echo $message->title = mb_substr($message->title, 0, 30, 'UTF-8') . '...';
                         else
                             echo $message->title;
@@ -25,7 +27,9 @@
                 </h3>
                 <small> -
                     <?php
-                        if (mb_strlen($message->content, 'UTF-8') > 70)
+                        if (!isset($message->content[1]))
+                            echo '<small>[ '.language::invokeOutput('frequent/unset').' ]</small>';
+                        else if (mb_strlen($message->content, 'UTF-8') > 70)
                             echo mb_substr($message->content, 0, 50, 'UTF-8') . '...';
                         else
                             echo $message->content;

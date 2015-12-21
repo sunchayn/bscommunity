@@ -21,12 +21,8 @@
 </head>
 <body>
 <div class="overlay"></div>
-<div class="scroll-up hide-sm">
-    <i class="icon-up-dir"></i>
-</div>
-<div class="scroll-up-res">
-    <i class="icon-up-dir"></i>
-</div>
+<div class="scroll-up hide-sm"><i class="icon-angle-up"></i></div>
+<div class="scroll-up-res"><i class="icon-angle-up"></i></div>
 <div class="confirm-modal" id="create-link">
     <div class="cf-modal-content"></div>
     <div class="modal-buttons grid-section">

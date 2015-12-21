@@ -72,8 +72,8 @@ return
                 'enabled' => 'مفعل',
                 'enable' => 'فعل',
                 'disable' => 'عطل',
-                'update' => 'تحيد',
-                'posted' => 'نشرت في :',
+                'update' => 'تحديث',
+                'posted' => 'نشر في :',
                 'no-change' => 'لم تغير أي شئ',
                 'report' => 'تبليغ',
                 'administration' => 'الإدارة',
@@ -87,13 +87,13 @@ return
                 'identifier' => "المعرف",
                 'identifier-desc' => "يمكن ان يكون إسم المستخدم او البريد الألكتروني",
                 'password' => 'كلمة السر',
-                'password-desc' =>"<a href='recover'>إسترجعها<a/> هل نسيت كلمة السر ؟",
+                'password-desc' =>"<a href='account/recover'>إسترجعها<a/> هل نسيت كلمة السر ؟",
                 'remember' =>"تذكرني",
                 'button' =>"دخول",
         ],
         'copyright' => [
             'name' => 'مازن التواتي',
-            'copyright' => '&copy; 2015 bloodstone community v1-alpha جميع الحقوق محفوظة، تمت عملية البرمجة و التصميم بواسطة '
+            'copyright' => '&copy; 2015 bloodstone community v1-beta جميع الحقوق محفوظة، تمت عملية البرمجة و التصميم بواسطة '
         ],
         'edit-label' => 'تحديث',
         'change-label' => 'تغيير',

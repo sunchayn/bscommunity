@@ -7,6 +7,7 @@
  * @author Mazen Touati
  * @version 1.0.0
  */
+
 class reportAPI extends databaseAPI{
     /**
      * @var  string
@@ -59,7 +60,7 @@ class reportAPI extends databaseAPI{
         $join = 'LEFT JOIN threads as t on t.id = report.reported
                 LEFT JOIN replies on replies.id = report.reported
                 LEFT JOIN threads on threads.id = replies.thread_id';
-        return Paginator::getInstance()->getData([$this->_table, $join], 'report', 'count(report.reported) as nor, report.*, threads.`title`, t.title as TT', $where, 'group by `type`, `reported` ' .  $order);
+        return Paginator::getInstance()->getData([$this->_table, $join], 'report', 'count(report.reported) as nor, report.*, threads.`title`, t.title as TT', $where, 'group by `type`, `reported` ' .  $order, '?', 'group by `type`, `reported`');
     }
 
     /**

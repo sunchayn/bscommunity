@@ -5,6 +5,7 @@
  * @author Mazen Touati
  * @version 1.0.0
  */
+
 class category extends Controller{
 
     /**
@@ -22,7 +23,7 @@ class category extends Controller{
                 self::$language->load('category');
                 //set data
                 $data = [];
-                $data['title'] = $getCategory[0]->title;
+                $data['title'] = isset_get($getCategory[0], 'title_'.LANGUAGE_CODE, 'undefined');
                 $data['page-title'] = self::$GLOBAL['site_name'];
                 $data['forums'] = forumsAPI::getInstance()->getForumsByParent($params[0]);
                 //fill the data's array with this category information

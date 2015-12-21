@@ -20,7 +20,7 @@ class create extends Controller
         if (isset($params[0])) {
             //set the view data array
             $data = [];
-            $data['forum'] = forumsAPI::getInstance()->getForumByID($params[0], 'id, cat_id, title, status');
+            $data['forum'] = forumsAPI::getInstance()->getForumByID($params[0], 'id, cat_id, title_'.LANGUAGE_CODE.' as title, status');
             if (!empty($data['forum'])){
                 if ($data['forum'][0]->status == 0)
                     header('Location: '.URL.'home');
@@ -32,8 +32,10 @@ class create extends Controller
                 $data['page-title'] = self::$language->invokeOutput('title/thread');
                 //get the category title
                 $data['forum'] = $data['forum'][0];
-                $data['category'] = categoryAPI::getInstance()->getCategoryByID($data['forum']->cat_id, 'id, title');
+                $data['category'] = categoryAPI::getInstance()->getCategoryByID($data['forum']->cat_id, 'id, title_'.LANGUAGE_CODE.' as title');
                 $data['category'] = isset_get($data['category'], 0, []);
+                //create a new draft instance or get the already created one
+                $data['draft'] = threadDraftAPI::getInstance()->initDraft();
                 //load the header view
                 $this->loadView('header', $data);
                 //load this page view
@@ -66,7 +68,7 @@ class create extends Controller
             $data['thread'] = threadsAPI::getInstance()->getThreadByID($params[0], 'id, forum_id, title');
             if (!empty($data['thread'])){
                 $data['thread'] = $data['thread'][0];
-                $data['forum'] = forumsAPI::getInstance()->getForumByID($data['thread']->forum_id, 'id, cat_id, title');
+                $data['forum'] = forumsAPI::getInstance()->getForumByID($data['thread']->forum_id, 'id, cat_id, title_'.LANGUAGE_CODE.' as title');
                 if (!empty($data['forum'])) {
                     //prepare the language
                     self::$language->load('create');
@@ -76,7 +78,7 @@ class create extends Controller
                     $data['page-title'] = self::$language->invokeOutput('title/reply');
                     //get the category title
                     $data['forum'] = $data['forum'][0];
-                    $data['category'] = categoryAPI::getInstance()->getCategoryByID($data['forum']->cat_id, 'id, title');
+                    $data['category'] = categoryAPI::getInstance()->getCategoryByID($data['forum']->cat_id, 'id, title_'.LANGUAGE_CODE.' as title');
                     $data['category'] = isset_get($data['category'], 0, []);
                     //load the header view
                     $this->loadView('header', $data);
@@ -119,8 +121,11 @@ class create extends Controller
             //if the given id is wrong
             if (empty($user))
                 header('Location: ../error');
-            else
-                $data['user'] = $user[0];
+            $data['user'] = $user[0];
+            //get the user preferences
+            $preferences = usersAPI::getInstance()->getUserPreferences($user[0]->id, 'messages');
+            if ($preferences[0]->messages == 0 && !accessAPI::is_Administration())
+                header('Location: '.URL.'home');
         }
         //prepare the language
         self::$language->load('create');
@@ -128,6 +133,8 @@ class create extends Controller
         $data['title'] = self::$language->invokeOutput('title/message');
         //the title shown on the page wide header
         $data['page-title'] = self::$language->invokeOutput('create/message');
+        //create a new draft instance or get the already created one
+        $data['draft'] = inboxDraftAPI::getInstance()->initDraft();
         //load the header view
         $this->loadView('header', $data);
         //load this page view

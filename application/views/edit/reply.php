@@ -10,12 +10,9 @@
                 <i class="icon-angle-<?=DIRECTION;?>"></i>
                 <a href="thread/<?=isset_get($data['thread'], 'id');?>"><?=isset_get($data['thread'], 'title');?></a>
             </div>
-            <form action="ajax/updateReply" method="POST" class="ajax">
+            <form action="ajax/updateReply" method="POST" class="ajax editor">
                 <div class="col-m col-12 box">
                     <h3><?=Language::invokeOutput('update/reply');?></h3>
-                </div>
-                <div class="col-m col-12 box">
-                    <?=Language::invokeOutput('addReplyTo')?><a href="thread/<?=isset_get($data['thread'], 'id');?>"><?=isset_get($data['thread'], 'title');?></a>
                 </div>
                 <!-- AJAX LOADER -->
                 <div class="ajax-loader" style="display:none;">
@@ -31,7 +28,7 @@
                     <input type="hidden" name="token" value="<?=$global['token'];?>" />
                     <input type="hidden" name="id" value="<?=$data['reply']->id;?>" />
                     <input type="hidden" name="thread_id" value="<?=$data['reply']->thread_id;?>" />
-                    <a id="submit-editor" href="#updateReply" class="formSubmit"><?=Language::invokeOutput('submit/reply')?></a>&nbsp;<i class="icon-<?=DIRECTION;?>"></i>
+                    <a id="submit-editor" href="#updateReply"><?=Language::invokeOutput('frequent/update')?></a>&nbsp;<i class="icon-<?=DIRECTION;?>"></i>
                 </div>
             </form>
         </div><!-- end - parent grid-section -->

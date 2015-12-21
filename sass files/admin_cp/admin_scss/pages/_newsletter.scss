@@ -1,0 +1,13 @@
+.newsletter-page {
+	& .send-btn {
+		color: $color5;
+	}
+
+	& .send-result {
+		display: none;
+		color: $succ;
+		&.fail {
+			color: $fail;
+		}
+	}
+}

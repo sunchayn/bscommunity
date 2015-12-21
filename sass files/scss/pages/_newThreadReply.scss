@@ -1,3 +1,16 @@
 .newThreadReply-page {
-	
+	.succ-attch, .fail-attch {
+		padding: .3em;
+	}
+
+	.succ-attch {
+		color: $succ;
+	}
+
+	.fail-attch {
+		color: $pre-black;
+		& span {
+			color: $fail;
+		}
+	}
 }

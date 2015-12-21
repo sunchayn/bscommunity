@@ -3,13 +3,30 @@
 	cursor: pointer;
 
 	&.simple-trigger {
-			padding: .3em .4em;
+		padding: .3em .4em;
 
 		&:hover , &.active-dd{
 			background-color: darken($color3, 2%);
 			text-decoration: none;
 		}
+	}
 
+	&.active-dd {
+		position: relative;
+		&:after{
+			content: "";
+			display: inline-block;
+			border: 5px solid;
+			width: 0;
+			height: 0;
+			border-color: darken($color3, 3%) transparent transparent darken($color3, 3%);
+			position: absolute;
+			bottom: -14px; // 8(menu pos padding - in the dd plugin -) + 5(the arrow border with)
+			left: calc( 50% - 5px );
+			z-index: 650;
+			@include transform-rotate(45);
+			opacity: 1 !important;
+		}
 	}
 }
 
@@ -19,12 +36,29 @@
 	position: absolute;
 	min-width: 160px;
     max-width: 360px;
+    max-height: 360px;
+    overflow-y: auto; 
 	background-color: $white;
-	border: 1px solid darken($color3, 8%);
+	border: 1px solid darken($color3, 3%);
 	padding: 0;
 	@extend .a-left;
 	color: $pre-black2;
-	z-index: 666;
+	z-index: 700;
+	&::-webkit-scrollbar {
+	    width: 12px;
+	}
+	&::-webkit-scrollbar-track {
+	    background-color: darken($color3, 5%);
+	    @include borderRadius(12px);
+	}
+	&::-webkit-scrollbar-thumb {
+	    background-color: lighten($pre-black2, 15%);
+	    @include borderRadius(12px);
+	}
+	&::-webkit-scrollbar-thumb:hover {
+	    background-color: darken($pre-black,5%);
+	}
+
 	& .m-wrapper {
 		max-height: 360px;
 		overflow-y: auto;	
@@ -33,14 +67,14 @@
 		display: block;
 		padding: .8em .4em;
 		background-color: $color5;
-		border-bottom: 1px solid darken($color3, 8%);
+		border-bottom: 1px solid darken($color3, 3%);
 		color: $white;
 		& a { color: $white;}
 	}
 	& .menu-element {
 		cursor: pointer;
 		display: block;
-		padding: .8em .4em;
+		padding: .6em .4em;
 		&:hover {
 			background-color: $color5;
 			color: $white;
@@ -99,21 +133,6 @@
 	}
 	&.medium-width {
 		width: 230px;
-	}
-
-
-
-	&:before{
-		content: "";
-		display: inline-block;
-		border: 5px solid;
-		width: 0;
-		height: 0;
-		border-color: darken($color3, 3%) transparent transparent darken($color3, 3%);
-		position: absolute;
-		top: -5px;
-		left: calc( 50% - 5px );
-		@include transform-rotate(45);
 	}
 
 	& hr {

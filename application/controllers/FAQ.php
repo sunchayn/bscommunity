@@ -5,6 +5,7 @@
  * @author Mazen Touati
  * @version 1.0.0
  */
+
 class faq extends Controller
 {
     /**

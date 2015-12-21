@@ -17,6 +17,7 @@
                 <a href="admin_cp/settings" <?=isset_get($data['sub-checked'], 'general', '');?>><?=Language::invokeOutput('sidebar/settings/general');?></a>
                 <a href="admin_cp/settings?section=variables" <?=isset_get($data['sub-checked'], 'variables', '');?>><?=Language::invokeOutput('sidebar/settings/variables');?></a>
                 <a href="admin_cp/settings?section=filter" <?=isset_get($data['sub-checked'], 'filter', '');?>><?=Language::invokeOutput('sidebar/settings/filter');?></a>
+                <a href="admin_cp/settings?section=social" <?=isset_get($data['sub-checked'], 'social', '');?>><?=Language::invokeOutput('sidebar/settings/social');?></a>
             </nav>
         </div>
         <div class="sub-menu">
@@ -47,9 +48,9 @@
             <i class="icon-help"></i> <br />
             <?=Language::invokeOutput('sidebar/support');?>
         </a>
-        <a href="admin_cp/seo" <?=isset_get($data['checked'], 'seo', '');?>>
+        <a href="admin_cp/subscribers" <?=isset_get($data['checked'], 'subscribers', '');?>>
             <i class="icon-minus"></i> <br />
-            <?=Language::invokeOutput('sidebar/seo');?>
+            <?=Language::invokeOutput('sidebar/subscribers');?>
         </a>
         <a href="admin_cp/about" <?=isset_get($data['checked'], 'about', '');?>>
             <i class="icon-code"></i> <br />

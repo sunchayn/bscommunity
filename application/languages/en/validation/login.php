@@ -8,4 +8,7 @@ return
         'attempt' =>  "this user login blocked for a while, try later !",
         'attempt-word' => 'attempt',
         'status' =>  "sorry, but this user is closed !",
+        'status2' =>  "sorry, but this user is deactivated !",
+        'active' => 'sorry, but your account not active yet .',
+        'resend' => 'click here to resend email',
     ];
