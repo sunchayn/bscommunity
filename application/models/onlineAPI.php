@@ -7,7 +7,6 @@
  * @author Mazen Touati
  * @version 1.0.0
  */
-
 class onlineAPI extends databaseAPI{
     /**
      * @var  string
@@ -22,7 +21,6 @@ class onlineAPI extends databaseAPI{
         }
         return self::$_instance;
     }
-    
     /**
      * define the database variable when call this class
      * @param $db

@@ -1,9 +1,12 @@
 <div class="page rules-page">
     <div class="area sub-wrapper">
         <div class="grid-section">
+            <div class="col-m col-12 content-heading">
+                <h2><?=language::invokeOutput('heading');?></h2>
+                <p class="section-desc"><?=language::invokeOutput('desc');?></p>
+            </div>
             <div class="col-m col-12">
-                <h3><?=$data['forum']->$global['curr_title'];?> :</h3>
-                <p class="section-desc"><?=$data['forum']->$global['curr_desc'];?></p>
+                <h3><?=$data['forum']->title;?> :</h3>
             </div>
             <div class="col-m col-12">
                 <?php

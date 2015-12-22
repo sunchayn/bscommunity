@@ -3,7 +3,7 @@
         <div class="grid-section area">
             <div class="col-m col-12 a-center heading">
                 <img src="<?=URL?>img/logo.png" alt="logo" class="x-100">
-                <h3>bloodstone community V1 - beta</h3>
+                <h3>bloodstone community V1 - alpha</h3>
             </div>
             <div class="col-m col-12 steps step3">
                 <div class="col-m col-12">
@@ -106,13 +106,10 @@
                         <!-- end - one label -->
                     </div>
                     <div class="col-m col-12 links">
-                        <div class="col-m col-4">&nbsp;</div>
-                        <div class="col-m col-8">
-                            <a href="#settings" class="save-data"><?=language::invokeOutput('step3/create');?></a>
-                            <span class="next hidden-item">
-                                 - <a href="install/step4" class="middle"><?=language::invokeOutput('next');?></a>&nbsp;<i class="<?=language::invokeOutput('direction');?>"></i>
-                            </span>
-                        </div>
+                        <a href="#settings" class="save-data"><?=language::invokeOutput('step3/create');?></a>
+                    <span class="next hidden-item">
+                         - <a href="install/step4"><?=language::invokeOutput('next');?></a>&nbsp;<i class="<?=language::invokeOutput('direction');?>"></i>
+                    </span>
                     </div>
                 </form>
             </div>

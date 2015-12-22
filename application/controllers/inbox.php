@@ -5,7 +5,6 @@
  * @author Mazen Touati
  * @version 1.0.0
  */
-
 class inbox extends Controller
 {
     /**
@@ -42,7 +41,7 @@ class inbox extends Controller
         }
         elseif($section == 'draft')
         {
-            $paginator = inboxDraftAPI::getInstance()->getUserDraftsP($id, 'users.username, inboxdraft.*');
+            $paginator = inboxAPI::getInstance()->getUserInbox($id);
             $data['postfix'] = '3';
         }
         //redirect bad pages

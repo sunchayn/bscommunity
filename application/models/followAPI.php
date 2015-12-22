@@ -7,7 +7,6 @@
  * @author Mazen Touati
  * @version 1.0.0
  */
-
 class followAPI extends databaseAPI{
     /**
      * @var  string
@@ -109,20 +108,14 @@ class followAPI extends databaseAPI{
         if (!usersAPI::isLogged())
             return [Controller::$language->invokeOutput('frequent/badLogin')];
         $data['follower_id'] = Controller::$GLOBAL['logged']->id;
-        //get following pref
-        $following = usersAPI::getInstance()->getUserPreferences($data['following_id'], 'is_follow');
-        if (!isset($data['following_id']) || empty(usersAPI::getInstance()->getUserById($data['follower_id'])) || $following === false)
+        if (!isset($data['following_id']) || empty(usersAPI::getInstance()->getUserById($data['follower_id'])) || empty(usersAPI::getInstance()->getUserById($data['following_id'])))
             return [Controller::$language->invokeOutput('wrong')];
-        //if he try to follow himself
         if ($data['follower_id'] == $data['following_id'])
             return [Controller::$language->invokeOutput('yourself')];
-        //if already following
         if ($this->isFollowing($data['follower_id'], $data['following_id']))
             return [Controller::$language->invokeOutput('already')];
-        //if the following disabled the follow feature
-        if ((int)$following[0]->is_follow == 0)
-            return [Controller::$language->invokeOutput('cant')];
-        //while no error happened insert the following record
+        //---->
+        //create the thread
         $add = parent::insertData($this->_table, array_keys($data), array_values($data));
         if (!empty($add))
         {

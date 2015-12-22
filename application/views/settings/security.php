@@ -7,7 +7,7 @@
                     <!-- security settings -->
                     <div class="col-m col-12 content-heading">
                         <h2><?=language::invokeOutput('heading/security');?></h2>
-                        <p class="section-desc"><?=language::invokeOutput('desc/security');?></p>
+                        <p class="section-desc"><?=language::invokeOutput('label-desc/security');?></p>
                     </div>
                     <div class="col-m col-12 split"></div>
                     <div class="col-m col-12 content-body">
@@ -28,7 +28,7 @@
                                 <?=isset_get($data['preferences'], 'recovery');?>
                             </div>
                             <div class="col-m col-1">
-                                <a href="#" class="toggle-input"><?=Language::invokeOutput('edit-label');?></a>
+                                <a href="#" class="disabled"><?=Language::invokeOutput('edit-label');?></a>
                             </div>
                         </div>
                         <div class="col-m col-12 split"></div>

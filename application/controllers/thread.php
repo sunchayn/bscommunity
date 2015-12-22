@@ -5,7 +5,6 @@
  * @author Mazen Touati
  * @version 1.0.0
  */
-
 class thread extends Controller{
 
     /**
@@ -40,19 +39,18 @@ class thread extends Controller{
                 //check the order selected type's anchor
                 $data[$gedOrderType] = "class='checked'";
                 //get the forum and category title
-                $data['forum'] = forumsAPI::getInstance()->getForumById($getThread[0]->forum_id, 'id, title_'.LANGUAGE_CODE.' as title, cat_id');
-                $data['cat'] = categoryAPI::getInstance()->getCategoryByID($data['forum'][0]->cat_id, 'id, title_'.LANGUAGE_CODE.' as title');
+                $data['forum'] = forumsAPI::getInstance()->getForumById($getThread[0]->forum_id, 'id, title, cat_id');
+                $data['cat'] = categoryAPI::getInstance()->getCategoryByID($data['forum'][0]->cat_id, 'id, title');
                 if (empty($data['forum']) || empty($data['cat']))
                     header('Location: ../error');
                 $data['forum'] = $data['forum'][0];
                 $data['cat'] = $data['cat'][0];
                 //get the data of the author
                 $data['author'] = [];
-                if($author = usersAPI::getInstance()->getThreadAuthor($getThread[0]->author_id))
+                if($author = usersAPI::getInstance()->getUserById($getThread[0]->author_id))
                 {
                     $data['author'] = $author[0];
                     $data['author']->thanked = thanksAPI::getInstance()->getThankedCount($getThread[0]->author_id);
-                    $data['authorSocial'] = json_decode($data['author']->social);
                 }
                 //get the thanks
                 $data['thanks'] = thanksAPI::getInstance()->getThanksForThread($params[0]);

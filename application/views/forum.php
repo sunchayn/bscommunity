@@ -15,8 +15,8 @@
                         <img src="<?=isset_get($data['forum'], 'logo');?>" alt="logo" class="middle f-left x-50">
                     </div>
                     <div class="v-col no-margin">
-                        <h3><?=$data['forum']->$global['curr_title'];?></h3>
-                        <small><?=$data['forum']->$global['curr_desc'];?></small>
+                        <h2><?=$data['forum']->title;?></h2>
+                        <small><?=$data['forum']->desc;?></small>
                     </div>
                 </div>
                 <!-- pagination -->
@@ -48,9 +48,9 @@
                             foreach ($data['categories'] as $cat)
                             {
                                 if (!empty($cat->forums)){
-                                    echo '<optgroup label="'. $cat->$global['curr_title'] .'">';
+                                    echo '<optgroup label="'. $cat->title .'">';
                                     foreach($cat->forums as $forum)
-                                        echo "<option value='forum/{$forum->id}'>{$forum->$global['curr_title']}</option>";
+                                        echo "<option value='forum/{$forum->id}'>{$forum->title}</option>";
                                     echo "</optgroup>";
                                 }
                             }
@@ -60,12 +60,12 @@
                 </div>
                 <!-- end - pagination -->
                 <!-- ########## -->
-                <div class="col-m col-12 caption v-middle hide-sm">
-                    <div class="v-col col-6"><?=Language::invokeOutput('caption/title');?></div>
-                    <div class="v-col col-1"><?=Language::invokeOutput('caption/replies');?></div>
-                    <div class="v-col col-1"><?=Language::invokeOutput('caption/views');?></div>
-                    <div class="v-col col-2"><?=Language::invokeOutput('caption/date');?></div>
-                    <div class="v-col col-2"><?=Language::invokeOutput('caption/operation');?></div>
+                <div class="col-m col-12 caption hide-sm">
+                    <div class="col-m col-6"><?=Language::invokeOutput('caption/title');?></div>
+                    <div class="col-m col-1"><?=Language::invokeOutput('caption/replies');?></div>
+                    <div class="col-m col-1"><?=Language::invokeOutput('caption/views');?></div>
+                    <div class="col-m col-2"><?=Language::invokeOutput('caption/date');?></div>
+                    <div class="col-m col-2"><?=Language::invokeOutput('caption/operation');?></div>
                 </div>
                 <!-- # show threads area # -->
                 <div class="col-m col-12 body">

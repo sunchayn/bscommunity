@@ -5,7 +5,6 @@
  * @author Mazen Touati
  * @version 1.0.0
  */
-
 class globalVariable extends Controller{
 
     /**
@@ -15,7 +14,7 @@ class globalVariable extends Controller{
     {
         $data = [];
         //fetch for settings
-        $settings = settingsAPI::getInstance()->getCurrSettings();
+        $settings = settingsAPI::getInstance()->getSettings();
         //fetch for logged user
         if (usersAPI::isLogged())
         {
@@ -37,10 +36,7 @@ class globalVariable extends Controller{
                 usersAPI::clearLoggedTrace();
             }
         }
-        $settings[0]->social = json_decode($settings[0]->social);
         self::fillData($settings, $data);
-        $data['curr_title'] = 'title_'.LANGUAGE_CODE;
-        $data['curr_desc'] = 'desc_'.LANGUAGE_CODE;
         self::$GLOBAL = $data;
     }
 }

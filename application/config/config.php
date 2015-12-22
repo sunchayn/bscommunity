@@ -1,16 +1,9 @@
 <?php
 /**
- * bloodstone community V1.0.0
- * @link https://www.facebook.com/Mazn.touati
- * @author Mazen Touati
- * @version 1.0.0
-*/
-
-/**
  * Configuration for: Error reporting
  * Useful to show every little problem during development, but only show hard errors in production
  */
-define('ENVIRONMENT', 'production');
+define('ENVIRONMENT', 'development');
 if (ENVIRONMENT == 'development' || ENVIRONMENT == 'dev') {
     error_reporting(E_ALL);
     ini_set("display_errors", 1);
@@ -51,9 +44,11 @@ define('URL', URL_PROTOCOL . URL_DOMAIN . URL_SUB_FOLDER);
  * Configuration for: Database
  * This is the place where you define your database credentials, database type etc.
  */
-if (file_exists(APP.'config/core.php'))
-    require_once APP.'config/core.php';
 define('DB_TYPE', 'mysql');
+define('DB_HOST', '127.0.0.1');
+define('DB_NAME', 'bloodstone');
+define('DB_USER', 'root');
+define('DB_PASS', '');
 define('DB_CHARSET', 'utf8');
 
 /**
@@ -64,14 +59,7 @@ spl_autoload_register(function($class){
     if (!empty($matches))
         require_once ROOT .'application/models/' . $class . '.php';
     else
-    {
-        if (is_readable(ROOT .'application/helper/' . $class . '.php')) {
-            require ROOT .'application/helper/' . $class . '.php';
-        }elseif(is_readable(ROOT .'application/helper/vendor/' . strtolower($class) . '.php'))
-            require ROOT .'application/helper/vendor/' . strtolower($class) . '.php';
-        else
-            die('check directories paths for classes call !');
-    }
+        require_once ROOT .'application/helper/' . $class . '.php';
 });
 /**
  * Configuration for: sessions
@@ -95,9 +83,7 @@ define('AJAX', 'AJAX_ATTEMPTS');
  */
 if (isset($_GET['lang']))
     Session::set('BSCLANG', $_GET['lang']);
-//set the language code
 define('LANGUAGE_CODE', isset_get($_SESSION, 'bss_BSCLANG', 'ar'));
-//set the direction value for icon direction purpose
 define('DIRECTION', (LANGUAGE_CODE == 'ar') ? 'left' : 'right');
-//set the paragraphe direction
 define('DIRECTION_CODE', (LANGUAGE_CODE == 'ar') ? 'rtl' : 'ltr');
+

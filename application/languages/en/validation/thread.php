@@ -15,5 +15,4 @@ return [
     ],
     'pin' => 'your successfully pin the thread',
     'unpin' => 'your successfully unpin the thread',
-    'thread-deleted' => 'thread successfully deleted',
 ];

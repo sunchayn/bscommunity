@@ -3,7 +3,6 @@ return [
     "user-panel" => [
                         'profile' => 'profile',
                         'settings' => 'account settings',
-                        'draft' => 'threads draft',
                         'logout' => 'logout',
                         'inbox' => 'inbox',
                         'support' => 'support',
@@ -13,6 +12,7 @@ return [
     "notification" => [
                          'no-notify' => "sorry no notification to show.",
                          'title' => "notification center",
+                         'mark' => "mark all as read",
                          'center' => "notification center",
                       ],
     "messages" => [

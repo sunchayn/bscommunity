@@ -1,3 +1,4 @@
+<!-- bloodstone community V1 alpha !-->
 <!DOCTYPE html>
 <html lang="<?=LANGUAGE_CODE;?>"
       xmlns="http://www.w3.org/1999/xhtml"
@@ -22,7 +23,6 @@
     <!--[if lt IE 9]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <style></style>
 </head>
 <body>
 <!-- # Wrapper # -->

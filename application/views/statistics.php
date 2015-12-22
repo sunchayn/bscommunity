@@ -3,7 +3,7 @@
         <div class="grid-section">
             <div class="col-m col-12 content-heading">
                 <h2><?=Language::invokeOutput('page-title');?></h2>
-                <p class="section-desc"><?=Language::invokeOutput('desc');?></p>
+                <p class="content-desc"><?=Language::invokeOutput('desc');?></p>
             </div>
             <!-- members stats -->
             <div class="col-m col-12 box">

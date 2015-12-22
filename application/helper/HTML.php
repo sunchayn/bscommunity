@@ -1,14 +1,8 @@
 <?php
-/**
- * bloodstone community V1.0.0
- * @link https://www.facebook.com/Mazn.touati
- * @author Mazen Touati
- * @version 1.0.0
- */
 
 class HTML {
 
-    /** clean the editor Output to be a valid HTML !
+    /**
      * @param $input
      * @return mixed|tidy
      */
@@ -35,33 +29,25 @@ class HTML {
         //-- end - using php Tidy library --//
         #remove js and css codes
         $input = renderOutput(htmlspecialchars_decode($input));
-        #get rid of bad words
-        $input = Filters::sexualContentFilter($input);
-        #clear blackListed website from the content if filter is enabled
-        $input = Filters::externalFilter($input);
         return $input;
     }
 
-    /** fix no closed tags
-     * @param $html
-     * @return string
-     */
     public static function closeTags($html)
     {
-            preg_match_all('/<(?!meta|img|br|hr|input\b)\b([A-z]+)(?: .*)?(?<![/|/ ])>/u', $html, $result);
-            $openedTags = $result[1];
-            preg_match_all('/</([A-z]+)>/u', $html, $result);
-            $closedTags = $result[1];
-            $len_opened = count($openedTags);
-            if (count($closedTags) == $len_opened)
+            preg_match_all('/<(?!meta|img|br|hr|input\b)\b([A-z]+)(?: .*)?(?<![/|/ ])>/iu', $html, $result);
+            $openedtags = $result[1];
+            preg_match_all('/</([A-z]+)>/iu', $html, $result);
+            $closedtags = $result[1];
+            $len_opened = count($openedtags);
+            if (count($closedtags) == $len_opened)
                 return $html;
-            $openedTags = array_reverse($openedTags);
+            $openedtags = array_reverse($openedtags);
             for ($i=0; $i < $len_opened; $i++)
             {
-                if (!in_array($openedTags[$i], $closedTags))
-                    $html .= '</'.$openedTags[$i].'>';
+                if (!in_array($openedtags[$i], $closedtags))
+                    $html .= '</'.$openedtags[$i].'>';
                 else
-                    unset($closedTags[array_search($openedTags[$i], $closedTags)]);
+                    unset($closedtags[array_search($openedtags[$i], $closedtags)]);
             }
             return $html;
     }

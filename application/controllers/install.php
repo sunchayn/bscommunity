@@ -5,19 +5,15 @@
  * @author Mazen Touati
  * @version 1.0.0
  */
-
 class install extends Controller
 {
 
     public function __construct()
     {
-        if (file_exists(APP.'config/core.php'))
-        {
-          $this->openDatabaseConnection();
-          self::$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        }
+        $this->openDatabaseConnection();
         self::$language = new Language();
-        error_reporting(1);
+        self::$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        error_reporting(0);
     }
 
     /**
@@ -35,20 +31,6 @@ class install extends Controller
         $this->loadView('install/_header', $data);
         $this->loadView('install/home', $data);
         $this->loadView('install/_footer', $data);
-    }
-
-    public function check()
-    {
-        //prepare the language
-        self::$language->load('install/pre');
-        //set the view data array
-        $data = [];
-        //the title
-        $data['title'] = self::$language->invokeOutput('title');
-        //load this page view
-        $this->loadView('install/_header', $data);
-        $this->loadView('install/pre-install', $data);
-        $this->loadView('install/_footer', $data);      
     }
 
     /**
@@ -127,74 +109,11 @@ class install extends Controller
         $base = realpath(__DIR__.'/../../').DIRECTORY_SEPARATOR;
         unlink($base.'public/js/install.js');
         unlink($base.'public/css/install.css');
-        rrmdir($base.'application/languages/en/install');
-        rrmdir($base.'application/languages/ar/install');
-        rrmdir($base.'application/views/install');
+        rrdir($base.'application/languages/en/install');
+        rrdir($base.'application/languages/ar/install');
+        rrdir($base.'application/views/install');
         unlink($base.'application/controllers/install.php');
-        unlink($base.'application/models/installAPI.php');
         header('Location: ../home');
-    }
-
-    public function preCheck()
-    {
-        //prepare the language
-        self::$language->load('install/pre');
-        $results = [];
-        //checking for versions
-          #checking php version
-          $results['php'] = language::invokeOutput('rslt/pass');
-          if (version_compare(PHP_VERSION, '5.5.0') < 0)
-            $results['php'] = language::invokeOutput('rslt/fail');
-        extract($_POST);
-        unset($_POST['db_pass']);
-        //checking for required fields
-          if (Validation::issetEmptyValue($_POST))
-            die( json_encode( [ 'required' => language::invokeOutput('required'), 'php' => $results['php'] ] ) );
-        //try database connection
-        $dbc = true;
-        try {
-           self::$db = new PDO('mysql:host=' . $host . ';dbname=' . $db_name . ';charset=utf8', $db_user, $db_pass);
-        }catch(PDOException $e){
-            $dbc = false;
-        }
-        $results['database'] = ($dbc) ? language::invokeOutput('database/pass') : language::invokeOutput('database/fail');
-        //checking email information
-            $mail = new PHPMailer();
-            $mail->isSMTP();
-            $mail->Host = $smtp_host;
-            $mail->Port = $smtp_port;
-            $mail->SMTPSecure = 'tls';
-            $mail->SMTPAuth = true;
-            $mail->Username = $smtp_user;
-            $mail->Password = $smtp_pass;
-            //check information
-            $mc = ($mail->smtpConnect()) ? true : false;
-        $results['email'] = ($mc) ? language::invokeOutput('email/pass') : language::invokeOutput('email/fail');
-        //creating config file if information are right
-        if ($dbc && $mc)
-        {
-            //save information
-            $database = 
-"<?php
-  define('DB_HOST', '{$host}');
-  define('DB_NAME', '{$db_name}');
-  define('DB_USER', '{$db_user}');
-  define('DB_PASS', '{$db_pass}');
-
-  define('SMTP_HOST', '{$smtp_host}');
-  define('SMTP_PORT', {$smtp_port});
-  define('SMTP_USER', '{$smtp_user}');
-  define('SMTP_NO_REPLY', '{$no_reply}');
-  define('SMTP_PASS', '{$smtp_pass}');
-?>";
-            $file = fopen(APP.'config/core.php','w');
-            if ( fwrite($file,$database) > 0 )
-              $results['createP'] = language::invokeOutput('create/pass');
-            else
-              $results['createF'] = language::invokeOutput('create/fail');
-        }
-        //return the results
-        echo json_encode($results);
     }
 
     /**
@@ -268,10 +187,8 @@ class install extends Controller
             // We got an exception == table not found
             $sql = "CREATE TABLE `categories` (
                       `id` int(11) NOT NULL AUTO_INCREMENT,
-                      `title_en` varchar(255) NOT NULL,
-                      `title_ar` varchar(255) NOT NULL,
-                      `desc_en` text NOT NULL,
-                      `desc_ar` text NOT NULL,
+                      `title` varchar(255) NOT NULL,
+                      `desc` text NOT NULL,
                       `logo` varchar(255) DEFAULT NULL,
                       `status` int(1) NOT NULL DEFAULT '1',
                       `create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -321,10 +238,8 @@ class install extends Controller
             $sql = "CREATE TABLE `forums` (
                       `id` int(11) NOT NULL AUTO_INCREMENT,
                       `cat_id` int(11) NOT NULL,
-                      `title_en` varchar(255) NOT NULL,
-                      `title_ar` varchar(255) NOT NULL,
-                      `desc_ar` text NOT NULL,
-                      `desc_en` text NOT NULL,
+                      `title` varchar(255) NOT NULL,
+                      `desc` text NOT NULL,
                       `logo` varchar(255) NOT NULL,
                       `views` int(11) NOT NULL DEFAULT '0',
                       `replies` int(11) NOT NULL DEFAULT '0',
@@ -398,7 +313,8 @@ class install extends Controller
         //inserting items basic data
         if (empty(itemsAPI::getInstance()->getItems()))
         {
-            $sql = "INSERT INTO `items` VALUES (1,1,'[\"xp\",25]',25,1,'".URL."public/img/25xp.jpg','بطاقة خبرة 25','xp card 25','تمنحك 25 نقطة خبرة','give you a 25 point of experience'),(2,1,'[\"xp\",50]',50,1,'".URL."public/img/50xp.jpg','بطاقة خبرة 50','xp card 50','تمنحك 50 نقطة خبرة','give you a 50 point of experience'),(3,1,'[\"xp\",75]',75,1,'".URL."public/img/75xp.jpg','بطاقة خبرة 75','xp card 75','تمنحك 75 نقطة خبرة','give you a 75 point of experience'),(4,2,'',100,6,'".URL."public/img/threads-breaker.jpg','صديق المواضيع','thread\'s firend','تمنحك 6 مواضيع إضافية اذا نجاوزت حدود المواضيع اليومية','give you an extra 6 threads to create if you exceed the limit of threads per day.'),(5,2,'',200,20,'".URL."public/img/tweetes.jpg','زقزقات لطيفة','friendly tweet','تمنحك 20 رسالة إضافية لإرساله اذا تجاوزت الحد اليومي','give you an extra 20 message to send if you exceed the limit'),(6,2,'',400,40,'".URL."public/img/tweeter.jpg','الطائر','the tweeter','تمنحك 40 رسالة إضافية لإرسالها اذا تجاوت الحد اليومي','give you an extra 40 message to send if you exceed the limit');";
+            $icon = URL.'public/img/bsc-icon.jpg';
+            $sql = "INSERT INTO `items` VALUES (1,1,'[\"xp\",25]',25,1,'{$icon}','بطاقة خبرة 25','xp card 25','تمنحك 25 نقطة خبرة','give you a 25 point of experience'),(2,1,'[\"xp\",50]',50,1,'{$icon}','بطاقة خبرة 50','xp card 50','تمنحك 50 نقطة خبرة','give you a 50 point of experience'),(3,1,'[\"xp\",75]',75,1,'{$icon}','بطاقة خبرة 75','xp card 75','تمنحك 75 نقطة خبرة','give you a 75 point of experience'),(4,2,'',100,6,'{$icon}','صديق المواضيع','thread\'s firend','تمنحك 6 مواضيع إضافية اذا نجاوزت حدود المواضيع اليومية','give you an extra 6 threads to create if you exceed the limit of threads per day.'),(5,2,'',200,20,'{$icon}','زقزقات لطيفة','friendly tweet','تمنحك 20 رسالة إضافية لإرساله اذا تجاوزت الحد اليومي','give you an extra 20 message to send if you exceed the limit'),(6,2,'',400,40,'{$icon}','الطائر','the tweeter','تمنحك 40 رسالة إضافية لإرسالها اذا تجاوت الحد اليومي','give you an extra 40 message to send if you exceed the limit');";
             $results['store-data'] = databaseAPI::getInstance()->executeQuery($sql, null, false) ? language::invokeOutput('dataInserted') : language::invokeOutput('notInserted');
         }
         //creating table 11 ( notification table )
@@ -521,22 +437,17 @@ class install extends Controller
             // We got an exception == table not found
             $sql = "CREATE TABLE `settings` (
                       `id` int(1) NOT NULL DEFAULT '1',
-                      `site_name_en` varchar(255) NOT NULL,
-                      `site_desc_en` text NOT NULL,
+                      `site_name` varchar(255) NOT NULL,
+                      `site_desc` text NOT NULL,
                       `site_keywords` text NOT NULL,
                       `webmaster_email` varchar(255) NOT NULL,
                       `logo_url` varchar(255) NOT NULL,
                       `favicon_url` varchar(255) NOT NULL,
-                      `is_close` int(1) NOT NULL,
-                      `close_msg_en` text NOT NULL,
+                      `is_close` int(1) NOT NULL '0',
+                      `close_msg` text NOT NULL,
                       `social` varchar(255) DEFAULT NULL,
-                      `site_tag_en` varchar(255) NOT NULL,
+                      `site_tag` varchar(255) NOT NULL,
                       `external` int(1) DEFAULT '1',
-                      `site_name_ar` varchar(255) NOT NULL,
-                      `site_desc_ar` text NOT NULL,
-                      `close_msg_ar` text NOT NULL,
-                      `site_tag_ar` varchar(255) NOT NULL,
-                      `filterMode` int(1) NOT NULL DEFAULT '0',
                       PRIMARY KEY (`id`)
                     ) ENGINE=MyISAM DEFAULT CHARSET=utf8;";
             $results['table18'] = databaseAPI::getInstance()->executeQuery($sql, null, false) ? $succ : $fail;
@@ -594,7 +505,6 @@ class install extends Controller
                       `rate` int(11) DEFAULT NULL,
                       `last_reply` timestamp NULL DEFAULT NULL,
                       `keywords` varchar(255) DEFAULT NULL,
-                      `attachments` int(1) DEFAULT '0',
                       PRIMARY KEY (`id`)
                     ) ENGINE=MyISAM DEFAULT CHARSET=utf8;";
             $results['table21'] = databaseAPI::getInstance()->executeQuery($sql, null, false) ? $succ : $fail;
@@ -635,8 +545,8 @@ class install extends Controller
                       `country` varchar(120) DEFAULT NULL,
                       `birthday` date DEFAULT NULL,
                       `social` varchar(255) DEFAULT NULL,
-                      `education` text,
-                      `skills` text,
+                      `education` TEXT,
+                      `skills` TEXT,
                       `interest` varchar(255) DEFAULT '[]',
                       `about` tinytext,
                       `quote` varchar(255) DEFAULT '[]',
@@ -649,8 +559,6 @@ class install extends Controller
                       `gold` int(11) DEFAULT '0',
                       `views` int(11) DEFAULT '0',
                       `status` int(11) NOT NULL DEFAULT '1',
-                      `active` int(1) NOT NULL DEFAULT '0',
-                      `hash` varchar(255) NOT NULL,
                       PRIMARY KEY (`id`)
                     ) ENGINE=MyISAM DEFAULT CHARSET=utf8;";
             $results['table23'] = databaseAPI::getInstance()->executeQuery($sql, null, false) ? $succ : $fail;
@@ -700,7 +608,7 @@ class install extends Controller
         //inserting variables basic data
         if (empty(variablesAPI::getInstance()->getVariables()))
         {
-            $sql = "INSERT INTO `variables` VALUES (1,'levels','1','90'),(2,'levels','2','98'),(3,'levels','3','105'),(4,'levels','4','113'),(5,'levels','5','448'),(6,'levels','6','476'),(7,'limit','threads','6'),(8,'limit','messages','40'),(9,'limit','replyPP','8'),(10,'limit','threadPP','10'),(11,'limit','msgPP','12'),(12,'levels','7','504'),(13,'levels','8','532'),(14,'levels','9','560'),(15,'levels','10','1050'),(16,'levels','11','1100'),(17,'levels','12','1150'),(18,'levels','13','1200'),(19,'levels','14','1250'),(20,'levels','15','1300'),(21,'levels','16','1350'),(22,'levels','17','1400'),(23,'levels','18','1450'),(24,'levels','19','1500'),(25,'levels','20','2131'),(26,'levels','21','2200'),(27,'levels','22','2269'),(28,'levels','23','2338'),(29,'levels','24','2406'),(30,'levels','25','2475'),(31,'levels','26','2544'),(32,'levels','27','2613'),(33,'levels','28','2681'),(34,'levels','29','2750'),(35,'limit','attchSize','100'),(36,'limit','attachMaxFiles','3'),(37,'behaviour','verifyEmail','1');";
+            $sql = "INSERT INTO `variables` VALUES (1,'levels','1','90'),(2,'levels','2','98'),(3,'levels','3','105'),(4,'levels','4','113'),(5,'levels','5','448'),(6,'levels','6','476'),(7,'limit','threads','6'),(8,'limit','messages','40'),(9,'limit','replyPP','8'),(10,'limit','threadPP','10'),(11,'limit','msgPP','12'),(12,'levels','7','504'),(13,'levels','8','532'),(14,'levels','9','560'),(15,'levels','10','1050'),(16,'levels','11','1100'),(17,'levels','12','1150'),(18,'levels','13','1200'),(19,'levels','14','1250'),(20,'levels','15','1300'),(21,'levels','16','1350'),(22,'levels','17','1400'),(23,'levels','18','1450'),(24,'levels','19','1500'),(25,'levels','20','2131'),(26,'levels','21','2200'),(27,'levels','22','2269'),(28,'levels','23','2338'),(29,'levels','24','2406'),(30,'levels','25','2475'),(31,'levels','26','2544'),(32,'levels','27','2613'),(33,'levels','28','2681'),(34,'levels','29','2750');";
             $results['variables-data'] = databaseAPI::getInstance()->executeQuery($sql, null, false) ? language::invokeOutput('dataInserted') : language::invokeOutput('notInserted');
         }
         //creating table 26 ( visits table )
@@ -718,89 +626,6 @@ class install extends Controller
                       PRIMARY KEY (`id`)
                     ) ENGINE=MyISAM DEFAULT CHARSET=utf8;";
             $results['table26'] = databaseAPI::getInstance()->executeQuery($sql, null, false) ? $succ : $fail;
-        }
-        //creating table 27 ( attachment table )
-        try {
-            databaseAPI::getInstance()->executeQuery("SELECT 1 FROM `attachment` LIMIT 1");
-            $results['table27'] = $already;
-        } catch (Exception $e){
-            // We got an exception == table not found
-            $sql = "CREATE TABLE `attachment` (
-                      `id` int(11) NOT NULL AUTO_INCREMENT,
-                      `path` varchar(255) DEFAULT NULL,
-                      `thread_id` int(11) NOT NULL,
-                      `size` varchar(45) DEFAULT NULL,
-                      PRIMARY KEY (`id`)
-                    ) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;";
-            $results['table27'] = databaseAPI::getInstance()->executeQuery($sql, null, false) ? $succ : $fail;
-        }
-        //creating table 28 ( inbox draft  table )
-        try {
-            databaseAPI::getInstance()->executeQuery("SELECT 1 FROM `inboxdraft` LIMIT 1");
-            $results['table28'] = $already;
-        } catch (Exception $e){
-            // We got an exception == table not found
-            $sql = "CREATE TABLE `inboxdraft` (
-                      `id` int(11) NOT NULL AUTO_INCREMENT,
-                      `title` varchar(255) DEFAULT NULL,
-                      `sender` int(11) DEFAULT NULL,
-                      `receiver` varchar(45) DEFAULT NULL,
-                      `content` mediumtext,
-                      `date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-                      PRIMARY KEY (`id`)
-                    ) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;";
-            $results['table28'] = databaseAPI::getInstance()->executeQuery($sql, null, false) ? $succ : $fail;
-        }
-        //creating table 29 ( inbox draft  table )
-        try {
-            databaseAPI::getInstance()->executeQuery("SELECT 1 FROM `recover` LIMIT 1");
-            $results['table29'] = $already;
-        } catch (Exception $e){
-            // We got an exception == table not found
-            $sql = "CREATE TABLE `recover` (
-                      `id` int(11) NOT NULL AUTO_INCREMENT,
-                      `user_id` int(11) NOT NULL,
-                      `hash` varchar(255) NOT NULL,
-                      `time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-                      PRIMARY KEY (`id`),
-                      UNIQUE KEY `hash_UNIQUE` (`hash`)
-                    ) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;";
-            $results['table29'] = databaseAPI::getInstance()->executeQuery($sql, null, false) ? $succ : $fail;
-        }
-        //creating table 30 ( subscribes table )
-        try {
-            databaseAPI::getInstance()->executeQuery("SELECT 1 FROM `subscribes` LIMIT 1");
-            $results['table30'] = $already;
-        } catch (Exception $e){
-            // We got an exception == table not found
-            $sql = "CREATE TABLE `subscribes` (
-                      `id` int(11) NOT NULL AUTO_INCREMENT,
-                      `email` varchar(255) DEFAULT NULL,
-                      `priority` int(1) DEFAULT NULL,
-                      `hash` varchar(255) DEFAULT NULL,
-                      PRIMARY KEY (`id`),
-                      UNIQUE KEY `hash_UNIQUE` (`hash`)
-                    ) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;";
-            $results['table30'] = databaseAPI::getInstance()->executeQuery($sql, null, false) ? $succ : $fail;
-        }
-        //creating table 31 ( thread draft table )
-        try {
-            databaseAPI::getInstance()->executeQuery("SELECT 1 FROM `threaddraft` LIMIT 1");
-            $results['table31'] = $already;
-        } catch (Exception $e){
-            // We got an exception == table not found
-            $sql = "CREATE TABLE `threaddraft` (
-                      `id` int(11) NOT NULL AUTO_INCREMENT,
-                      `author_id` int(11) DEFAULT NULL,
-                      `title` varchar(255) DEFAULT NULL,
-                      `content` longtext,
-                      `keywords` varchar(255) DEFAULT NULL,
-                      `forum_id` int(11) DEFAULT NULL,
-                      `date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-                      `attachments` text,
-                      PRIMARY KEY (`id`)
-                    ) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;";
-            $results['table31'] = databaseAPI::getInstance()->executeQuery($sql, null, false) ? $succ : $fail;
         }
         //print the json object
         echo json_encode($results);
@@ -831,11 +656,11 @@ class install extends Controller
     public function admin()
     {
         Controller::$language->load('install/admin');
-        if (!empty(usersAPI::getInstance()->getUsers('*', [ 'role = 3' ])))
+        if (!empty(usersAPI::getInstance()->getUserById(1)))
         {
             echo json_encode(['already' => Controller::$language->invokeOutput('already')]);
         }else{
-            $set = installAPI::getInstance()->createAdmin($_POST, 'adminCreate');
+            $set = usersAPI::getInstance()->createUser(array_merge($_POST, ['role' => 3]), 'adminCreate');
             if (is_string($set) )
             {
                 echo json_encode(["done" => $set]);

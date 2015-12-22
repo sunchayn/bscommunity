@@ -15,10 +15,7 @@
                     <div class="col-m col-12 heading">
                         <h2><?=Language::invokeOutput('heading'.$data['postfix']);?></h2>
                     </div>
-                    <?php if ( $data['postfix'] == '3')
-                            echo '<div class="col-m col-12 notice">'. language::invokeOutput('draft-delay') .'</div>';
-                    ?>
-                    <form action="<?=( $data['postfix'] != '3') ? 'ajax/deleteMessages' : 'ajax/deleteInboxDrafts';?>" method="post" class="col-m col-12 deleteMsg">
+                    <form action="ajax/deleteMessages" method="post" class="col-m col-12 deleteMsg">
                         <input type="hidden" name="token" value="<?=$global['token'];?>">
                         <div class="col-m col-12 box">
                             <div class="col-m col-12 tools">
@@ -43,15 +40,10 @@
                                             $prefix = '<span class="color-5">[' . Language::invokeOutput('prefix/response') . ']</span>';
                                         }elseif($data['postfix'] == '2' && !is_null($message->last_response))
                                             $prefix =  '<span class="color-5">[' . Language::invokeOutput('prefix/inbox') . ']</span>';
-
-                                        if ($data['postfix'] != '3')
-                                        {
-                                             if ($message->sender == $global['logged']->id && $message->has_response == '1')
-                                                $class = 'unread';
-                                            elseif($message->sender != $global['logged']->id && $message->is_rec_read == 0)
-                                                $class = 'unread'; 
-                                        }
-
+                                        if ($message->sender == $global['logged']->id && $message->has_response == '1')
+                                            $class = 'unread';
+                                        elseif($message->sender != $global['logged']->id && $message->is_rec_read == 0)
+                                            $class = 'unread';
                                         include('partials/_inbox.php');
                                     }
                                 }else{

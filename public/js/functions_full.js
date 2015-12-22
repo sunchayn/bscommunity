@@ -20,47 +20,21 @@
 		options = $.extend(defaults, options);
 		function setDdPos(trigger){
 			var p = trigger.position(),
-				height = trigger.innerHeight(),
+				height = trigger.outerHeight(),
 				width = trigger.outerWidth(),
 				menu = $("#" + trigger.data('id')),
-				menuW = menu.outerWidth(),
-				left = trigger.offset().left,
-				rightOff = left + width,
-				offDiff = left - p.left,//offset difference ratio
-				right = $(document).width() - (rightOff + offDiff),
 				top = p.top + height + 8;
-			//if the menu will go outside of the screen from the left
-			if (left <= (menuW / 2 ))
-			{
-				menu.css({
-					'left': p.left + 'px',
-					'right' : 'auto',
-					'top' : top + 'px'
-				});
-			//if the menu will go outside of the screen from the right
-			}else if (rightOff + (menuW / 2 ) >= $(document).width()){ 
-				menu.css({
-					'right': right + 'px',
-					'left' : 'auto',
-					'top' : top + 'px'
-				});
-			}
-			//if the menu will be in the sceen
-			else
-			{
-				menu.css({
-					'left': p.left  - (menuW  - width  ) / 2 + 'px',
-					'right' : 'auto',
-					'top' : top + 'px'
-				});
-			}
-			//#### end if
+			menu.css({
+				'left': p.left  - ( menu.outerWidth() - width  ) / 2 + 'px',
+				'top' : top + 'px'
+			});
 		}
 		$(this).each(function() {
 			// variables
 			var trigger = $(this),
 				dropDown = $("#" + trigger.data('id'));
-			$(window).bind('resize', function() {
+			setDdPos(trigger);
+			$(window).resize(function() {
 				setDdPos(trigger);
 			});
 			//event listener
@@ -71,13 +45,9 @@
 				$('.dropdown-trigger').not(this).removeClass('active-dd');
 				$('.dropdown-menu').not("#" + trigger.data('id')).hide();
 				//styling
-					//#add the toggle
-					trigger.toggleClass('active-dd');
-					//#put the dropdown in the right position
-					if (trigger.hasClass('active-dd'))
-						setDdPos(trigger);
-					//open/close dropdown onClick
-					dropDown.toggle();
+				$(this).toggleClass('active-dd');
+				//open/close dropdown onClick
+				dropDown.toggle();
 				//close dropdown when click outside of it
 				$('.wrapper').bind('click', function(e){
 					if(!$(e.target).is('.dropdown-menu') && !$(e.target).parents().is('.dropdown-menu')){
@@ -242,13 +212,6 @@
 					data = form.serialize(),
 					target = $(this).find('.ajax-loader')
 				target.fadeIn(400).html('<img src="img/loader.gif" />');
-				if (!form.hasClass('noScroll'))
-				{
-					$('html,body').animate({
-						scrollTop: target.offset().top
-					}, 'fast');
-				}
-				
 				$.ajax({
 					url : url,
 					type : type ,
@@ -288,6 +251,14 @@
 					},
 					error: function(error){
 						target.html(error.responseText);
+					},
+					complete: function() {
+						if (!form.hasClass('noScroll'))
+						{
+							$('html,body').animate({
+								scrollTop: target.offset().top
+							}, 'fast');
+						}
 					}
 				});
 			});
@@ -476,12 +447,6 @@
             async: true,
             success : function(response){
 				if (typeof callBackFunc == 'function') callBackFunc(response);
-				setInterval(function(){
-					if (response['reload'])
-						location.reload(true);
-					else if (response['redirect'])
-						window.location.href=response['redirect'];
-				}, 3000);
             },
             error: function(){
                 $('.result-modal').addClass('fail').html('<p> something went wrong </p>').fadeIn(400).delay(3000).fadeOut(400);
@@ -530,8 +495,8 @@ function respChart(selector, data, type, options){
 }
 //end - CHART functions
 function centerPanel(panel){
-	var height = panel.outerHeight(true),
+	var height = panel.outerHeight(),
 		top = ($(window).height() - height ) / 2,
-		left = ($(window).width() - panel.outerWidth(true)) / 2;
+		left = ($(window).outerWidth() - panel.outerWidth() )/ 2;
 	panel.css({top: (top > 0 ? top : 0)+'px', left: (left > 0 ? left : 0)+'px'});
 }

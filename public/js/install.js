@@ -13,43 +13,7 @@
     });
     $(document).ajaxComplete(function() { isProcessing = false; });
     $('form.ajax').ajaxSubmit();
-    //pre-installer
-    $('.pre-installer').on('click', function(e){
-        e.preventDefault();
-        var $this = $(this);
-            data = $this.closest('form').serialize(),
-            finalR = $('.ajax-result.final'),
-            db = $('.ajax-result.db'),
-            mail = $('.ajax-result.mail');
-
-        $('.ajax-result').html('<img src="img/loader.gif" alt="loader"></img>').show();
-        $('html,body').animate({
-            scrollTop: finalR.offset().top
-        }, 'fast');
-        $this.ajaxRequest({url : 'install/preCheck', data : data}, function(response){
-            $('.version-rsl').html(response.php);
-            if (response['required'])
-            {
-                finalR.removeClass('succ').addClass('fail').html(response.required);
-                db.hide();
-                mail.hide();
-            }
-            else {
-
-                db.html(response.database);
-                mail.show().html(response.email);
-                if (response['createF'])
-                    finalR.removeClass('succ').addClass('fail').html(response.createF);
-                else if(response['createP'])
-                    finalR.removeClass('fail').addClass('succ').html(response.createP);
-                else
-                    finalR.hide();
-            }
-
-            $('.next').show();
-        });
-    });   
-     //install tables
+    //install tables
     $('.install-tables').on('click', function(e){
         e.preventDefault();
         $('.ajax-result').css({'display': 'inline-block'});

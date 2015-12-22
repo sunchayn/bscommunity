@@ -7,7 +7,6 @@
  * @author Mazen Touati
  * @version 1.0.0
  */
-
 class databaseAPI{
     /**
      * $_database:
@@ -224,6 +223,6 @@ class databaseAPI{
      * @return mixed
      */
     public function setCharset(){
-        return $this->_connection->exec("SET NAMES '{$this->_charset}'");
+        return Controller::$db->exec("SET NAMES '{$this->_charset}'");
     }
 }

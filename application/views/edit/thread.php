@@ -10,7 +10,7 @@
                 <i class="icon-angle-<?=DIRECTION;?>"></i>
                 <span href="#"><?=Language::invokeOutput('update/thread') . ' ' .isset_get($data['thread'], 'title');?></span>
             </div>
-            <form action="ajax/updateThread" method="POST" class="ajax editor">
+            <form action="ajax/updateThread" method="POST" class="ajax">
                 <div class="col-m col-12 box">
                     <h3><?=Language::invokeOutput('update/thread')?></h3>
                 </div>
@@ -31,41 +31,12 @@
                         <?=Language::invokeOutput('setKeywords')?>
                     </small>
                 </div>
-                <div class="col-m col-12 hidden-item">
+                <div class="col-m col-12 box">
                     <input type="hidden" name="token" value="<?=$global['token'];?>" />
                     <input type="hidden" name="id" value="<?=isset_get($data['thread'], 'id');?>" />
-                    <input type="hidden" name="attachments" class="attachmentsBus" value="" />
+                    <a id="submit-editor" href="#editThread" class="formSubmit"><?=Language::invokeOutput('submit/thread')?></a>&nbsp;<i class="icon-<?=DIRECTION;?>"></i>
                 </div>
-                <?php if ($data['thread']->attachments == 1) { ?>
-                    <!-- #  attachments # -->
-                    <div class="col-m col-12">
-                        <small><?=Language::invokeOutput('curr-attachments');?></small>
-                        <div class="col-m col-12">
-                            <?=attachmentAPI::getInstance()->getFilesReadyForDownload($data['thread']->id);?>
-                        </div>
-                        <div class="col-m col-12">
-                            <input type="checkbox" name="delCurrAttach" id="delC">
-                            <label for="delC"><?=language::invokeOutput('delete-curr-attch');?></label>
-                        </div>
-                    </div>
-                    <!-- #  attachments # -->
-                <?php } ?>
             </form>
-            <form action="ajax/uploadAttachments" method="POST" class="attch-holder" enctype="multipart/form-data">
-                <!-- attachment -->
-                <div class="col-m col-12 box">
-                    <h4 href="#"><?=Language::invokeOutput('attach/add');?></h4>
-                    <input type="file" name="attachs[]" class="filesInput" placehodler="<?=Language::invokeOutput('attach/choise');?>" multiple>
-                    <small><a href="#upload-attach" class="attch-uploader formSubmit"><?=Language::invokeOutput('attach/upload');?></a></small>
-                    <div class="hidden-item upload-loader"><img src="<?=URL;?>/img/loader.gif" alt="ajax-loader"/></div>
-                    <div class="att-rslt succ-attch hidden-item"></div>
-                    <div class="att-rslt fail-attch hidden-item"></div>
-                </div>
-                <!-- end -attachment -->
-            </form>
-            <div class="col-m col-12 box">
-                <a id="submit-editor" href="#editThread"><?=Language::invokeOutput('frequent/update')?></a>&nbsp;<i class="icon-<?=DIRECTION;?>"></i>
-            </div>
         </div><!-- end - parent grid-section -->
     </div><!-- end - sub-wrapper -->
 </div>

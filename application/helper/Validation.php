@@ -7,10 +7,7 @@
  * @author Mazen Touati
  * @version 1.0.0
  */
-
 class Validation {
-
-    private static $restrict = ['admin', 'moderator', 'مدير', 'مشرف'];
 
     /**
      * @param $string
@@ -18,11 +15,7 @@ class Validation {
      */
     public static function isRestrictEntry($string)
     {
-        foreach (self::$restrict as $value) {
-            if (mb_strpos($string, $value) !== false)
-                return true;
-        }
-
+        //soon
         return false;
     }
 
@@ -34,7 +27,7 @@ class Validation {
     public static function isShort($input, $length = 6)
     {
         $input = str_replace(' ', '', $input);
-        return !isset(strip_tags(fullTrim($input))[--$length]);
+        return !isset(strip_tags($input)[--$length]);
     }
     /**
      * @param array $array

@@ -7,7 +7,6 @@
  * @author Mazen Touati
  * @version 1.0.0
  */
-
 class repliesAPI extends databaseAPI{
     /**
      * @var  string
@@ -142,10 +141,8 @@ class repliesAPI extends databaseAPI{
         //check for errors
         if (!empty(array_diff($requireData, $fieldsArray)))
             return ['general' => [Controller::$language->invokeOutput("require")]];
-        //-- GET THE THREAD
-        $thread = threadsAPI::getInstance()->getThreadByID($data['thread_id'], 'id, author_id');
         //if thread doesn't exist
-        if (empty($thread))
+        if (!threadsAPI::getInstance()->isExist(($data['thread_id'])))
             $errors['thread'][] =  Controller::$language->invokeOutput("no-thread");
         //if short content
         if (Validation::isShort($data['content']))
@@ -168,8 +165,7 @@ class repliesAPI extends databaseAPI{
             //increment thread replies
             threadsAPI::getInstance()->updateThreadReplies($data['thread_id']);
             //notify author
-            if ($data['author_id'] != $thread[0]->author_id)
-                notificationAPI::getInstance()->notifyNewReply(intval($data['thread_id']));
+            notificationAPI::getInstance()->notifyNewReply(intval($data['thread_id']));
             $xp = (isset(strip_tags($data['content'])[99])) ? 55 : 40;
             $gold = (isset(strip_tags($data['content'])[99])) ? 40  : 25;
             //add xp gain

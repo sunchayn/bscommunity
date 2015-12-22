@@ -5,7 +5,6 @@
  * @author Mazen Touati
  * @version 1.0.0
  */
-
 class forum extends Controller{
 
     /**
@@ -29,7 +28,7 @@ class forum extends Controller{
                 //prepare the language
                 self::$language->load('forum');
                 //the title of the page on browser tab
-                $data['title'] = isset_get($data['forum'], 'title_'.LANGUAGE_CODE, 'undefined');
+                $data['title'] = $data['forum']->title;
                 //the title shown on the page wide header
                 $data['page-title'] = self::$GLOBAL['site_name'];
                 //set the order preference
@@ -61,10 +60,10 @@ class forum extends Controller{
                     $thread->author = (!empty($thread->author)) ? $thread->author[0] : null;
                 }
                 //get all the categories in order to make a cats. switcher
-                $data['categories'] = categoryAPI::getInstance()->getCategories("id, title_".LANGUAGE_CODE);
+                $data['categories'] = categoryAPI::getInstance()->getCategories("id, title");
                 //assign the forums of each category
                 foreach ($data['categories'] as $cat)
-                    $cat->forums = forumsAPI::getInstance()->getForumsByParent($cat->id, "id, title_".LANGUAGE_CODE);
+                    $cat->forums = forumsAPI::getInstance()->getForumsByParent($cat->id, "id, title");
                 //show views
                 $this->loadView('header', $data);
                 $this->loadView('forum', $data);

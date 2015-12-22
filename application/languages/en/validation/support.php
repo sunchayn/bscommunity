@@ -9,6 +9,4 @@ return [
     'closed' => 'sorry this ticked is closed !',
     'response' => '<span>your successfully response the ticket</span><br /><small>you will be redirect automatically .</small>',
     'done' =>  "<span>your successfully send the ticket</span><br /><small>you will be redirect automatically .</small>",
-    'delete' => 'ticket(s) successfully deleted',
-    'not-all' => 'something went wrong not all tickets have been deleted',
 ];

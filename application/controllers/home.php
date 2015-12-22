@@ -5,7 +5,6 @@
  * @author Mazen Touati
  * @version 1.0.0
  */
-
 class Home extends Controller
 {
 
@@ -60,7 +59,7 @@ class Home extends Controller
                         //get the number of threads
                         $forum->threadsCount = $getForumThreads->cID;
                         //get last thread
-                        $forum->LastThread = threadsAPI::getInstance()->getLastThreads('threads.`id`, threads.`title`, threads.`create`, users.`profile_picture`,users.`username`,users.`id` as UID',[ ['forum_id','=',$forum->id]],1,true)[0];
+                        $forum->LastThread = threadsAPI::getInstance()->getLastThreads('threads.`id`, threads.`title`, users.`profile_picture`,users.`username`,users.`id` as UID',[ ['forum_id','=',$forum->id]],1,true)[0];
                     }else{
                         //if no threads has found in this forum
                         $forum->noThreads = true;

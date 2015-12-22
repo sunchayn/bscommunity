@@ -30,18 +30,13 @@ footer {
 				background-color: rgba(0, 0, 0, .2);
 				& input[type="text"] {
 					background-color: transparent;
-					//width: 70%;
-					//display: inline-block;
+					width: 70%;
 					//padding: 0.4em .5em;
-					line-height: normal;
 				}
 
 				& .btn {
-					//width: 25%;
-					//display: inline-block;
-					//@if $direction == rtl {margin: 1px 4% 1px 0;} @else {margin: 1px 0 1px 4%;}
-					line-height: normal;
-					@if $direction == ltr{margin: 0 0 0 1.6%;}@else{margin: 0 1.6% 0 0;}
+					width: 25%;
+					@if $direction == rtl {margin: 1px 5% 1px 0;} @else {margin: 1px 0 1px 5%;}
 				}
 			}
 		}
@@ -59,13 +54,9 @@ footer {
 	background-color: $color1;
 	& .copyright{
 		@extend .a-left;
-		padding: .4em 0 ;
+		padding: .8em 0 ;
 		background-color: darken($color1,4%);
-		& .md a{
-			& img {
-				vertical-align: middle;
-			}
-		}
+
 	}
 
 	& .social-links {
@@ -78,7 +69,9 @@ footer {
 			@if $direction == ltr{margin-left: .1em;}@else{margin-right: .1em;}
 			text-align: center;
 			background-color: #fff;
-			color: $white;
+			& i {
+				color: $white;
+			}
 			&#facebook {
 				background-color: #3b5998;
 			}

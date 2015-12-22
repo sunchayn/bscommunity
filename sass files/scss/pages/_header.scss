@@ -12,7 +12,7 @@ header .top-nav{
 	}
 
 	& > div{
-		padding: .5em 0;
+		padding: .5 0;
 	}
 	
 	& nav > a {
@@ -79,16 +79,6 @@ header .top-nav{
 		}
 	}
 
-	& .small-username {
-		@extend .rad2;
-		display: inline-block;
-		background-color: darken($color1, 10%);
-		padding: .2em .4em;
-		text-decoration: none;
-		vertical-align: middle;
-		color: darken($color3, 60%);
-	}
-
 	& .user-panel {
 
 		& > a[class^='icon-']{
@@ -110,7 +100,6 @@ header .top-nav{
 		background-color: $color1;
 		border-top: 2px solid $color5;
 		z-index: 9999;
-		margin: 0;
 		& a {
 			display: block;
 			@extend .f-left;
@@ -161,12 +150,11 @@ header .top-nav{
 
 	& #title {
 		display: inline-block;
-		padding: 2em 1.75em;
-		font-size: 2.5em;
+		padding:0.8em 1em;
+		font-size: 40px;
 		border: 5px solid #fff;
 		margin: 1em 0;
 		color: $white;
-		font-weight: $bold;
 	}
 }
 

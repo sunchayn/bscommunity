@@ -7,7 +7,6 @@
  * @author Mazen Touati
  * @version 1.0.0
  */
-
 class variablesAPI extends databaseAPI{
     /**
      * @var  string
@@ -47,10 +46,6 @@ class variablesAPI extends databaseAPI{
 
     public function updateVariable($data)
     {
-        //only admins can access to this method
-        if (!accessAPI::is_admin())
-            return false;
-        //-- ## --//
         Controller::$language->load('admin_cp/validation/variables');
         if (empty($data))
             return false;
@@ -63,11 +58,7 @@ class variablesAPI extends databaseAPI{
         if ($data[$e] == $variable->value)
             return [Controller::$language->invokeOutput("no-change")];
         if ($group == 'limit')
-        {
-            $new = abs(intval($data[$e]));
-            if (isset($data['attachMaxFiles']) && $data['attachMaxFiles'] < 2)
-                $new = 2;
-        }
+            $new = intval($data[$e]);
         //update the category
         return (parent::updateData($this->_table, ['field' => 'id', 'value' => $variable->id], ['value' => $new])) ? Controller::$language->invokeOutput('done') : false;
     }

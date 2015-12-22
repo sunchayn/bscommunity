@@ -12,7 +12,7 @@
                 <i class="icon-angle-<?=DIRECTION;?>"></i>
                 <span href="#"><?=Language::invokeOutput('create/reply')?></span>
             </div>
-            <form action="ajax/createReply?redirect=true" method="POST" class="ajax editor">
+            <form action="ajax/createReply?redirect=true" method="POST" class="ajax">
                 <div class="col-m col-12 box">
                     <h3><?=Language::invokeOutput('create/reply')?></h3>
                 </div>
@@ -31,7 +31,7 @@
                     <input type="hidden" name="token" value="<?=$global['token'];?>" />
                     <input type="hidden" name="author_id" value="<?=$global['logged']->id;?>" />
                     <input type="hidden" name="thread_id" value="<?=isset_get($data['thread'], 'id');?>" />
-                    <a id="submit-editor" href="#addReply"><?=Language::invokeOutput('submit/reply')?></a>&nbsp;<i class="icon-<?=DIRECTION;?>"></i>
+                    <a id="submit-editor" href="#addReply" class="formSubmit"><?=Language::invokeOutput('submit/reply')?></a>&nbsp;<i class="icon-<?=DIRECTION;?>"></i>
                 </div>
             </form>
         </div><!-- end - parent grid-section -->

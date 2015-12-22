@@ -7,7 +7,7 @@
         isProcessing = true;
     });
     $(document).ajaxComplete(function(e) {  isProcessing = false; });
-    //form submitters
+    //form submitter
     $('.formSubmit').on("click",function(e){
         e.preventDefault();
         $(this).closest('form').submit();
@@ -116,34 +116,6 @@
             });
         });
     });
-    //-delete thread
-    $('.deleteThread').on('click', function(e){
-        e.preventDefault();
-        var target = $(this);
-        target.ajaxConfirm('deleteThread', function(){
-            var data = target.data('content');
-            target.ajaxRequest({url : 'ajax/deleteThread', data : data}, function(response){
-                if (response['done'])
-                    $('.result-modal').removeClass('fail').addClass('succ').html('<p>' + response.done  + '</p>').fadeIn(400).delay(3000).fadeOut(400);
-                else
-                    $('.result-modal').removeClass('succ').addClass('fail').html('<p>' + response.error  + '</p>').fadeIn(400).delay(3000).fadeOut(400);
-            });
-        });
-    });
-    //-delete thread
-    $('.deleteThreadFF').on('click', function(e){
-        e.preventDefault();
-        var target = $(this);
-        target.ajaxConfirm('deleteThread', function(){
-            var data = target.data('content');
-            target.ajaxRequest({url : 'ajax/deleteThreadFromForums', data : data}, function(response){
-                if (response['done'])
-                    $('.result-modal').removeClass('fail').addClass('succ').html('<p>' + response.done  + '</p>').fadeIn(400).delay(3000).fadeOut(400);
-                else
-                    $('.result-modal').removeClass('succ').addClass('fail').html('<p>' + response.error  + '</p>').fadeIn(400).delay(3000).fadeOut(400);
-            });
-        });
-    });
     //delete message(s)
     $('.deleteMsg').on('submit',function(e){
         e.preventDefault();
@@ -164,44 +136,7 @@
                 else
                 {
                     $('.result-modal').removeClass('succ').addClass('fail').html('<p>' + response.error  + '</p>').fadeIn(400).delay(3000).fadeOut(400);
-                    setTimeout(function(){ location.reload(true); }, 3000);
-                }
-            });
-        });
-    });
-    //delete SIngle Message
-    $('.deleteSingleMsg').on('click', function(e){
-        e.preventDefault();
-        var target = $(this);
-        target.ajaxConfirm('deleteMessages', function(){
-                var data = target.attr('data-get');
-            target.ajaxRequest({url : 'ajax/deleteMessage', data : data}, function(response){
-                if (response['done'])
-                {
-                    $('.result-modal').removeClass('fail').addClass('succ').html('<p>' + response.done  + '</p>').fadeIn(400).delay(3000).fadeOut(400);
-                }
-                else
-                {
-                    $('.result-modal').removeClass('succ').addClass('fail').html('<p>' + response.error  + '</p>').fadeIn(400).delay(3000).fadeOut(400);
-                }
-            });
-        });
-    });
-    //delete Draft
-    $('.deleteDraft').on('click', function(e){
-        e.preventDefault();
-        var target = $(this);
-        target.ajaxConfirm('deleteDraft', function(){
-                var data = target.attr('data-content');
-            target.ajaxRequest({url : 'ajax/deleteDraft', data : data}, function(response){
-                if (response['done'])
-                {
-                    $('.result-modal').removeClass('fail').addClass('succ').html('<p>' + response.done  + '</p>').fadeIn(400).delay(3000).fadeOut(400);
-                    target.closest('.draft-modal').delay(3000).fadeOut(400, function(){$(this).remove();});
-                }
-                else
-                {
-                    $('.result-modal').removeClass('succ').addClass('fail').html('<p>' + response.error  + '</p>').fadeIn(400).delay(3000).fadeOut(400);
+                    setTimeOut(function(){ location.reload(true); }, 3000);
                 }
             });
         });
@@ -262,30 +197,6 @@
                 }
                 else
                     $('.result-modal').removeClass('succ').addClass('fail').html('<p>' + response.error  + '</p>').fadeIn(400).delay(3000).fadeOut(400);
-            });
-        });
-    });
-    //deactivate account
-    $('#desactivate-acc').on('click',function(e){
-        e.preventDefault();
-        var target = $(this);
-        target.ajaxConfirm('deactivateAccount', function(){
-            var data = 'token='+target.attr('data-token');
-            target.ajaxRequest({url : 'ajax/deactivateUser', data : data}, function(response){
-                if (response['done'])
-                {
-                    $('.result-modal').removeClass('fail').addClass('succ').html('<p>' + response.done  + '</p>').fadeIn(400).delay(3000).fadeOut(400);
-                    setTimeout(function(){
-                        $('.ticket.checked').fadeOut(400, function(){
-                            $(this).remove();
-                        });
-                    }, 3000);
-                }
-                else
-                {
-                    $('.result-modal').removeClass('succ').addClass('fail').html('<p>' + response.error  + '</p>').fadeIn(400).delay(3000).fadeOut(400);
-                    setTimeOut(function(){ location.reload(true); }, 3000);
-                }
             });
         });
     });
@@ -426,46 +337,5 @@
         });
         panel.find('.linkHolder').html(link);
         panel.find('.theLink').attr('href', link);
-    });
-    //attachment uploader
-    $('.attch-holder').on('submit', function(e){
-        e.preventDefault();
-        var holder = $(this);
-        var url = holder.attr('action');
-        var data = new FormData(holder[0]);
-        var loader = holder.find('.upload-loader');
-        data.append('bsc_atc_current', $('.attachmentsBus').val());
-        loader.fadeIn(400);
-        $.ajax({
-            url : url,
-            type : 'POST',
-            data : data,
-            dataType : 'json',
-            async: true,
-            processData: false,
-            contentType: false,
-            success : function (response){
-                $('.att-rslt').html('');
-                //fetch succeeded files
-                if (response.succeed.length > 0)
-                    $('.succ-attch').show();
-                $.each(response['succeed'], function(k, v) {
-                    $('.succ-attch').append('<div class="attach-item">' + v['name'] + ' <small>' + v['size'] + '</small></div>');
-                });
-                //fetch faild files
-                if (response.failed.length > 0)
-                    $('.fail-attch').show();
-                $.each(response['failed'], function(k, v) {
-                    $('.fail-attch').append('<div class="attach-item">' + v['name'] + ' <small>' + v['size'] + '</small> - <span><bdo dir="auto">'+ v['error'] +'</bdo></span></div>');
-                });
-                $('.attachmentsBus').val(response.data);
-            },
-            error: function(error){
-                alert("something went wrong !");
-            },
-            complete: function() {
-                loader.hide();
-            }
-        });
     });
 })(jQuery);

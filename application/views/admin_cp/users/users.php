@@ -25,7 +25,7 @@
                         <div class="col-m col-12">
                             <?=language::invokeOutput('search-users');?>
                             <form class="inline-b middle" action="admin_cp/users" method="GET">
-                                <input type="text" name="search" placeholder="<?=language::invokeOutput('username');?>" value="<?=$data['search'];?>" class="rad2">
+                                <input type="text" name="search" placeholder="<?=language::invokeOutput('username');?>" value="<?=$data['search'];?>">
                             </form>
                         </div>
                         <!-- ########## -->
@@ -37,7 +37,7 @@
                                 echo '<div class="no-data">'. Language::invokeOutput('no-user') .'</div>';
                             }else{
                                 ?>
-                                <div class="col-m col-12 cf-list-cap v-middle hide-sm">
+                                <div class="col-m col-12 cf-list-cap v-middle">
                                     <div class="col-1 v-col"><?=language::invokeOutput('captions/id');?></div>
                                     <div class="col-2 v-col"><?=language::invokeOutput('captions/username');?></div>
                                     <div class="col-2 v-col"><?=language::invokeOutput('captions/role');?></div>

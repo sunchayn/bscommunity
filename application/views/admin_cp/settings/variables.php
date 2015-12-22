@@ -3,7 +3,10 @@
         <div class="grid-section">
             <div class="flexbox">
                 <!-- start menu -->
-                <?php include(__DIR__.DIRECTORY_SEPARATOR.'../_sidebar.php'); ?>
+                <?php
+                //echo();
+                include(__DIR__.DIRECTORY_SEPARATOR.'../_sidebar.php')
+                ;?>
                 <!-- end menu -->
                 <!-- ###### -->
                 <!-- start display -->
@@ -116,6 +119,7 @@
                         </div>
                         <!-- end - one label -->
                         <!-- ###### -->
+                        <!-- ###### -->
                         <div class="col-m col-12 split"></div>
                         <!-- one label -->
                         <div class="col-m col-12 field-label input-to-toggle-wrapper">
@@ -133,53 +137,6 @@
                                     </form>
                                 </div>
                                 <?=isset_get($data, 'msgPP');?>
-                            </div>
-                            <div class="col-m col-1">
-                                <a href="#" class="toggle-input"><?=Language::invokeOutput('edit-label');?></a>
-                            </div>
-                        </div>
-                        <!-- end - one label -->
-                        <div class="col-m col-12 split"></div>
-                        <!-- one label -->
-                        <div class="col-m col-12 field-label input-to-toggle-wrapper">
-                            <div class="col-m col-4">
-                                <h4><?=language::invokeOutput('labels/attachMaxSize');?></h4>
-                                <small class="label-desc"><?=language::invokeOutput('labels-desc/attachMaxSize');?></small>
-                            </div>
-                            <div class="col-m col-7">
-                                <div class="col-m col-12 input-to-toggle">
-                                    <form action="ajax/updateVariables" method="POST" class="ajaxModal">
-                                        <input type="text" name="attchSize" value="<?=isset_get($data, 'attchSize');?>">
-                                        <input type="hidden" name="token" value="<?=$global['token'];?>">
-                                        <input type="hidden" name="group" value="limit">
-                                        <a class="icon-cancel toggle-back"></a>
-                                    </form>
-                                </div>
-                                <?=Uploader::getReadableSize(isset_get($data, 'attchSize', 0) * 1024);?>
-                            </div>
-                            <div class="col-m col-1">
-                                <a href="#" class="toggle-input"><?=Language::invokeOutput('edit-label');?></a>
-                            </div>
-                        </div>
-                        <!-- end - one label -->
-                        <div class="col-m col-12 split"></div>
-                        <!-- ###### -->
-                        <!-- one label -->
-                        <div class="col-m col-12 field-label input-to-toggle-wrapper">
-                            <div class="col-m col-4">
-                                <h4><?=language::invokeOutput('labels/attachMaxFiles');?></h4>
-                                <small class="label-desc"><?=language::invokeOutput('labels-desc/attachMaxFiles');?></small>
-                            </div>
-                            <div class="col-m col-7">
-                                <div class="col-m col-12 input-to-toggle">
-                                    <form action="ajax/updateVariables" method="POST" class="ajaxModal">
-                                        <input type="text" name="attachMaxFiles" value="<?=isset_get($data, 'attachMaxFiles');?>">
-                                        <input type="hidden" name="token" value="<?=$global['token'];?>">
-                                        <input type="hidden" name="group" value="limit">
-                                        <a class="icon-cancel toggle-back"></a>
-                                    </form>
-                                </div>
-                                <?=isset_get($data, 'attachMaxFiles');?>
                             </div>
                             <div class="col-m col-1">
                                 <a href="#" class="toggle-input"><?=Language::invokeOutput('edit-label');?></a>

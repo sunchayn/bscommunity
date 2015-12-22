@@ -26,18 +26,18 @@
 			&.fail {
 				color: $color5;
 				padding: 0 .4em;
-				@if $direction == 'ltr' { font-weight: $bold; }
+				font-weight: bold;
 			}
 
 			&.done {
 				color: $succ;
 				padding: 0 .4em;
-				@if $direction == 'ltr' { font-weight: $bold; }
+				font-weight: bold;
 			}
 
 			&.war {
 				color: darken($succ, 10%);
-				@if $direction == 'ltr' { font-weight: $bold; }
+				font-weight: bold;
 				padding: 0 .4em;
 			}
 		}

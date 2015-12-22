@@ -9,14 +9,12 @@ return [
                     'contact' => [
                                     'title' => 'contact',
                                     'pm' => 'send a private message',
-                                    'facebook' => 'facebook',
-                                    'twitter' => 'twitter',
-                                    'youtube' => 'youtube',
+                                    'social' => 'social links',
                                ]
                 ],
     'rateT' => 'rate thread',
-    'thank' => 'thank you',
-    'no-thanks' => 'be the first that thank user for this thread !',
+    'thank' => 'give a thanks',
+    'no-thanks' => 'there\'s no thanks yet, be the first',
     'seeFullUsers' => 'see full users',
     'thanksModal' => [
                         'title' => 'all thanks',
@@ -29,11 +27,8 @@ return [
                         '0' => 'reply must be longer than 6 chars .',
                         '1' => 'you disallowed to use bad words or bad script .',
                      ],
-    'addReply-placeholder' => 'be positive and discuss thread with community .',
-    'fullReply' => 'via editor',
-    'quick-reply' => 'quick reply',
+    'fullReply' => 'full feature reply',
     'update-thread' => 'update thread',
-    'delete-thread' => 'delete thread',
     'update-reply' => 'update reply',
     'remove-reply' => 'remove reply',
     'remove-thread' => 'remove thread',
@@ -48,6 +43,4 @@ return [
         'go' => 'yes i know that and i want to go !',
         'hint' => 'you can disable this feature by visiting your <a href="settings/security">security settings</a>'
     ],
-    'thread-attachments' => 'attachments :',
-    'daysS' => 'days since join',
 ];

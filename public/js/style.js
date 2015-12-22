@@ -3,15 +3,15 @@
 	$(window).scroll(function(){
 		if ($(this).scrollTop() > 100) {
 			if ($(window).outerWidth() > 450){
-				$('.scroll-up').fadeIn();
+				$('.scroll-up').show();
 			}else{
-				$('.scroll-up-res').fadeIn();
+				$('.scroll-up-res').show();
 			}
 		} else {
 			if ($(window).outerWidth() > 450){
-				$('.scroll-up').fadeOut();
+				$('.scroll-up').hide();
 			}else{
-				$('.scroll-up-res').fadeOut();
+				$('.scroll-up-res').hide();
 			}
 		}
 	});
@@ -52,11 +52,11 @@
 	//toggle inputs
 	$(".toggle-input").on('click', function(e){
 		e.preventDefault();
-		$(this).parents(".input-to-toggle-wrapper").find(".input-to-toggle").fadeIn(400).children("input").focus().parents(".input-to-toggle-wrapper").next('.additional-input').fadeIn(400);
+		$(this).parents(".input-to-toggle-wrapper").find(".input-to-toggle").fadeIn(400).children("input").focus();
 	});
 	$(".toggle-back").on('click', function(e){
 		e.preventDefault();
-		$(this).parents('.input-to-toggle').fadeOut(400).parents(".input-to-toggle-wrapper").next('.additional-input').fadeOut(400);
+		$(this).parents('.input-to-toggle').fadeOut(400);
 	});
 	//end - toggle inputs
 	//######
@@ -101,26 +101,14 @@
 	function fitToScreenHeight(element){
 		element.css({height:$(window).outerHeight()});
 	}
-	//box pages
 	fitToScreenHeight($('.box-page'));
-	//some responsive styling
-	function responsiveStyle()
-	{
-		var resNavHeight = $('.res-menu').outerHeight();
-		$('style').text("@media screen and (max-width:480px) { .wrapper { padding-bottom: "+ resNavHeight +"px; } }");
-	}
+	centerPanel($('.central-box'));
 	//------
-	$(window).load($(this), function() {
-		//center to screen panels
-		centerPanel($('.central-box'));
-		responsiveStyle();
-    });
 	// on window resize
 	$(window).on('resize', function(){
 		$('.scroll-up, .scroll-up-res').hide();
 		centerPanel($('.central-box'));
 		fitToScreenHeight($('.box-page'));
-		responsiveStyle();
 		if ($(this).outerWidth() > 480)
 		{ $(".resp-login").hide(); }
 	});

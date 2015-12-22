@@ -5,6 +5,7 @@
     <div class="case-desc inline-b">
         <h2><?=$inventory->$data['item-title'];?></h2>
         <p><?=$inventory->$data['item-desc'];?></p>
+        <a href="#" class="gift-item disabled">gift to friend</a> -
         <a href="#consume-item" data-content="id=<?=$inventory->item_id;?>&token=<?=$global["token"];?>" class="gift-item consume-item"><?=Language::invokeOutput('consume');?></a><br>
         <small>
             <?=Language::invokeOutput('amount').' '.$inventory->amount.'.';?>

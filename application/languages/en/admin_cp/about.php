@@ -20,7 +20,8 @@ return [
     'search' => 'search for updates',
     'thankYou' => 'thank you for using BloodStone Community V1 beta',
     'short-desc' => 'I\'m a self-taught web developer & designer and graphic designer from Tunisia, i love simplicity and calmness .',
-    'interest-list' => 'music, anime, gaming ...',
+    'interest-list' => 'music, scene ...',
     'skills-list' => 'coding, design ...',
     'country-list' => 'kebeli - tunisia',
+
 ];

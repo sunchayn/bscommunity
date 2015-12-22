@@ -7,7 +7,6 @@
  * @author Mazen Touati
  * @version 1.0.0
  */
-
 class visitsAPI extends databaseAPI{
     /**
      * @var  string
@@ -86,7 +85,7 @@ class visitsAPI extends databaseAPI{
         {
             $device = $this->userAgent($_SERVER['HTTP_USER_AGENT']);
             $ip = $_SERVER['REMOTE_ADDR'];
-            $country = json_decode(@file_get_contents('http://ipinfo.io/'. $ip .'/json'));
+            $country = json_decode(file_get_contents('http://ipinfo.io/'. $ip .'/json'));
             $country = (isset($country->country)) ? $country->country : 'unknown';
             if(parent::insertData($this->_table, ['ip', 'device', 'browser', 'country'],[$ip, $device, $this->getBrowser(), $country]))
                 Session::set($this->_sess, true);

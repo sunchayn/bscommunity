@@ -6,15 +6,20 @@
 		position: fixed;
 		padding: .4em;
 		@extend .rad;
+		& > .v-col {
+			padding: .3em;
+		}
+
 		&.error-page {
 			& h1 {
 				text-align: center;
-				color: $color5;
+				font-size: 86px;
 			}
 
 			& h2 {
 				text-align: center;
-				padding: .5em 0;
+				font-size: 52px;
+				padding: .3em 0;
 				color: $color5;
 			}
 

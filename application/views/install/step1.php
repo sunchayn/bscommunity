@@ -3,7 +3,7 @@
         <div class="grid-section area">
             <div class="col-m col-12 a-center heading">
                 <img src="<?=URL?>img/logo.png" alt="logo" class="x-100">
-                <h3>bloodstone community V1 - beta</h3>
+                <h3>bloodstone community V1 - alpha</h3>
             </div>
             <div class="col-m col-12 steps step1">
                 <div class="col-m col-12">
@@ -38,11 +38,6 @@
                         <li id='table24'><span><?=language::invokeOutput('step1/table24');?></span><span class="ajax-result"><img src="<?=URL;?>img/loader.gif" alt="loader"></span></li>
                         <li id='table25'><span><?=language::invokeOutput('step1/table25');?></span><span class="ajax-result"><img src="<?=URL;?>img/loader.gif" alt="loader"></span></li>
                         <li id='table26'><span><?=language::invokeOutput('step1/table26');?></span><span class="ajax-result"><img src="<?=URL;?>img/loader.gif" alt="loader"></span></li>
-                        <li id='table27'><span><?=language::invokeOutput('step1/table27');?></span><span class="ajax-result"><img src="<?=URL;?>img/loader.gif" alt="loader"></span></li>
-                        <li id='table28'><span><?=language::invokeOutput('step1/table28');?></span><span class="ajax-result"><img src="<?=URL;?>img/loader.gif" alt="loader"></span></li>
-                        <li id='table29'><span><?=language::invokeOutput('step1/table29');?></span><span class="ajax-result"><img src="<?=URL;?>img/loader.gif" alt="loader"></span></li>
-                        <li id='table30'><span><?=language::invokeOutput('step1/table30');?></span><span class="ajax-result"><img src="<?=URL;?>img/loader.gif" alt="loader"></span></li>
-                        <li id='table31'><span><?=language::invokeOutput('step1/table31');?></span><span class="ajax-result"><img src="<?=URL;?>img/loader.gif" alt="loader"></span></li>
                     </ul>
                     <h3><?=LAnguage::invokeOutput('step1/data');?></h3>
                     <ul>
@@ -57,7 +52,7 @@
                 <div class="col-m col-12 links">
                     <a href="#tables" class="install-tables"><?=language::invokeOutput('step2/settings');?></a>
                     <span class="next hidden-item">
-                         - <a href="install/step2" class="middle"><?=language::invokeOutput('next');?></a>&nbsp;<i class="<?=language::invokeOutput('direction');?>"></i>
+                         - <a href="install/step2"><?=language::invokeOutput('next');?></a>&nbsp;<i class="<?=language::invokeOutput('direction');?>"></i>
                     </span>
                 </div>
             </div>

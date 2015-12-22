@@ -5,18 +5,11 @@
  * @author Mazen Touati
  * @version 1.0.0
  */
-
 class ajax extends Controller
 {
 
     public function __construct()
     {
-        //prevent direct access to the ajax methods
-        if (!@$_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest')
-        {
-            header('Location: '.URL.'error');
-            exit();
-        }
         parent::__construct(false, true);
         if ($this->checkAttempts())
         {
@@ -25,7 +18,7 @@ class ajax extends Controller
         }
     }
 
-    /** check if the user spam ajax requests
+    /** check if the user dosen't spam ajax requests
      * @return bool
      */
     public function checkAttempts()
@@ -290,7 +283,48 @@ class ajax extends Controller
     public function getConfirmMsg()
     {
         Controller::$language->load('confirm');
-        echo language::invokeOutput($_POST['type']);
+        switch ($_POST['type'])
+        {
+            case 'reply' :
+                echo language::invokeOutput('reply');
+                break;
+            case 'EdTitle' :
+                echo language::invokeOutput('EdTitle');
+                break;
+            case 'skill' :
+                echo language::invokeOutput('skill');
+                break;
+            case 'deleteMessages' :
+                echo language::invokeOutput('deleteMessages');
+                break;
+            case 'buyItem' :
+                echo language::invokeOutput('buyItem');
+                break;
+            case 'consumeItem' :
+                echo language::invokeOutput('consumeItem');
+                break;
+            case 'deleteCategory' :
+                echo language::invokeOutput('deleteCategory');
+                break;
+            case 'deleteForum' :
+                echo language::invokeOutput('deleteForum');
+                break;
+            case 'deleteUser' :
+                echo language::invokeOutput('deleteUser');
+                break;
+            case 'deleteRole' :
+                echo language::invokeOutput('deleteRole');
+                break;
+            case 'deleteTickets' :
+                echo language::invokeOutput('deleteTickets');
+                break;
+            case 'approveDecline' :
+                echo language::invokeOutput('approveDecline');
+                break;
+            case 'deleteRule' :
+                echo language::invokeOutput('deleteRule');
+                break;
+        }
     }
 
     /**
@@ -500,7 +534,7 @@ class ajax extends Controller
     }
 
     /**
-     * delete a message(s)
+     * delete a message
      */
     public function deleteMessages()
     {
@@ -536,70 +570,12 @@ class ajax extends Controller
     }
 
     /**
-     *
-     */
-    public function deleteInboxDrafts()
-    {
-        //prevent CSRF
-        if (!isset($_POST['token']) || !Token::check($_POST['token'], false))
-        {
-            echo json_encode(["error" => self::$language->invokeOutput('frequent/badRequest')]);
-        }else{
-            unset($_POST['token']);
-            $errors = 0;
-            Controller::$language->load('validation/inbox');
-            foreach ($_POST['select'] as $msg)
-            {
-                $deleteMessage = inboxDraftAPI::getInstance()->deleteDraft($msg);
-                if ($deleteMessage !== true)
-                    $errors++;
-            }
-
-            if ($errors == 0)
-            {
-                Token::destroyToken();
-                echo json_encode(["done" => Controller::$language->invokeOutput('delete')]);
-            }else{
-                if ($errors < count($_POST['select']))
-                    echo json_encode(["error" => Controller::$language->invokeOutput('not-all')]);
-                else
-                    echo json_encode(["error" => Controller::$language->invokeOutput('frequent/wrong')]);
-            }
-        }
-    }
-
-    /**
-     *
-     */
-    public function deleteMessage()
-    {
-        //prevent CSRF
-        if (!isset($_POST['token']) || !Token::check($_POST['token'], false))
-        {
-            echo json_encode(["error" => self::$language->invokeOutput('frequent/badRequest')]);
-        }else{
-            $id = self::$GLOBAL['logged']->id;
-            Controller::$language->load('validation/inbox');
-            $getMsg = inboxAPI::getInstance()->getMessageById( (int)$_POST['id'], 'sender' )[0];
-            $isSender = ($getMsg->sender == $id);
-            $delete = inboxAPI::getInstance()->deleteInbox((int)$_POST['id'], $isSender);
-            if ($delete)
-            {
-                Token::destroyToken();
-                echo json_encode(["done" => Controller::$language->invokeOutput('delete'), "redirect" => 'inbox']);
-            }
-            else
-                echo json_encode(["error" => Controller::$language->invokeOutput('frequent/wrong')]);
-        }
-    }
-
-    /**
      * get username by id
      */
     public function getUser()
     {
         $getUser = usersAPI::getInstance()->getUserById($_POST['id'], 'id, username');
-        if (!empty($getUser) && usersAPI::getLoggedId() != $getUser[0]->id)
+        if (!empty($getUser))
         {
             echo json_encode(['done' => $getUser[0]->username]);
         }else{
@@ -865,7 +841,7 @@ class ajax extends Controller
             if (is_string($updateCategory) )
             {
                 Token::destroyToken();
-                echo json_encode(["done" => $updateCategory, "redirect" => 'admin_cp/categories']);
+                echo json_encode(["done" => $updateCategory, 'reload' => true]);
             }
             else
             {
@@ -892,7 +868,7 @@ class ajax extends Controller
             if (is_string($createForum) )
             {
                 Token::destroyToken();
-                echo json_encode(["done" => $createForum, "redirect" => 'admin_cp/categories?section=forums']);
+                echo json_encode(["done" => $createForum, 'reload' => true]);
             }else{
                 if (is_array($createForum))
                     echo json_encode($createForum);
@@ -917,7 +893,7 @@ class ajax extends Controller
             if (is_string($updateForum) )
             {
                 Token::destroyToken();
-                echo json_encode(["done" => $updateForum, "redirect" => 'admin_cp/categories?section=forums']);
+                echo json_encode(["done" => $updateForum, 'reload' => true]);
             }
             else
             {
@@ -1094,7 +1070,7 @@ class ajax extends Controller
             if (is_string($createRole) )
             {
                 Token::destroyToken();
-                echo json_encode(["done" => $createRole, "redirect" => 'admin_cp/users?section=roles']);
+                echo json_encode(["done" => $createRole, 'reload' => true]);
             }else{
                 if (is_array($createRole))
                     echo json_encode($createRole);
@@ -1154,7 +1130,7 @@ class ajax extends Controller
             if (is_string($updateRole) )
             {
                 Token::destroyToken();
-                echo json_encode(["done" => $updateRole, "redirect" => 'admin_cp/users?section=roles']);
+                echo json_encode(["done" => $updateRole, 'reload' => true]);
             }
             else
             {
@@ -1276,7 +1252,6 @@ class ajax extends Controller
             echo json_encode(["error" => self::$language->invokeOutput('frequent/badRequest')]);
         }else{
             unset($_POST['token']);
-            Controller::$language->load('validation/support');
             if (!isset ($_POST['select']) )
                 die(json_encode(['nothing' => true]));
             $errors = 0;
@@ -1287,13 +1262,9 @@ class ajax extends Controller
             }
             if ($errors == 0)
             {
-                Token::destroyToken();
-                echo json_encode(["done" => Language::invokeOutput('delete')]);
+                echo json_encode(["done" => 'done']);
             }else{
-                if ($errors < count($_POST['select']))
-                    echo json_encode(["error" => Language::invokeOutput('not-all')]);
-                else
-                    echo json_encode(["error" => Language::invokeOutput('frequent/wrong')]);
+                echo json_encode(["error" => Controller::$language->invokeOutput('frequent/wrong')]);
             }
         }
     }
@@ -1362,7 +1333,7 @@ class ajax extends Controller
             if (is_string($addRule) )
             {
                 Token::destroyToken();
-                echo json_encode(["done" => $addRule, "redirect" => 'admin_cp/categories?section=rules']);
+                echo json_encode(["done" => $addRule, 'reload' => true]);
             }else{
                 if (is_array($addRule))
                     echo json_encode($addRule);
@@ -1422,7 +1393,7 @@ class ajax extends Controller
             if (is_string($update) )
             {
                 Token::destroyToken();
-                echo json_encode(["done" => $update,  "redirect" => 'admin_cp/categories?section=rules']);
+                echo json_encode(["done" => $update, 'reload' => true]);
             }
             else
             {
@@ -1596,420 +1567,4 @@ class ajax extends Controller
             echo '</div>';
         }
     }
-
-    /**
-     *
-     */
-    public function uploadAttachments()
-    {
-        //if the user about to re-upload new attachments => removes the old ones !
-        if (!empty($_POST['bsc_atc_current']))
-        {
-            $getFiles = json_decode(base64_decode($_POST['bsc_atc_current']));
-            foreach($getFiles as $file)
-                @unlink($file->newName);
-        }
-        //upload attachments
-        $uploader = new Uploader();
-        $uploader->uploadFiles();
-        echo json_encode(['succeed' => $uploader->success, 'failed' => $uploader->fail, 'data' => base64_encode(json_encode($uploader->success))]);
-    }
-
-    /**
-     *
-     */
-    public function addWhiteURL()
-    {
-        //prevent CSRF
-        if (!isset($_POST['token']) || !Token::check($_POST['token'], false))
-        {
-            echo json_encode(['displayError' => Controller::$language->invokeOutput('frequent/badRequest')]);
-        }else{
-            unset($_POST['token']);
-            $addURL = filterAPI::getInstance()->addEntry(['url' => $_POST['url'], 'is_black' => 0]);
-            if (is_string($addURL) )
-            {
-                Token::destroyToken();
-                echo json_encode(["done" => $addURL, "reload" => true]);
-            }else{
-                if (is_array($addURL))
-                    echo json_encode($addURL);
-                else
-                    echo json_encode(['displayError' => Controller::$language->invokeOutput('frequent/wrong')]);
-            }
-        }
-    }
-
-    /**
-     *
-     */
-    public function addBlackURL()
-    {
-        //prevent CSRF
-        if (!isset($_POST['token']) || !Token::check($_POST['token'], false))
-        {
-            echo json_encode(['displayError' => Controller::$language->invokeOutput('frequent/badRequest')]);
-        }else{
-            unset($_POST['token']);
-            $addURL = filterAPI::getInstance()->addEntry(['url' => $_POST['url'], 'is_black' => 1]);
-            if (is_string($addURL) )
-            {
-                Token::destroyToken();
-                echo json_encode(["done" => $addURL, "reload" => true]);
-            }else{
-                if (is_array($addURL))
-                    echo json_encode($addURL);
-                else
-                    echo json_encode(['displayError' => Controller::$language->invokeOutput('frequent/wrong')]);
-            }
-        }
-    }
-
-    /**
-     *
-     */
-    public function turnBlack()
-    {
-        //prevent CSRF
-        if (!isset($_POST['token']) || !Token::check($_POST['token'], false))
-        {
-            echo json_encode(['error' => Controller::$language->invokeOutput('frequent/badRequest')]);
-        }else{
-            unset($_POST['token']);
-            $turn = filterAPI::getInstance()->turnBlack($_POST['id']);
-            if (is_string($turn) )
-            {
-                Token::destroyToken();
-                echo json_encode(["done" => $turn, "reload" => true]);
-            }else{
-                if (is_array($turn))
-                    echo json_encode($turn);
-                else
-                    echo json_encode(['error' => Controller::$language->invokeOutput('frequent/wrong')]);
-            }
-        }
-    }
-
-    /**
-     *
-     */
-    public function turnWhite()
-    {
-        //prevent CSRF
-        if (!isset($_POST['token']) || !Token::check($_POST['token'], false))
-        {
-            echo json_encode(['error' => Controller::$language->invokeOutput('frequent/badRequest')]);
-        }else{
-            unset($_POST['token']);
-            $turn = filterAPI::getInstance()->turnWhite($_POST['id']);
-            if (is_string($turn) )
-            {
-                Token::destroyToken();
-                echo json_encode(["done" => $turn, "reload" => true]);
-            }else{
-                if (is_array($turn))
-                    echo json_encode($turn);
-                else
-                    echo json_encode(['error' => Controller::$language->invokeOutput('frequent/wrong')]);
-            }
-        }
-    }
-
-    /**
-     *
-     */
-    public function deleteURL()
-    {
-        //prevent CSRF
-        if (!isset($_POST['token']) || !Token::check($_POST['token'], false))
-        {
-            echo json_encode(['error' => Controller::$language->invokeOutput('frequent/badRequest')]);
-        }else{
-            unset($_POST['token']);
-            $delete = filterAPI::getInstance()->deleteEntry($_POST['id']);
-            if (is_string($delete) )
-            {
-                Token::destroyToken();
-                echo json_encode(["done" => $delete]);
-            }else{
-                if (is_array($delete))
-                    echo json_encode($delete);
-                else
-                    echo json_encode(['error' => Controller::$language->invokeOutput('frequent/wrong')]);
-            }
-        }
-    }
-
-    /**
-     *
-     */
-    public function recover()
-    {
-        //prevent CSRF
-        if (!isset($_POST['token']) || !Token::check($_POST['token'], false))
-        {
-            echo json_encode(['displayError' => Controller::$language->invokeOutput('frequent/badRequest')]);
-        }else{
-            unset($_POST['token']);
-            $recover = recoverAPI::getInstance()->addRecoverRequest($_POST);
-            if (is_string($recover) )
-            {
-                Token::destroyToken();
-                echo json_encode(["done" => $recover]);
-            }else{
-                if (is_array($recover))
-                    echo json_encode($recover);
-                else
-                    echo json_encode(['displayError' => Controller::$language->invokeOutput('frequent/wrong')]);
-            }
-        }
-    }
-
-    /**
-     *
-     */
-    public function reset()
-    {
-        //prevent CSRF
-        if (!isset($_POST['token']) || !Token::check($_POST['token'], false))
-        {
-            echo json_encode(['displayError' => Controller::$language->invokeOutput('frequent/badRequest')]);
-        }else{
-            unset($_POST['token']);
-            $reset = recoverAPI::getInstance()->resetPassword($_POST);
-            if (is_string($reset) )
-            {
-                Token::destroyToken();
-                echo json_encode(["done" => $reset, "redirect" => 'home']);
-            }else{
-                if (is_array($reset))
-                    echo json_encode($reset);
-                else
-                    echo json_encode(['displayError' => Controller::$language->invokeOutput('frequent/wrong')]);
-            }
-        }
-    }
-
-    /**
-     *
-     */
-    public function deactivateUser()
-    {
-        //prevent CSRF
-        if (!isset($_POST['token']) || !Token::check($_POST['token'], false))
-        {
-            echo json_encode(['error' => Controller::$language->invokeOutput('frequent/badRequest')]);
-        }else{
-            unset($_POST['token']);
-            $action = usersAPI::getInstance()->deactivateUser();
-            if (is_string($action) )
-            {
-                Token::destroyToken();
-                echo json_encode(["done" => $action, "redirect" => 'home']);
-            }else{
-                if (is_array($action))
-                    echo json_encode(['error' => $action[0]]);
-                else
-                    echo json_encode(['error' => Controller::$language->invokeOutput('frequent/wrong')]);
-            }
-        }
-    }
-
-    /**
-     *
-     */
-    public function subscribe()
-    {
-        //prevent CSRF
-        if (!isset($_POST['token']) || !Token::check($_POST['token'], false))
-        {
-            echo json_encode(['error' => Controller::$language->invokeOutput('frequent/badRequest')]);
-        }else{
-            unset($_POST['token']);
-            $action = subscribesAPI::getInstance()->addSubscriber($_POST);
-            if (is_string($action) )
-            {
-                echo json_encode(["done" => $action, "reload" => true]);
-            }else{
-                if (is_array($action))
-                    echo json_encode(['error' => $action]);
-                else
-                    echo json_encode(['error' => Controller::$language->invokeOutput('frequent/wrong')]);
-            }
-        }
-    }
-
-    /**
-     *
-     */
-    public function sendMailsToSubscribers()
-    {
-        //prevent CSRF
-        if (!isset($_POST['token']) || !Token::check($_POST['token'], false))
-        {
-            echo json_encode(['error' => Controller::$language->invokeOutput('frequent/badRequest')]);
-        }else{
-            //only admins can access to this method
-            if (!accessAPI::is_admin())
-                die(json_encode(['error' => Controller::$language->invokeOutput('frequent/wrong')]));
-            //-- ## --//
-            unset($_POST['token']);
-            $x = new NewslettersCron();
-            echo json_encode($x->msg);
-        }
-    }
-
-    /**
-     *
-     */
-    public function saveInboxDraft()
-    {
-        //prevent CSRF
-        if (!isset($_POST['token']) || !Token::check($_POST['token'], false))
-        {
-            echo json_encode(['error' => Controller::$language->invokeOutput('frequent/badRequest')]);
-        }else{
-            //update draft ?
-            $id = $_POST['draft'];
-            unset($_POST['draft'], $_POST['token']);
-            $update = inboxDraftAPI::getInstance()->updateDraft($id, $_POST);
-            if (is_string($update))
-                echo json_encode(['done' => $update]);
-            else
-                echo json_encode(['error' => language::invokeOutput('frequent/wrong')]);
-        }
-    }
-
-    /**
-     *
-     */
-    public function saveThreadsDraft()
-    {
-        //prevent CSRF
-        if (!isset($_POST['token']) || !Token::check($_POST['token'], false))
-        {
-            echo json_encode(['error' => Controller::$language->invokeOutput('frequent/badRequest')]);
-        }else{
-            $id = $_POST['draft'];
-            unset($_POST['draft'], $_POST['token']);
-            $update = threadDraftAPI::getInstance()->updateDraft($id, $_POST);
-            if (is_string($update))
-                echo json_encode(['done' => $update]);
-            else
-                echo json_encode(['error' => language::invokeOutput('frequent/wrong')]);
-        }
-    }
-
-    /**
-     *
-     */
-    public function deleteDraft()
-    {
-        //prevent CSRF
-        if (!isset($_POST['token']) || !Token::check($_POST['token'], false))
-        {
-            echo json_encode(['error' => Controller::$language->invokeOutput('frequent/badRequest')]);
-        }else{
-            unset($_POST['token']);
-            $delete = threadDraftAPI::getInstance()->deleteDraft($_POST['id']);
-            if (is_string($delete))
-                echo json_encode(['done' => $delete]);
-            else
-                echo json_encode(['error' => language::invokeOutput('frequent/wrong')]);
-        }
-    }
-
-    /**
-     *
-     */
-    public function deleteThread()
-    {
-        //prevent CSRF
-        if (!isset($_POST['token']) || !Token::check($_POST['token'], false))
-        {
-            echo json_encode(['error' => Controller::$language->invokeOutput('frequent/badRequest')]);
-        }else{
-            Controller::$language->load('validation/thread');
-            unset($_POST['token']);
-            $delete = threadsAPI::getInstance()->deleteThread($_POST['id']);
-            $redirect = (isset($_POST['forum'])) ? 'forum/'.(int)$_POST['forum'] : 'home';
-            if ($delete)
-                echo json_encode(['done' => language::invokeOutput('thread-deleted'), 'redirect' => $redirect]);
-            else
-                echo json_encode(['error' => language::invokeOutput('frequent/wrong')]);
-        }
-    }
-
-    /**
-     *
-     */
-    public function deleteThreadFromForums()
-    {
-        //prevent CSRF
-        if (!isset($_POST['token']) || !Token::check($_POST['token'], false))
-        {
-            echo json_encode(['error' => Controller::$language->invokeOutput('frequent/badRequest')]);
-        }else{
-            Controller::$language->load('validation/thread');
-            unset($_POST['token']);
-            $delete = threadsAPI::getInstance()->deleteThread($_POST['id']);
-            if ($delete)
-                echo json_encode(['done' => language::invokeOutput('thread-deleted'), 'reload' => true]);
-            else
-                echo json_encode(['error' => language::invokeOutput('frequent/wrong')]);
-        }
-    }
-
-    /**
-     *
-     */
-    public function saveSocials()
-    {
-        //prevent CSRF
-        if (!isset($_POST['token']) || !Token::check($_POST['token'], false))
-        {
-            echo json_encode(['displayError' => Controller::$language->invokeOutput('frequent/badRequest')]);
-        }else{
-            unset($_POST['token']);
-            $save = settingsAPI::getInstance()->updateSettings(['social' => $_POST]);
-            if (is_string($save))
-            {
-                Token::destroyToken();
-                echo json_encode(["done" => $save, 'reload' => true]);
-            }else{
-                if (is_array($save))
-                    echo json_encode($save);
-                else
-                    echo json_encode(['displayError' => Controller::$language->invokeOutput('frequent/wrong')]);
-            }
-        }
-    }
-
-    /**
-     *
-     */
-    public function saveUserSocials()
-    {
-        //prevent CSRF
-        if (!isset($_POST['token']) || !Token::check($_POST['token'], false))
-        {
-            echo json_encode(['displayError' => Controller::$language->invokeOutput('frequent/badRequest')]);
-        }else{
-            unset($_POST['token']);
-            $id = usersAPI::getLoggedId();
-            $save = usersAPI::getInstance()->updateUser($id, ['social' => $_POST]);
-            if (is_string($save))
-            {
-                Token::destroyToken();
-                echo json_encode(["done" => $save, 'reload' => true]);
-            }else{
-                if (is_array($save))
-                    echo json_encode($save);
-                else
-                    echo json_encode(['displayError' => Controller::$language->invokeOutput('frequent/wrong')]);
-            }
-        }
-    }
-
-
 }

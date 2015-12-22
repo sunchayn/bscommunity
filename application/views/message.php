@@ -39,7 +39,7 @@
                         </div>
                         <div class="col-4 v-col a-right">
                             <span class="middle"><?=isset_get($data['message'], 'date');?></span><small> ( <?=usersAPI::getDays($data['message']->date).' '.language::invokeOutput('frequent/days');?> ) - </small>
-                            <a href="#" class="middle deleteSingleMsg" data-get="id=<?=$data['message']->id;?>&token=<?=$global['token'];?>"><?=Language::invokeOutput('frequent/delete');?></a>
+                            <a href="#" class="middle"><?=Language::invokeOutput('frequent/delete');?></a>
                         </div>
                     </div>
                     <!-- ############## -->

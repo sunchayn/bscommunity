@@ -31,10 +31,4 @@ return [
     'cancel' => 'cancel',
     'addReplyTo' => 'reply to : ',
     'sendMsgTo' => 'send a message to : ',
-    'attach' => [
-        "add" => "add attachment :",
-        "chose" => "chose files",
-        "upload" => "upload attachment",
-    ],
-    'savingDraft' => 'saving draft',
 ];

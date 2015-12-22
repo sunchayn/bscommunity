@@ -7,7 +7,6 @@
  * @author Mazen Touati
  * @version 1.0.0
  */
-
 class attemptAPI extends databaseAPI{
     /**
      * @var  string

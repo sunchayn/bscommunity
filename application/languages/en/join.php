@@ -23,8 +23,8 @@ return
                                     'birthday' => 'your birthday',
                                ],
         'inp-rules' => [
-            'name' => ['only letter are allowed'],
-            'nickname' => ['the nickname must be unique','administration names are disallowed'],
+            'name' => ['only letter are allowed', 'bad words are disallowed'],
+            'nickname' => ['the nickname must be unique', 'bad words are disallowed', 'you can\'t use a name look like administration'],
             'email' => ['must be a valid e-mail', 'have to be not used before'],
             'password' => ['must be more than 6 characters'],
             'password-confirm' => ['must be the same as the first password'],

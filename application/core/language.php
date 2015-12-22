@@ -1,11 +1,4 @@
 <?php
-/**
- * bloodstone community V1.0.0
- * @link https://www.facebook.com/Mazn.touati
- * @author Mazen Touati
- * @version 1.0.0
- */
- 
 class Language {
 
     /**
@@ -26,7 +19,7 @@ class Language {
      */
     public function loadGeneralLanguage()
     {
-        $file = APP."languages/" . LANGUAGE_CODE ."/general.php";
+        $file = "../application/languages/" . LANGUAGE_CODE ."/general.php";
         if (is_readable($file)) {
             // require file
             $this->array = include ($file);
@@ -37,7 +30,7 @@ class Language {
         //if there's an user logged get the languages preferences that concern members
         if (usersAPI::isLogged())
         {
-            $file = APP."languages/" . LANGUAGE_CODE ."/loggedUsers.php";
+            $file = "../application/languages/" . LANGUAGE_CODE ."/loggedUsers.php";
             if (is_readable($file)) {
                 // require file and add it to the $general property
                 $this->array = array_merge(include ($file), $this->array);
@@ -55,7 +48,7 @@ class Language {
     public function load($pageName, $lang = LANGUAGE_CODE)
     {
         // get the lang file
-        $file = APP."languages/{$lang}/{$pageName}.php";
+        $file = "../application/languages/{$lang}/{$pageName}.php";
         // check if is readable
         if (is_readable($file)) {
             // require file
@@ -73,7 +66,7 @@ class Language {
     public function loadAnotherData($pageName, $lang = LANGUAGE_CODE)
     {
         // get the lang file
-        $file = APP."languages/{$lang}/{$pageName}.php";
+        $file = "../application/languages/{$lang}/{$pageName}.php";
         // check if is readable
         if (is_readable($file)) {
             // require file

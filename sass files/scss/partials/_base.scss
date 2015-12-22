@@ -36,7 +36,6 @@ html, body {
 a {
 	text-decoration: none;
 	color: inherit;
-	font-size: inherit;
 	&:hover {
 		text-decoration: underline;
 	}
@@ -65,16 +64,15 @@ i {
 
 h1,h2,h3,h4,h5,h6 {
 	margin : 0;
-	padding : .2em 0;
-	font-family: $headers-font-family;
+	font-family: $base-font-family;
 	font-weight : $header-font-weight;
+	color: inherit;
 	color: $pre-black2;
 }
 
 p {
 	margin: 0;
 	padding: 0;
-	line-height: $md-line-height;
 }
 
 ul {
@@ -105,12 +103,6 @@ ul {
 		  vertical-align: middle;
 		}
 	} 
-}
-
-.URL {
-	padding: .3em;
-	background-color: $color3;
-	color: $color5;
 }
 
 /* end - Base Styling */
@@ -198,8 +190,6 @@ ul {
 
 .show-sm { display: none; }
 
-.show-md { display: none; }
-
 .no-margin {margin:0;}
 
 .resp-margin { margin: .3em 0; }
@@ -224,20 +214,9 @@ ul {
 
 .side-padding { @if $direction == ltr{padding-left:.6em;}@else{padding-right:.6em;} }
 
-.rad { 
+.rad { @include borderRadius($radiusAmount); overflow:hidden; }
 
-@include borderRadius($radiusAmount); /*overflow:hidden;*/ 
-
-}
-
-.rad2 {
-
-	 @include borderRadius($radiusAmount2); /*overflow:hidden;*/
-	 &:not(.no-cut) {
-	 	overflow:hidden;
-	 }
-
- }
+.rad2 { @include borderRadius($radiusAmount2); overflow:hidden; }
 
 .rad-right { @include borderRadiusRight($radiusAmount); overflow:hidden; }
 
@@ -248,8 +227,6 @@ ul {
 .padding-h {padding: 0 .4em;}
 
 .padding-v {padding: .4em 0;}
-
-.reset-i {font-style: normal;}
 
 /* end - display & padding & margin */
 
@@ -341,7 +318,7 @@ ul {
 
 .section-desc {
 	color: $pre-black2;
-	padding: .2em .1em;
+	padding: .4em 0;
 	margin: 0;
 }
 
@@ -371,18 +348,8 @@ ul {
 .breads {
 
 	& > a, & > i, & > span {
-		padding: .2em .4em;
+		padding: 0 .2em;
 		@extend .f-left;
-	}
-
-	& > a {
-		display: inline-block;
-		background-color: $color3;
-		@extend .rad2;
-		&:hover {
-			text-decoration: none;
-			background-color: darken($color3, 2%);
-		}
 	}
 }
 
@@ -439,19 +406,17 @@ ul {
 }
 
 .scroll-up-res {
-	padding: .2em .6em;
+	padding: .2em 1em;
 	display: none;
 	text-align: center;
 	position: fixed;
-	bottom: 2.5em;
+	bottom: 4em;
 	right: 1em;
 	color: $white;
 	cursor: pointer;
 	background-color: $color2;
 	& i {
 		color: $white;
-		vertical-align: middle;
-		display: inline-block;
 	}
 
 }
@@ -470,30 +435,4 @@ canvas {
 	direction: ltr;
 }
 
-
-.draftResult {
-	position: fixed;
-	display: none;
-	padding: 1em;
-	background-color: rgba(0, 0, 0, .4);
-	color: $white;
-	text-align: center;
-	z-index: 888;
-	bottom: 1.5em;
-	@if $direction == ltr{right: 1.5em;}@else{left: 1.5em;}
-
-	&.succ {
-		background-color: $succ;
-	}
-
-	&.fail {
-		background-color: $fail;
-
-	}
-}
-
-.notice {
-	color: darken($color5, 10%);
-	font-size: $md-font-size;
-}
 /* end - misc */

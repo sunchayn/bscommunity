@@ -11,49 +11,31 @@
                 <span><?=$data['thread']->title;?></span>
                 <div class="clear"></div>
             </div>
+            <div class="col-m col-12 thread-title"><h2><?=$data['thread']->title;?></h2></div>
             <!-- ####### -->
             <!-- # author panel # -->
             <div class="col-m col-12 author-panel">
-                <div class="col-m col-12 center-sm">
-                    <h3 class="inline-b middle"><a href="profile/<?=$data['author']->id;?>"><?=$data['author']->username;?></a></h3>&nbsp;<small class="middle">- <?=$data['author']->role;?></small>
+                <div class="col-m col-4 v-top">
+                    <img src="img/logo.png" alt="user-photo" width="100" height="100" class="img-edge v-col"/>
+                    <span class="col-4 author-name v-col">
+                        <h3><a href="profile/<?=$data['author']->id;?>"><?=$data['author']->username;?></a>
+                        </h3>
+                        <small><?=$data['author']->country;?></small><br />
+                        <small>#<?=$data['author']->id;?></small><br />
+                        <small><?=usersAPI::getGender($data['author']->sexe);?></small>
+                    </span>
                 </div>
-                <div class="col-m col-12">
-                    <div class="col-m col-2 user-picture a-center">
-                        <img src="<?=isset_get($data['author'], 'profile_picture', 'unset');?>" alt="user-photo" class="v-col img-circel x-100"/>
-                    </div>
-                    <div class="col-m col-10">
-                        <div class="col-m col-12 author-stats">
-                            <div class="col-m col-3">
-                                <span><?=$data['author']->level;?></span><br />
-                                <?=Language::invokeOutput('frequent/level');?>
-                            </div>
-                            <div class="col-m col-3">
-                                <span><?=$data['author']->posts;?></span><br />
-                                <?=Language::invokeOutput('frequent/posts');?>
-                            </div>
-                            <div class="col-m col-3">
-                                <span><?=$data['author']->thanked;?></span><br />
-                                <?=Language::invokeOutput('frequent/thanked');?>
-                            </div>
-                            <div class="col-m col-3">
-                                <span><?=usersAPI::getDays($data['author']->create_date);?></span><br />
-                                <?=Language::invokeOutput('daysS');?>
-                            </div>
-                        </div>
-                        <div class="col-m col-12">
-                            <a href="create/message/<?=$data['author']->id;?>"><?=Language::invokeOutput('author/contact/pm');?></a>
-                            <?php 
-                                if (isset($data['authorSocial']->facebook) && !empty($data['authorSocial']->facebook))
-                                    echo ' - <a href="http://facebook.com/'. $data['authorSocial']->facebook .'">'. Language::invokeOutput('author/contact/facebook') .'</a>';
-                            
-                                if (isset($data['authorSocial']->twitter) && !empty($data['authorSocial']->twitter))
-                                    echo ' - <a href="http://twitter.com/'. $data['authorSocial']->twitter .'">'. Language::invokeOutput('author/contact/twitter') .'</a>';
-                            
-                                if (isset($data['authorSocial']->youtube) && !empty($data['authorSocial']->youtube))
-                                    echo ' - <a href="http://youtube.com/'. $data['authorSocial']->youtube .'">'. Language::invokeOutput('author/contact/youtube') .'</a>';
-                            ?>
-                        </div>
-                    </div>
+                <div class="col-m col-4">
+                    <h3><?=Language::invokeOutput('author/stats/title');?></h3>
+                    <span><?=Language::invokeOutput('frequent/level'). ' : ' .$data['author']->level;?></span><br />
+                    <span><?=Language::invokeOutput('frequent/posts'). ' : ' .$data['author']->posts;?></span><br />
+                    <span><?=Language::invokeOutput('frequent/thanked'). ' : ' .$data['author']->thanked;?></span><br />
+                    <span><?=Language::invokeOutput('frequent/registerS'). ' : ' .$data['author']->create_date;?></span>
+                </div>
+                <div class="col-m col-4">
+                    <h3><?=Language::invokeOutput('author/contact/title');?></h3>
+                    <span><a href="create/message/<?=$data['author']->id;?>"><?=Language::invokeOutput('author/contact/pm');?></a></span><br />
+                    <span><a href="#"><?=Language::invokeOutput('author/contact/social');?></a></span><br />
                 </div>
             </div>
             <!-- # end - author panel # -->
@@ -62,88 +44,75 @@
                 <small><?=Language::invokeOutput('frequent/posted'). '  ' .$data['thread']->create;?></small>
                 <?php
                 if (accessAPI::getInstance()->checkAccessToUpdateThread($data['thread']->author_id))
-                    echo "<span class='middle'>-</span> <small><a href='edit/thread/{$data['thread']->id}'>". Language::invokeOutput('update-thread') ."</a></small> ";
-                if (accessAPI::getInstance()->checkAccessToDeleteThread($data['thread']->author_id))
-                    echo "<span class='middle'>-</span> <small><a href='#delete-thread' class='deleteThread' data-content='id=".$data['thread']->id."&forum=".$data['forum']->id."&token=".$global['token']."'>". Language::invokeOutput('delete-thread') ."</a></small>";
+                    echo "- <small><a href='edit/thread/{$data['thread']->id}'>". Language::invokeOutput('update-thread') ."</a></small>";
                 ?>
-                <span class="middle">-</span> <small><a href="#report-reply" data-reported="<?=$data['thread']->id;?>" data-type="0" data-panel="report-panel" class="reportTrigger triggerPanel"><?=language::invokeOutput('frequent/report');?></a></small>
+                - <small><a href="#report-reply" data-reported="<?=$data['thread']->id;?>" data-type="0" data-panel="report-panel" class="reportTrigger triggerPanel"><?=language::invokeOutput('frequent/report');?></a></small>
             </div>
             <!-- #  thread core # -->
-            <div class="col-m col-12 thread-core<?=(usersAPI::warExternal())? ' external' : '';?>">
-                <?=renderOutput($data['thread']->content);
-                    if ($data['thread']->attachments == 1)
-                    {
-                        ?>
-                        <!-- #  attachments # -->
-                        <div class="col-m col-12 thread-attachments">
-                            <small><?=Language::invokeOutput('thread-attachments');?></small>
-                            <div class="col-m col-12">
-                                <?=attachmentAPI::getInstance()->getFilesReadyForDownload($data['thread']->id);?>
-                            </div>
-                        </div>
-                        <!-- #  attachments # -->
-                        <?php
-                    }
-                ?>
-            </div>
+            <div class="col-m col-12 thread-core<?=(usersAPI::warExternal())? ' external' : '';?>"><?=renderOutput($data['thread']->content);?></div>
             <!-- #  end - thread core # -->
-            <div class="col-m col-12 thread-likes">
-                <div class="col-m col-2">
-                    <form action="ajax/addThank" method="POST" class="ajaxModal">
-                        <input type="hidden" name="thread_id" value="<?=isset_get($data['thread'], 'id');?>">
-                        <input type="hidden" name="author_id" value="<?=isset_get($data['author'], 'id');?>">
-                        <input type="hidden" name="token" value="<?=isset_get($global, 'token');?>">
-                        <a href="#thank" class="formSubmit"><?=Language::invokeOutput('thank');?></a>
-                    </form>
-                </div>
-                <div class="col-m col-10">
-                    <?php
-                    if (!empty($data['thanks']))
-                    {
-                        $x = 0;
-                        foreach($data['thanks'] as $thank)
+            <!-- #  ~~~~~~~~ # -->
+            <!-- #  thread-footer # -->
+            <div class="col-m col-12 thread-footer">
+                <div class="col-m col-12 thread-likes">
+                    <div class="col-m col-2">
+                        <form action="ajax/addThank" method="POST" class="ajaxModal">
+                            <input type="hidden" name="thread_id" value="<?=isset_get($data['thread'], 'id');?>">
+                            <input type="hidden" name="author_id" value="<?=isset_get($data['author'], 'id');?>">
+                            <input type="hidden" name="token" value="<?=isset_get($global, 'token');?>">
+                            <a href="#thank" class="formSubmit"><?=Language::invokeOutput('thank');?></a>
+                        </form>
+                    </div>
+                    <div class="col-m col-10">
+                        <?php
+                        if (!empty($data['thanks']))
                         {
-                            if ($x++ == 7) break;
-                            echo "<a href='profile/{$thank->thank_user}'>{$thank->username}</a>, ";
-                        }
-                        echo "<em><a href='#' class='open-modal' id='modalAllThankUsers' data-id='AllThankUsers'>". Language::invokeOutput('seeFullUsers') ."</a></em>";
-                    }else{
-                        echo Language::invokeOutput('no-thanks');
-                    }
-                    ?>
-                    <!-- modal start -->
-                    <div class="overlay"></div>
-                    <div id="AllThankUsers" class="modal rad2" >
-                        <div class="modal-body">
-                            <div class="col-m col-12 content-heading">
-                                <h2><?=Language::invokeOutput('thanksModal/title');?></h2>
-                                <p class="section-desc">
-                                    <?=Language::invokeOutput('thanksModal/descPart1');?>
-                                    <strong><a href="profile/<?=isset_get($data['author'], 'id');?>"><?=isset_get($data['author'], 'username');?></a></strong>
-                                    <?=Language::invokeOutput('thanksModal/descPart2');?>
-                                </p>
-                            </div>
-                            <?php
+                            $x = 0;
                             foreach($data['thanks'] as $thank)
                             {
-                                ?>
-                                <div class="col-m col-12 usersInModal">
-                                    <h4>
-                                        <a href="profile/<?=$thank->thank_user;?>"><?=$thank->username;?></a>
-                                    </h4>
-                                    <small><?=language::invokeOutput('frequent/level').' '.$thank->level;?></small>
+                                if ($x++ == 7) break;
+                                echo "<a href='profile/{$thank->thank_user}'>{$thank->username}</a>, ";
+                            }
+                            echo "<em><a href='#' class='open-modal' id='modalAllThankUsers' data-id='AllThankUsers'>". Language::invokeOutput('seeFullUsers') ."</a></em>";
+                        }else{
+                            echo Language::invokeOutput('no-thanks');
+                        }
+                        ?>
+                        <!-- modal start -->
+                        <div class="overlay"></div>
+                        <div id="AllThankUsers" class="modal rad2" >
+                            <div class="modal-body">
+                                <div class="col-m col-12 content-heading">
+                                    <h2><?=Language::invokeOutput('thanksModal/title');?></h2>
+                                    <p class="section-desc">
+                                        <?=Language::invokeOutput('thanksModal/descPart1');?>
+                                        <strong><a href="profile/<?=isset_get($data['author'], 'id');?>"><?=isset_get($data['author'], 'username');?></a></strong>
+                                        <?=Language::invokeOutput('thanksModal/descPart2');?>
+                                    </p>
                                 </div>
-                            <?php } ?>
+                                <?php
+                                foreach($data['thanks'] as $thank)
+                                {
+                                ?>
+                                    <div class="col-m col-12 usersInModal">
+                                        <h4>
+                                            <a href="profile/<?=$thank->thank_user;?>"><?=$thank->username;?></a>
+                                        </h4>
+                                        <small><?=language::invokeOutput('frequent/level').' '.$thank->level;?></small>
+                                    </div>
+                                <?php } ?>
+                            </div>
+                            <div class="modal-footer">
+                                <a href="#" class="btn btn-color2 rad cancel f-right">
+                                    <?=Language::invokeOutput('frequent/cancel');?>
+                                </a>
+                            </div>
                         </div>
-                        <div class="modal-footer">
-                            <a href="#" class="btn btn-color2 rad cancel f-right">
-                                <?=Language::invokeOutput('frequent/cancel');?>
-                            </a>
-                        </div>
+                        <!-- modal end -->
                     </div>
-                    <!-- modal end -->
                 </div>
             </div>
+            <!-- #  end - thread-footer # -->
             <!-- #  ~~~~~~~~ # -->
             <!-- #  operation panel # -->
             <div class="col-m col-12 v-middle operation-panel">
@@ -181,20 +150,24 @@
                     <img src="<?=URL;?>/img/loader.gif" alt="ajax-loader"/>
                 </div>
                 <!-- end -  AJAX LOADER -->
-                <div class="col-m col-12 reply-box-holder">
-                    <div class="text-area">
+                <div class="col-m col-12 v-middle">
+                    <div class="col-10 v-col">
                         <input type="hidden" name="thread_id" value="<?=isset_get($data['thread'], 'id');?>" />
                         <input type="hidden" name="token" value="<?=isset_get($global, 'token');?>" />
-                        <textarea rows="5" name="content" placeholder="<?=Language::invokeOutput('addReply-placeholder');?>"></textarea>
+                        <div class="content-heading">
+                            <h3><?=Language::invokeOutput('addReplyTitle');?></h3>
+                            <ul class="section-desc have-arrow">
+                                <li><?=Language::invokeOutput('reply-rules/0');?></li>
+                                <li><?=Language::invokeOutput('reply-rules/1');?></li>
+                            </ul>
+                        </div>
+                        <textarea rows="10" name="content"></textarea>
                     </div>
-                    <div class="col-m col-12 box-anchors">
-                        <a href="#addReply" class="formSubmit"><?=Language::invokeOutput('quick-reply');?></a> -
-                        <a href="create/reply/<?=$data['thread']->id;?>"><?=Language::invokeOutput('fullReply');?></a>
+                    <div class="col-2 v-col a-center">
+                        <a href="#addReply" class="formSubmit"><?=Language::invokeOutput('addReply');?></a><br />
+                        <span><?=Language::invokeOutput('frequent/or');?><br /><?=Language::invokeOutput('frequent/open');?></span>
+                        <a href="create/reply/<?=isset_get($data['thread'], 'id');?>"><?=Language::invokeOutput('fullReply');?></a>
                     </div>
-                </div>
-                <div class="col-m col-12 reply-rules">
-                    <small><?=Language::invokeOutput('reply-rules/0');?></small>
-                    <small><?=Language::invokeOutput('reply-rules/1');?></small>
                 </div>
             </form>
             <!-- report panel !-->
@@ -238,7 +211,7 @@
                         <p><?=language::invokeOutput('external/desc');?></p>
                     </div>
                     <div class="col-m col-12">
-                        <bdo dir="auto"><span class="linkHolder"></span></bdo>
+                        <span class="linkHolder"></span>
                     </div>
                     <div class="col-m col-12">
                         <a href="" class="theLink"><?=language::invokeOutput('external/go');?></a>&nbsp;

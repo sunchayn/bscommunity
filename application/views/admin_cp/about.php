@@ -19,7 +19,7 @@
                         <!-- one label -->
                         <div class="col-m col-12 field-label">
                             <div class="col-m col-4"><?=Language::invokeOutput('version');?></div>
-                            <div class="col-m col-8">V1 beta</div>
+                            <div class="col-m col-8">V1 alpha <a href="#" class="color-5"><?=Language::invokeOutput('search');?></a></div>
                         </div>
                         <!-- end - one label -->
                         <!-- ###### -->
@@ -54,7 +54,7 @@
                         <!-- one label -->
                         <div class="col-m col-12 field-label">
                             <div class="col-m col-4"><?=Language::invokeOutput('donation');?></div>
-                            <div class="col-m col-8"><a href="https://asnadstore.com/p/tl4a/">Asnad Store</a></div>
+                            <div class="col-m col-8"><a href="https://asnadstore.com/p/lssk">Asnad Store</a></div>
                         </div>
                         <!-- end - one label -->
                         <!-- ###### -->

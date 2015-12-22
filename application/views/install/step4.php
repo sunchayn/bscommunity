@@ -3,7 +3,7 @@
         <div class="grid-section area">
             <div class="col-m col-12 a-center heading">
                 <img src="<?=URL?>img/logo.png" alt="logo" class="x-100">
-                <h3>bloodstone community V1 - beta</h3>
+                <h3>bloodstone community V1 - alpha</h3>
             </div>
             <div class="col-m col-12 steps step4">
                 <div class="col-m col-12">
@@ -11,7 +11,7 @@
                     <p class="box"><?=Language::invokeOutput('step4/desc');?></p>
                 </div>
                 <div class="col-m col-12 links">
-                    <a href="install/finish" class="middle"><?=Language::invokeOutput('step4/finish')?></a>&nbsp;<i class="<?=language::invokeOutput('direction');?>"></i>
+                    <a href="install/finish"><?=Language::invokeOutput('step4/finish')?></a>&nbsp;<i class="<?=language::invokeOutput('direction');?>"></i>
                 </div>
             </div>
 

@@ -72,9 +72,9 @@
 	}
 
 	& a[class^="icon-"]{
-		//@include opacity(0.8);
+		@include opacity(0.8);
 		&:hover {
-			//@include opacity(1);
+			@include opacity(1);
 		}
 	}
 }

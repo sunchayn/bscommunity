@@ -3,24 +3,18 @@
 <div class="col-m col-12 reply flexbox delete-wrapper">
     <aside class="col-m col-2 user-info">
         <div class="col-m col-12 info-heading">
-            <h3 class="inline-b middle"><a href="profile/<?=$reply->uID;?>"><?=$reply->username;?></a></h3> - <small class="middle"><?=$reply->role;?></small>
+            <h3 class="inline-b"><a href="profile/<?=$reply->uID;?>"><?=$reply->username;?></a></h3> - <small><?=$reply->role;?></small>
             <br /><img src="<?=$reply->profile_picture;?>" alt="reply-author-photo" class="img-circel x-100"><br />
         </div>
-        <div class="col-m col-12 info-body hide-md">
+        <div class="col-m col-12 info-body">
             <span><?=language::invokeOutput('frequent/level'). '   ' . $reply->level;?></span><br />
             <span><?=language::invokeOutput('frequent/posts'). ' : ' . $reply->posts;?></span><br />
             <span><?=language::invokeOutput('country'). ' : ' . $reply->country;?></span><br />
             <span><?=language::invokeOutput('join'). ' : ' . usersAPI::getDays($reply->create_date) . ' ' . language::invokeOutput('ago');?></span>
         </div>
-        <!-- responsive perpose -->
-        <div class="col-m col-12 a-center show-md">
-            <span><?=language::invokeOutput('frequent/level'). '   ' . $reply->level;?></span>&nbsp;/&nbsp;
-            <span><?=language::invokeOutput('frequent/posts'). ' : ' . $reply->posts;?></span>&nbsp;/&nbsp;
-            <span><?=language::invokeOutput('country'). ' : ' . $reply->country;?></span>
-        </div>
     </aside>
     <div class="col-m col-10 reply-core">
-        <div class="col-m col-12 a-left hide-md"><a href="reply/<?=$reply->id;?>">#<?=$x;?></a></div>
+        <div class="col-m col-12 a-left"><a href="reply/<?=$reply->id;?>">#<?=$x;?></a></div>
         <div class="col-m col-12 reply-content">
             <div class="col-m col-1 a-center reply-rate">
                 <span>

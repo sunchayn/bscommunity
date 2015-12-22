@@ -32,7 +32,6 @@ return [
         'reply' => 'reply',
         'unpin' => 'unpin',
         'pin' => 'pin',
-        'delete' => 'delete',
     ],
     "no-threads" => "sorry, no threads to show !",
     'by' => 'by',
