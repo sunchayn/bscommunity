@@ -90,13 +90,13 @@ return
                 'identifier' => "identifier",
                 'identifier-desc' => "can be either your username or email .",
                 'password' => 'password',
-                'password-desc' =>"did you forgot your password ? <a href='recover'>recover it<a/> .",
+                'password-desc' =>"did you forgot your password ? <a href='account/recover'>recover it<a/> .",
                 'remember' =>"remember me",
                 'button' =>"login",
         ],
         'copyright' => [
             'name' => 'mazen touati',
-            'copyright' => '&copy; 2015 bloodstone community v1-alpha, all rights reserved. desgined & developped by'
+            'copyright' => '&copy; 2015 bloodstone community v1-beta, all rights reserved. desgined & developped by'
         ],
         'edit-label' => 'edit',
         'change-label' => 'change',

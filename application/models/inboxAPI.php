@@ -7,6 +7,7 @@
  * @author Mazen Touati
  * @version 1.0.0
  */
+
 class inboxAPI extends databaseAPI
 {
     /**
@@ -86,7 +87,7 @@ class inboxAPI extends databaseAPI
         $row .= ", (CASE
         WHEN isnull(in2.last_response) THEN in2.date
         ELSE in2.last_response END) AS orderType";
-        $injectWhere = "(in1.sub_inbox = in2.id AND (in1.receiver = {$id} AND in2.sender = {$id}) AND in2.is_sen_del = 0)
+        $injectWhere = "(in1.sub_inbox = in2.id AND (in1.receiver = {$id} AND in2.sender = {$id}) AND in2.is_sen_del = 0 AND in1.is_rec_del = 0)
         OR (in2.sub_inbox = 0 AND in2.receiver = {$id} AND in2.is_rec_del = 0)
         GROUP BY in2.id";
         if ($paginator)
@@ -218,11 +219,9 @@ class inboxAPI extends databaseAPI
             //check if the user have a messages breaker
             $getItem = inventoryAPI::getInstance()->getActiveItem([5,6], $user);
             if (!empty($getItem))
-            {
                 inventoryAPI::getInstance()->useItem($getItem[0]->id);
-            }else{
+            else
                 return 'limit';
-            }
         }
         return parent::insertData($this->_table, $fields, $values);
     }
@@ -263,8 +262,14 @@ class inboxAPI extends databaseAPI
             $errors['content'][] =  [Controller::$language->invokeOutput("content2")];
         // -- end check for errors
         if (!empty($errors)) return $errors;
+        //delete the draft
+        if (isset($data['draft']))
+        {
+            inboxDraftAPI::getInstance()->deleteDraft($data['draft']);
+            unset($data['draft']);
+        }
         //send the message
-        $send = $this->insertMessage($fieldsArray,array_values($data), $data['sender']);
+        $send = $this->insertMessage(array_keys($data),array_values($data), $data['sender']);
         if (is_string($send))
             return ['general' => [Controller::$language->invokeOutput("exceed-limit")]];
         return ($send) ? Controller::$language->invokeOutput("done2") : [Controller::$language->invokeOutput('frequent/wrong')];

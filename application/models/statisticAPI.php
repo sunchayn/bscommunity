@@ -7,6 +7,7 @@
  * @author Mazen Touati
  * @version 1.0.0
  */
+
 class statisticAPI extends databaseAPI{
     /**
      * @var  string
@@ -75,7 +76,26 @@ class statisticAPI extends databaseAPI{
                 WHERE
                 replies.`thread_id` = threads.`id`
                 AND
-                DATEDIFF(CURDATE(), replies.`create`) < 10
+                DATEDIFF(CURDATE(), replies.`create`) <= 8
+                group by thread_id
+                ORDER by Cnt DESC
+                LIMIT {$limit}";
+        return parent::executeQuery($sql);
+    }
+
+    public function getThreadsForSubscribers($limit = 5)
+    {
+        $sql = "SELECT
+                    count(*) as Cnt,
+                    threads.`id`,
+                    threads.`title`,
+                    threads.`content`
+                FROM
+                    threads, replies
+                WHERE
+                  replies.`thread_id` = threads.`id`
+                AND
+                  DATEDIFF(CURDATE(), replies.`create`) <= 8
                 group by thread_id
                 ORDER by Cnt DESC
                 LIMIT {$limit}";
@@ -221,8 +241,8 @@ class statisticAPI extends databaseAPI{
      */
     public function getTopCategories($limit = 3, $table = 'forums')
     {
-        $join = 'LEFT JOIN categories on categories.id = forums.cat_id';
-        return parent::selectData("categories.title, (sum(forums.threads) + sum(forums.replies)) as posts", null, [$table, $join], 'group by categories.id order by posts desc', "LIMIT {$limit}");
+        $join = 'INNER JOIN categories on categories.id = forums.cat_id';
+        return parent::selectData("categories.title_".LANGUAGE_CODE." as title, (sum(forums.threads) + sum(forums.replies)) as posts", null, [$table, $join], 'group by categories.id order by posts desc', "LIMIT {$limit}");
     }
 
     /**

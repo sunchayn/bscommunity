@@ -5,6 +5,7 @@ return [
         'about' => 'about you',
         'security' => 'your security',
         'privacy' => 'privacy',
+        'contact' => 'contact',
         'notification' => 'notification center',
         'follow' => 'followers / following center',
         'logging' => 'user authentication',
@@ -14,6 +15,7 @@ return [
         'about' => 'bellow you can add and edit information about yourself .',
         'security' => 'bellow you can check your account security .',
         'privacy' => 'bellow you can preference your privacy .',
+        'contact' => 'bellow you can update your social links .',
         'notification' => 'bellow you can edit which type of notification you want to receive .',
         'follow' => 'bellow you can see people you following and whom that follow you.',
         'logging' => 'bellow you can edit your login information .',
@@ -139,4 +141,14 @@ return [
     'deactivate' => 'deactivate your account',
     'passwordPH' => 'change your current password',
     'load-more' => 'load more',
+    'placeholders' => [
+        'newPass' => 'your new password',
+        'currPass' => 'your current password',
+    ],
+    'socials' => [
+        'facebook' => 'facebook',
+        'twitter' => 'twitter',
+        'youtube' => 'youtube',
+        'save' => 'save changes',
+    ],
 ];

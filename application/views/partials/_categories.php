@@ -3,11 +3,9 @@
     <!-- # category heading # -->
     <div class="col-m col-12 a-left cat-heading">
         <div class="col-m col-12">
-            <h2 class="inline-b"><a href="<?="category/{$cat->id}"?>"><span><?=$cat->title;?></span></a></h2>
+            <h3 class="inline-b"><a href="<?="category/{$cat->id}"?>"><?=$cat->$global['curr_title'];?></a></h3>
             <div class="f-right"><a href="#" class="icon-angle-up trigger-fs"></a></div>
-        </div>
-        <div class="col-m col-12">
-            <p><?=$cat->desc;?></p>
+            <div class="clear"></div>
         </div>
     </div>
     <!-- # end category heading # -->
@@ -23,8 +21,8 @@
                 <div class="v-col col-8 scale-sm">
                     <img src="<?=$forum->logo;?>" alt="forum icon" height="75" width="75" class="middle hide-sm">
                     <span class="middle inline-b">
-                        <a href="forum/<?=$forum->id;?>" class="forum-title"><h2 class="inline-b middle"><?=$forum->title;?></h2></a><br />
-                        <small><?=$forum->desc;?></small><br />
+                        <a href="forum/<?=$forum->id;?>" class="forum-title"><h4 class="inline-b middle"><?=$forum->$global['curr_title'];?></h4></a><br />
+                        <small><?=$forum->$global['curr_desc'];?></small><br />
                         <span class="forum-stats">
                             <div class="label label-with-icon middle">
                                 <i class="icon-eye middle"></i><?=$forum->views;?>
@@ -38,19 +36,15 @@
                         </span>
                     </span>
                 </div>
-                <div class="v-col col-4 scale-sm v-middle">
+                <div class="v-col col-4 scale-sm last-topic v-middle center-md left-sm">
                     <?php
                     if (isset_get( $forum, 'noThreads' ) === true){
                         echo '<div class="no-data">' . Language::invokeOutput('no-threads') .'</div>';
                     } else { ?>
-                        <div class="hide-sm last-topic v-col scale-sm">
-                            <img src="<?=$forum->LastThread->profile_picture;?>" alt="user icon" class=" img img-circel" height="50" width="50">
-                        </div>
+                        <div class="hide-sm v-col"><img src="<?=$forum->LastThread->profile_picture;?>" alt="user icon" class="img img-circel x-50" /></div>
                         <p class="v-col scale-sm">
-                            <a href="thread/<?=$forum->LastThread->id;?>">
-                                <small><?=$forum->LastThread->title;?></small>
-                            </a>
-                            <br/>
+                            <a href="thread/<?=$forum->LastThread->id;?>"><?=$forum->LastThread->title;?></a>
+                            <br />
                             <small><?=language::invokeOutput('frequent/by');?> <a href="profile/<?=$forum->LastThread->UID;?>"><?=$forum->LastThread->username;?></a></small>
                         </p>
                         <div class="clear"></div>

@@ -30,7 +30,7 @@
                     ?>
                     <a href="#" class="icon-mail-alt dropdown-trigger" data-id="empty-inbox"></a>
                     <?php } else { ?>
-                    <div class="label label-with-icon rad2 middle bg-color-5">
+                    <div class="label label-with-icon rad2 no-cut middle bg-color-5">
                         <a href="#" data-id="inbox-menu" class="icon-mail-alt dropdown-trigger"></a>
                         <span><?=$global['inboxCount'];?></span>
                     </div>
@@ -55,7 +55,7 @@
                     <?php
                     }else{
                         ?>
-                        <div class="label label-with-icon rad2 middle bg-color-5">
+                        <div class="label label-with-icon rad2 no-cut middle bg-color-5">
                             <a href="#notification" data-id="notify-menu" class="icon-bell-alt dropdown-trigger notifications"></a>
                             <span><?=$global['notificationsCount'];?></span>
                         </div>
@@ -102,6 +102,7 @@
                                 echo '<a class="menu-element" href="admin_cp">'. Language::invokeOutput('user-panel/admin_cp') .'</a>';
                         ?>
                         <a  class="menu-element" href="settings"><?=Language::invokeOutput('user-panel/settings');?></a>
+                        <a  class="menu-element" href="draft/see"><?=Language::invokeOutput('user-panel/draft');?></a>
                         <a  class="menu-element" href="inbox"><?=Language::invokeOutput('user-panel/inbox');?></a>
                         <a  class="menu-element" href="inventory"><?=Language::invokeOutput('user-panel/inventory');?></a>
                         <a  class="menu-element" href="support"><?=Language::invokeOutput('user-panel/support');?></a>
@@ -115,19 +116,23 @@
 <!-- responsive purpose - will be displayed when screen is small -->
 <div class="col-m col-12 show-sm res-nav">
     <div class="col-m col-12 a-center box user-panel">
-        <img src="<?=$global['logo_url'];?>" alt="logo" height="50" width="50" class="middle">
-        <a href="#panel" class="small-username trigger-sm-userpanel"><?=$global['logged']->username;?></a>
-        <?php
-        if ($global['inboxCount'] <= 0)
-        {
-            echo '<a href="inbox" class="icon-mail-alt"></a>';
-        } else { ?>
-        <div class="label label-with-icon rad2 middle bg-color-5">
-            <a href="inbox" class="icon-mail-alt"></a>
-            <span><?=$global['inboxCount'];?></span>
+        <div class="col-m col-12">
+            <img src="<?=$global['logo_url'];?>" alt="logo" class="middle x-50">
         </div>
-        <?php } ?>
-        <div class="clear"></div>
+        <div class="col-m col-12">
+            <a href="#panel" class="small-username trigger-sm-userpanel"><?=$global['logged']->username;?></a>
+            <?php
+            if ($global['inboxCount'] <= 0)
+            {
+                echo '<a href="inbox" class="icon-mail-alt"></a>';
+            } else { ?>
+            <div class="label label-with-icon rad2 middle bg-color-5">
+                <a href="inbox" class="icon-mail-alt"></a>
+                <span><?=$global['inboxCount'];?></span>
+            </div>
+            <?php } ?>
+            <div class="clear"></div>            
+        </div>
     </div>
     <div class="field-with-icon rad2">
         <form action="search" method="get" class="clearfix">
@@ -159,6 +164,7 @@
         echo '<a href="admin_cp">'. Language::invokeOutput('user-panel/admin_cp') .'</a>';
     ?>
     <a href="settings"><?=Language::invokeOutput('user-panel/settings');?></a>
+    <a href="draft/see" class="menu-element"><?=Language::invokeOutput('user-panel/draft');?></a>
     <a href="inbox"><?=Language::invokeOutput('user-panel/inbox');?></a>
     <a href="inventory"><?=Language::invokeOutput('user-panel/inventory');?></a>
     <a href="support"><?=Language::invokeOutput('user-panel/support');?></a>

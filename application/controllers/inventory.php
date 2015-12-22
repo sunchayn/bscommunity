@@ -5,6 +5,7 @@
  * @author Mazen Touati
  * @version 1.0.0
  */
+
 class inventory extends Controller
 {
     /**

@@ -1,4 +1,11 @@
 <?php
+/**
+ * bloodstone community V1.0.0
+ * @link https://www.facebook.com/Mazn.touati
+ * @author Mazen Touati
+ * @version 1.0.0
+ */
+
 /** isset_get()
  * check if the second param exist as a key for the first param ( return value if exist or third param )
  * @param $element
@@ -7,7 +14,7 @@
  * @return string
  */
 function isset_get($element, $key, $default = null) {
-    $default = (!isset($default)) ? '<em class="color-5">'. language::invokeOutput('frequent/unset') .'</em>' : $default;
+    $default = (!isset($default)) ? language::invokeOutput('frequent/unset') : $default;
     if (is_array($element))
         return isset($element[$key]) ? $element[$key] : $default;
     else if (is_object($element))
@@ -78,4 +85,9 @@ function getRealDate($date)
         $d = '01';
     //return the new date
     return $y.'/'.$m.'/'.$d;
+}
+//remove all spaces in the sides
+function fullTrim($input)
+{
+    return preg_replace('/^\s+|\s+$/u', '', $input);
 }

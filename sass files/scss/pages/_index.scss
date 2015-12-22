@@ -23,20 +23,15 @@
 		& .category {
 			margin: .5em 0;
 			& .cat-heading {
-				background-color: $color3;
-				border-bottom: 2px solid darken($color3, 6%);
-				padding: 1em .4em;
-
+				border-bottom: 2px solid darken($color3, 2%);
+				padding: .6em .4em;
+				background: darken($white, 1%);
+				color: $pre-black; 
 				& a:hover { text-decoration: none; }
 
 				& .trigger-fs { font-weight: bold; }
 
-				& p { 
-					padding: .4em 0;
-					color: $pre-black2;
-				}
-
-				& h2 { color: $pre-black; }
+				& a { color: $pre-black; }
 			}
 		}
 	}
@@ -45,8 +40,10 @@
 		& .forum {
 			margin: .2em 0;
 			padding: .4em .3em;
-			border-bottom: 1px dashed darken($color3, 6%);
-			&:last-child { border: none; }
+			&:nth-child(even)
+			{
+				background-color: lighten($color3, 1%);
+			}
 			&:hover {
 				background-color: lighten($color3, 1%);
 			}
@@ -73,6 +70,16 @@
 
 			& .forum-stats {
 				display: inline-block;
+			}
+
+			& .last-topic {
+				& p {
+					display: inline-block;
+				}
+			}
+
+			& .forum-title:hover h4{
+				color: $color5;
 			}
 		}
 	}

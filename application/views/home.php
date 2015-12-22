@@ -29,8 +29,8 @@
                 <div class="col-m col-8">
                     <div class="col-m col-6 scale-sm">
                         <div class="col-m col-12">
-                            <div class="col-m col-12 box"><h3><?=onlineAPI::getInstance()->getOnlineUsers();?> <?=Language::invokeOutput('statistics/online');?></div>
-                            <div class="col-m col-12 box"><h3><?=count($data['have-birthday'])?><?=Language::invokeOutput('statistics/birthday');?></div>
+                            <div class="col-m col-12"><h3><?=onlineAPI::getInstance()->getOnlineUsers();?> <?=Language::invokeOutput('statistics/online');?></div>
+                            <div class="col-m col-12"><h3><?=count($data['have-birthday'])?><?=Language::invokeOutput('statistics/birthday');?></div>
                             <?php
                                 if (!empty($data['have-birthday']))
                                 {
@@ -41,8 +41,8 @@
                                     }
                                 }
                             ?>
-                            <div class="col-m col-12 box"><h3><?=$data['join-us-today'][0]->cID;?><?=Language::invokeOutput('statistics/join');?></div>
-                            <div class="col-m col-12 box">
+                            <div class="col-m col-12"><h3><?=$data['join-us-today'][0]->cID;?><?=Language::invokeOutput('statistics/join');?></div>
+                            <div class="col-m col-12">
                                 <span>
                                     <?=Language::invokeOutput('statistics/recent-user/part-one');?>
                                     <strong><a href="profile/<?=$data['last-user']->id?>"><?=$data['last-user']->username?></a></strong>
@@ -112,7 +112,7 @@
                         </div>
                         <div class="col-m col-4 scale-sm">
                             <h4><?=$data['replies-count'];?></h4>
-                            <span><?=Language::invokeOutput('statistics/general/replies');?></span>
+                            <span><?=Language::invokeOutput('frequent/replies');?></span>
                         </div>
                     </div>
                     <div class="col-m col-12">

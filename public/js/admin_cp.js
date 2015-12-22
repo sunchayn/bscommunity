@@ -45,37 +45,6 @@ $(".sub-menu>a.checked").children(".toggle").toggleTwoClass("icon-angle-down", "
                 $('.result-modal').removeClass('succ').addClass('fail').html('<p>' + response.error  + '</p>').fadeIn(400).delay(3000).fadeOut(400);
         });
     });
-    //edit category
-    $('.edit-category').on('click',function(e){
-        e.preventDefault();
-        var target = $(this),
-            content = target.data('content');
-            target.ajaxRequest({url : 'ajax/getCategory', data : content}, function(response){
-                console.log(response);
-                $panel = $('#edit-category');
-                if (response['done'])
-                {
-                    var cat = response['done'];
-                    $panel.find('#title').val(cat.title);
-                    $panel.find('#order').val(cat.order);
-                    $panel.find('#desc').val(cat.desc);
-                    $panel.find('#cat_id').val(cat.id);
-                    switch (Number(cat.visibility))
-                    {
-                        case 2 :
-                            $panel.find('#membersU').attr('checked', 'checked');
-                            break;
-                        case 3 :
-                            $panel.find('#administrationU').attr('checked', 'checked');
-                            break;
-                        default :
-                            $panel.find('#allU').attr('checked', 'checked');
-                    }
-                }
-                else
-                    $panel.find('.cat-fields').html(response['error']);
-            });
-    });
     //delete category
     $('.delete-category').on('click',function(e){
         e.preventDefault();
@@ -98,26 +67,6 @@ $(".sub-menu>a.checked").children(".toggle").toggleTwoClass("icon-angle-down", "
                     setTimeout(function(){ location.reload(true); }, 3000);
                 }
             });
-        });
-    });
-    //edit forum
-    $('.edit-forum').on('click',function(e){
-        e.preventDefault();
-        var target = $(this),
-            content = target.data('content');
-        target.ajaxRequest({url : 'ajax/getForum', data : content}, function(response){
-            $panel = $('#edit-forum');
-            if (response['done'])
-            {
-                var forum = response['done'];
-                $panel.find('#title').val(forum.title);
-                $panel.find('#logo').val(forum.logo);
-                $panel.find('#desc').val(forum.desc);
-                $panel.find('#cat_id').val(forum.cat_id);
-                $panel.find('#id').val(forum.id);
-            }
-            else
-                $panel.find('.cat-fields').html(response['error']);
         });
     });
     //delete category
@@ -216,48 +165,6 @@ $(".sub-menu>a.checked").children(".toggle").toggleTwoClass("icon-angle-down", "
             });
         });
     });
-    //edit role
-    $('.edit-role').on('click',function(e){
-        e.preventDefault();
-        var target = $(this),
-            content = target.data('content');
-        target.ajaxRequest({url : 'ajax/getRole', data : content}, function(response){
-            var $panel = $('#edit-role');
-            if (response['done'])
-            {
-                var role = response['done'],
-                    acc = $.parseJSON(role.access_json);
-                $panel.find('#id').val(role.id);
-                $panel.find('#name_ar').val(role.name_ar);
-                $panel.find('#name_en').val(role.name_en);
-                $(acc).each(function(){
-                    $panel.find('#'+this).attr('checked', 'checked');
-                });
-            }
-            else
-                $panel.find('.fields').html(response['error']);
-        });
-    });
-    //edit rule
-    $('.edit-rule').on('click',function(e){
-        e.preventDefault();
-        var target = $(this),
-            content = target.data('content');
-        target.ajaxRequest({url : 'ajax/getRule', data : content}, function(response){
-            var $panel = $('#edit-rule');
-            if (response['done'])
-            {
-                var rule = response['done'];
-                $panel.find('#id').val(rule.id);
-                $panel.find('#title_ar').val(rule.title_ar);
-                $panel.find('#title_en').val(rule.title_en);
-                $panel.find('#description_en').val(rule.description_en);
-                $panel.find('#description_ar').val(rule.description_ar);
-            }
-            else
-                $panel.find('.fields').html(response['error']);
-        });
-    });
     //delete ticket(s)
     $('.delete-tickets').on('submit',function(e){
         e.preventDefault();
@@ -322,6 +229,91 @@ $(".sub-menu>a.checked").children(".toggle").toggleTwoClass("icon-angle-down", "
                 $panel.find('.fields').hide().next('.no-data').html( response['error']).show();
         });
     });
+    //turn black
+    $('.turnB').on('click', function(e){
+        e.preventDefault();
+        var target = $(this);
+        target.ajaxConfirm('turnWoB', function(){
+            var content = target.data('content');
+            target.ajaxRequest({url : 'ajax/turnBlack', data : content}, function(response){
+                if (response['done'])
+                {
+                    $('.result-modal').removeClass('fail').addClass('succ').html('<p>' + response.done  + '</p>').fadeIn(400).delay(3000).fadeOut(400);
+                    setTimeout(function(){
+                        target.parents('.one-row').fadeOut(400, function(){
+                            $(this).remove();
+                        });
+                    }, 3000);
+                }
+                else
+                {
+                    $('.result-modal').removeClass('succ').addClass('fail').html('<p>' + response.error  + '</p>').fadeIn(400).delay(3000).fadeOut(400);
+                    setTimeout(function(){ location.reload(true); }, 3000);
+                }
+            });
+        });
+    })
+    //turn white
+    $('.turnW').on('click', function(e){
+        e.preventDefault();
+        var target = $(this);
+        target.ajaxConfirm('turnWoB', function(){
+            var content = target.data('content');
+            target.ajaxRequest({url : 'ajax/turnWhite', data : content}, function(response){
+                if (response['done'])
+                {
+                    $('.result-modal').removeClass('fail').addClass('succ').html('<p>' + response.done  + '</p>').fadeIn(400).delay(3000).fadeOut(400);
+                    setTimeout(function(){
+                        target.parents('.one-row').fadeOut(400, function(){
+                            $(this).remove();
+                        });
+                    }, 3000);
+                }
+                else
+                {
+                    $('.result-modal').removeClass('succ').addClass('fail').html('<p>' + response.error  + '</p>').fadeIn(400).delay(3000).fadeOut(400);
+                    setTimeout(function(){ location.reload(true); }, 3000);
+                }
+            });
+        });
+    })
+    //delete URL
+    $('.deleteURL').on('click', function(e){
+        e.preventDefault();
+        var target = $(this);
+        target.ajaxConfirm('deleteURL', function(){
+            var content = target.data('content');
+            target.ajaxRequest({url : 'ajax/deleteURL', data : content}, function(response){
+                if (response['done'])
+                {
+                    $('.result-modal').removeClass('fail').addClass('succ').html('<p>' + response.done  + '</p>').fadeIn(400).delay(3000).fadeOut(400);
+                    setTimeout(function(){
+                        target.parents('.one-row').fadeOut(400, function(){
+                            $(this).remove();
+                        });
+                    }, 3000);
+                }
+                else
+                {
+                    $('.result-modal').removeClass('succ').addClass('fail').html('<p>' + response.error  + '</p>').fadeIn(400).delay(3000).fadeOut(400);
+                    setTimeout(function(){ location.reload(true); }, 3000);
+                }
+            });
+        });
+    })
+    //send mails to subscribers
+    $('.newsletterTrigger').on('click', function(e){
+        e.preventDefault();
+        var trigger = $(this);
+            data = trigger.attr('data-token');
+        $('.send-result').fadeIn(400).html('<img src="img/loader.gif" />');
+        trigger.ajaxRequest({url : 'ajax/sendMailsToSubscribers', data : data}, function(response){
+            if (response['error'])
+                $('.send-result').show().addClass('fail').html(response.error);
+            else if (response['msg'])
+                $('.send-result').show().removeClass('fail').html(response.msg);
+        });
+    })
 //help center
     //check tickets
     var len = $(".checkboxTickets").size();

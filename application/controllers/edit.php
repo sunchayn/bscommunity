@@ -27,7 +27,7 @@ class edit extends Controller
                     $this->loadView('access');
                     return false;
                 }
-                $data['forum'] = forumsAPI::getInstance()->getForumByID($data['thread']->forum_id, 'id, cat_id, title');
+                $data['forum'] = forumsAPI::getInstance()->getForumByID($data['thread']->forum_id, 'id, cat_id, title_'.LANGUAGE_CODE.' as title');
                 if (!empty($data['forum'])) {
                     //prepare the language
                     self::$language->load('edit');
@@ -37,7 +37,7 @@ class edit extends Controller
                     $data['page-title'] = self::$language->invokeOutput('title/thread');
                     //get the category title
                     $data['forum'] = $data['forum'][0];
-                    $data['category'] = categoryAPI::getInstance()->getCategoryByID($data['forum']->cat_id, 'id, title');
+                    $data['category'] = categoryAPI::getInstance()->getCategoryByID($data['forum']->cat_id, 'id, title_'.LANGUAGE_CODE.' as title');
                     $data['category'] = isset_get($data['category'], 0, []);
                     //load the header view
                     $this->loadView('header', $data);
@@ -47,15 +47,15 @@ class edit extends Controller
                     $this->loadView('footer', $data);
                 }else{
                     //if the ID not found => show 404 error
-                    $this->loadView('404');
+                    header('Location: ../error');
                 }
             }else{
                 //if the ID not found => show 404 error
-                $this->loadView('404');
+                header('Location: ../error');
             }
         }else{
             //if no params is passed
-            $this->loadView('404');
+            header('Location: ../error');
         }
     }
 
@@ -107,15 +107,15 @@ class edit extends Controller
                 }else{
                     echo 'no thread';
                     //if the ID not found => show 404 error
-                    $this->loadView('404');
+                    header('Location: ../error');
                 }
             }else{
                 //if the ID not found => show 404 error
-                $this->loadView('404');
+                header('Location: ../error');
             }
         }else{
             //if no params is passed
-            $this->loadView('404');
+            header('Location: ../error');
         }
     }
 

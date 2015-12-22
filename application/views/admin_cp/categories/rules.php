@@ -20,11 +20,11 @@
                         <div class="col-m col-12">
                             <?=language::invokeOutput('sel-forum') . ' : ';?>
                             <select class="page-swapper">
-                                <option value="admin_cp/categories?section=rules&forum_id=<?=$data['curr_forum']->id;?>"><?=$data['curr_forum']->title;?></option>
+                                <option value="admin_cp/categories?section=rules&forum_id=<?=$data['curr_forum']->id;?>"><?=$data['curr_forum']->$data['Ftitle'];?></option>
                                 <?php
                                 foreach ($data['forums'] as $forum)
-                                    if ($cat->id != $data['curr_forum']->id)
-                                        echo '<option value="admin_cp/categories?section=rules&forum_id='. $forum->id .'">'. $forum->title. '</option>';
+                                    if ($forum->id != $data['curr_forum']->id)
+                                        echo '<option value="admin_cp/categories?section=rules&forum_id='. $forum->id .'">'. $forum->$data['Ftitle']. '</option>';
                                 ?>
                             </select>
                         </div>
@@ -45,112 +45,9 @@
                         </div>
                         <!-- end - forums / categories wrapper -->
                         <!-- ###### -->
-                        <!-- add new role -->
+                        <!-- add new rule -->
                         <div class="col-m col-12">
-                            <h4><a href="#add-rule" class="triggerPanel" data-panel="add-rule"><?=Language::invokeOutput('newRule');?></a></h4>
-                        </div>
-                        <div class="overlay"></div>
-                        <div class="panel" id="add-rule">
-                            <div class="panel-head">
-                                <a href="#" class="icon-cancel cancel f-right"></a>
-                            </div>
-                            <div class="panel-content grid-section">
-                                <div class="col-m col-12">
-                                    <h2 class="content-heading"><?=Language::invokeOutput('addRule/heading');?></h2>
-                                    <p class="section-desc"><?=Language::invokeOutput('addRule/desc');?></p>
-                                </div>
-                                <form action="ajax/addRule" method="POST" class="ajax noScroll">
-                                    <div class="col-m col-12 ajax-loader"></div>
-                                    <div class="col-m col-12 login-label">
-                                        <div class="col-m col-12 box">
-                                            <h4><?=Language::invokeOutput('addRule/title_ar');?></h4>
-                                        </div>
-                                        <div class="col-m col-12">
-                                            <input type="text" name="title_ar" placeholder="<?=Language::invokeOutput('addRule/placeholder1');?>" class="rad2" tabindex="1"/>
-                                        </div>
-                                    </div>
-                                    <div class="col-m col-12 login-label">
-                                        <div class="col-m col-12 box">
-                                            <h4><?=Language::invokeOutput('addRule/title_en');?></h4>
-                                        </div>
-                                        <div class="col-m col-12">
-                                            <input type="text" name="title_en" placeholder="<?=Language::invokeOutput('addRule/placeholder1');?>" class="rad2" tabindex="1"/>
-                                        </div>
-                                    </div>
-                                    <div class="col-m col-12 login-label">
-                                        <div class="col-m col-12 box">
-                                            <h4><?=Language::invokeOutput('addRule/description_ar');?></h4>
-                                        </div>
-                                        <div class="col-m col-12">
-                                            <textarea name="description_ar" class='col-12' rows="3" placeholder="<?=Language::invokeOutput('addRule/placeholder2');?>" tabindex="3"></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="col-m col-12 login-label">
-                                        <div class="col-m col-12 box">
-                                            <h4><?=Language::invokeOutput('addRule/description_en');?></h4>
-                                        </div>
-                                        <div class="col-m col-12">
-                                            <textarea name="description_en" class='col-12' rows="3" placeholder="<?=Language::invokeOutput('addRule/placeholder2');?>" tabindex="3"></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="col-m col-12 login-label">
-                                        <a href="#" class="formSubmit"><?=Language::invokeOutput('submit-label');?></a>&nbsp;<i class="icon-<?=DIRECTION;?>"></i>
-                                        <input type="hidden" name="forum_id" value="<?=$data['curr_forum']->id;?>" />
-                                        <input type="hidden" name="token" value="<?=$global['token'];?>" />
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="panel" id="edit-rule">
-                            <div class="panel-head">
-                                <a href="#" class="icon-cancel cancel f-right"></a>
-                            </div>
-                            <div class="panel-content grid-section">
-                                <div class="col-m col-12">
-                                    <h2 class="content-heading"><?=Language::invokeOutput('addRule/heading');?></h2>
-                                    <p class="section-desc"><?=Language::invokeOutput('addRule/desc');?></p>
-                                </div>
-                                <form action="ajax/editRule" method="POST" class="ajax noScroll">
-                                    <div class="col-m col-12 ajax-loader"></div>
-                                    <div class="col-m col-12 login-label">
-                                        <div class="col-m col-12 box">
-                                            <h4><?=Language::invokeOutput('addRule/title_ar');?></h4>
-                                        </div>
-                                        <div class="col-m col-12">
-                                            <input type="text" name="title_ar" id="title_ar" placeholder="<?=Language::invokeOutput('addRule/placeholder1');?>" class="rad2" tabindex="1"/>
-                                        </div>
-                                    </div>
-                                    <div class="col-m col-12 login-label">
-                                        <div class="col-m col-12 box">
-                                            <h4><?=Language::invokeOutput('addRule/title_en');?></h4>
-                                        </div>
-                                        <div class="col-m col-12">
-                                            <input type="text" name="title_en" id="title_en" placeholder="<?=Language::invokeOutput('addRule/placeholder1');?>" class="rad2" tabindex="1"/>
-                                        </div>
-                                    </div>
-                                    <div class="col-m col-12 login-label">
-                                        <div class="col-m col-12 box">
-                                            <h4><?=Language::invokeOutput('addRule/description_ar');?></h4>
-                                        </div>
-                                        <div class="col-m col-12">
-                                            <textarea name="description_ar" class='col-12' rows="3" id="description_ar" placeholder="<?=Language::invokeOutput('addRule/placeholder2');?>" tabindex="3"></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="col-m col-12 login-label">
-                                        <div class="col-m col-12 box">
-                                            <h4><?=Language::invokeOutput('addRule/description_en');?></h4>
-                                        </div>
-                                        <div class="col-m col-12">
-                                            <textarea name="description_en" class='col-12' rows="3" id="description_en" placeholder="<?=Language::invokeOutput('addRule/placeholder2');?>" tabindex="3"></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="col-m col-12 login-label">
-                                        <a href="#" class="formSubmit"><?=Language::invokeOutput('submit-label');?></a>&nbsp;<i class="icon-<?=DIRECTION;?>"></i>
-                                        <input type="hidden" name="id" id="id" value="" />
-                                        <input type="hidden" name="token" value="<?=$global['token'];?>" />
-                                    </div>
-                                </form>
-                            </div>
+                            <h4><a href="admin_cp/categories?section=addRule&forum_id=<?=$data['curr_forum']->id;?>"><?=Language::invokeOutput('newRule');?></a></h4>
                         </div>
                     </div>
                 </div>

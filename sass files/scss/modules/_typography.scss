@@ -1,16 +1,22 @@
 //direction
-$direction : rtl;
+$direction : ltr;
 // Font weights
 $light: 100;
 $regular: 400;
-$bold: 600;
+$bold: 600; //-- RTL --
+//$bold: 600;
 // Font
-$base-font-family: tahoma,arial;
+//@import url(http://fonts.googleapis.com/earlyaccess/droidarabickufi.css);
+//$base-font-family: 'Droid Arabic Kufi',Helvetica, sans-serif, arial; //-- RTL --
+$base-font-family: tahoma, arial;
+//$headers-font-family: 'Droid Arabic Kufi',Helvetica, sans-serif, arial; //-- RTL --
+$headers-font-family: tahoma, arial;
 $base-font-weight: $regular;
 $base-font-size: 14px;
 $md-font-size: 13px;
 $sm-font-size: 12px;
-$base-line-height: normal;
+//-- ** --
+$base-line-height: 1.3em;
 $sm-line-height: 2em;
 $md-line-height: 1.5em;
 // Headings
@@ -19,8 +25,8 @@ $header-sm-font-weight: $regular;
 //scale font
 $breakpoints: (
   small : 480px,
-  medium: 924px,
-  large : 1024px
+  medium: 955px,
+  large : 1063px
 );
 $h1-font-sizes: (
   null  : 2em,
@@ -29,8 +35,8 @@ $h1-font-sizes: (
   small : 1.5em,
 );
 $h2-font-sizes: (
-  null  : 1.5em,
-  large  : 1.5em,
+  null  : 1.3em,
+  large  : 1.3em,
   medium : 1.25em,
   small : 1.17em,
 );
@@ -66,7 +72,7 @@ $p-font-sizes: (
 );
 
 //
-p, ul, ol,span { @include font-size($p-font-sizes); }
+p, ul, ol, span, a { @include font-size($p-font-sizes); }
 
 h1 { @include font-size($h1-font-sizes); }
 

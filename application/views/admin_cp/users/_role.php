@@ -13,7 +13,7 @@
         <?php
         }else{
             ?>
-                <a href="#edit-role" class="edit-role triggerPanel" data-panel="edit-role" data-content="id=<?=$role->id;?>&token=<?=$global['token'];?>"><?=language::invokeOutput('edit-label');?></a> -
+                <a href="admin_cp/users?section=editRole&id=<?=$role->id;?>"><?=Language::invokeOutput('edit-label');?></a> -
                 <a href="#delete-role" class="delete-role" data-content="id=<?=$role->id;?>&token=<?=$global['token'];?>"><?=language::invokeOutput('frequent/delete');?></a>
         <?php } ?>
 

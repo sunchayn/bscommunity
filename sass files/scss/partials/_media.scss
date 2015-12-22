@@ -1,4 +1,4 @@
-@media only screen and (max-width: 1024px){
+@media only screen and (max-width: 1065px){
 
 	.sub-wrapper {
 		width: 95%;
@@ -6,7 +6,7 @@
 }
 
 //@media only screen and (max-width: 768px){
-@media only screen and (max-width: 924px){
+@media only screen and (max-width: 955px){
 
 	/* responsive grid */
 	.col-1, .col-2, .col-3,	.col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-10, .col-11, .col-12, .v-middle .v-col {
@@ -14,7 +14,7 @@
 		{
 			width: 100%;
 			min-width: 100%;
-			margin: 0;
+			margin: 1% 0 0 0;
 		}
 	}
 
@@ -23,6 +23,10 @@
 		width: 100% !important;
 		min-width: 100% !important;
 		margin: 0 !important;
+	}
+
+	.remov-bor {
+		border: 0 !important;
 	}
 
 	/*
@@ -103,15 +107,35 @@
 	}
 	/* end - general style */
 	.scale-fz {
-		font-size: 1.5em !important;
+		font-size: 1.4em !important;
 	}
 
 	body, html {
 		line-height: $md-line-height;
 	}
 	.wide-zone h1#title  {
-		font-size: 30px;
+		font-size: 2em;
 		border: 3px solid #fff;
+	}
+
+
+	/* small view styles */
+
+	.hide-md, .v-middle .v-col.hide-md {
+		display: none !important;
+	}
+
+	.show-md {
+		display: block;
+	}
+
+	.left-md { @if $direction == ltr {text-align: left !important;}@else{text-align: right !important;} }
+
+	.right-md {	@if $direction == ltr {text-align: right !important;}@else{text-align: left !important;} }
+
+
+	.center-md {
+		text-align: center !important;
 	}
 }
 
@@ -123,12 +147,12 @@
 		margin: 1% 0 0 0;
 	}
 	.scale-fz {
-		font-size: 1.3em !important;
+		font-size: 1.2em !important;
 	}
 	/* responsive grid */
-	.resp-margin {
-		margin: 0;
-	}
+	.resp-margin { margin: 0 !important; }
+
+	.wrapper .res-nav { margin: 0; }
 
 	/* end - responsive grid */
 
@@ -184,7 +208,7 @@
 		margin-bottom: 3px;
 	}
 
-	body, html {
+	p {
 		line-height: $sm-line-height;
 	}
 
@@ -194,7 +218,7 @@
 
 	/* general styles */
 
-	p {
+	p, span {
 		padding-top: 0.3em;
 	}
 
@@ -203,9 +227,6 @@
 		padding: .3em .4em;
 	}
 
-	.wrapper {
-		padding-bottom: 1.2em;
-	}
 
 	.result-modal {
 		bottom: 2.7em;
@@ -220,9 +241,7 @@
 	}
 
 	.pagination {
-		&>div {
-			text-align: center;
-		}
+		&>div { text-align: center; }
 	}
 
 	.hide-md, .v-middle .v-col.hide-md {
@@ -261,8 +280,11 @@
 	}
 
 	.wide-zone h1#title  {
-		font-size: 20px;
+		font-size: 1.55em;
 		border: 3px solid #fff;
+		font-weight: $regular;
+		line-height: $sm-line-height;
+		padding: 1.75em 1.55em;
 	}
 	/* end - small view styles */
 

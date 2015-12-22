@@ -7,6 +7,7 @@
  * @author Mazen Touati
  * @version 1.0.0
  */
+
 class inventoryAPI extends databaseAPI
 {
     /**

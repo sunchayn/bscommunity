@@ -7,6 +7,7 @@
  * @author Mazen Touati
  * @version 1.0.0
  */
+
 class usersAPI extends databaseAPI{
 
     private $_table = 'users';
@@ -60,7 +61,7 @@ class usersAPI extends databaseAPI{
         $join = "LEFT JOIN access ON access.id = users.role";
         if ($search === false)
             return Paginator::getInstance()->getData([$this->_table, $join], $url, "access.name_".LANGUAGE_CODE." as role, users.id, username, country, posts, level, profile_picture, create_date, status", null, 'order by users.id desc');
-        return Paginator::getInstance()->getData([$this->_table, $join], $url.'?search='.$search, "users.id, username, country, posts, level, profile_picture, create_date, status", [ ['username', 'LIKE', "%".$search."%"] ], 'order by users.id desc', '&');
+        return Paginator::getInstance()->getData([$this->_table, $join], $url.'?search='.$search, "access.name_".LANGUAGE_CODE." as role,users.id, username, country, posts, level, profile_picture, create_date, status", [ ['username', 'LIKE', "%".$search."%"] ], 'order by users.id desc', '&');
     }
 
     /**
@@ -71,6 +72,8 @@ class usersAPI extends databaseAPI{
      */
     public function getUserPreferences($id, $rows = "*", $where = [])
     {
+        if (empty($this->getUserById($id)))
+            return false;
         $get = parent::selectData($rows, array_merge([['user_id', '=', $id]], $where), $this->_table2);
         if (empty($get))
         {
@@ -105,6 +108,17 @@ class usersAPI extends databaseAPI{
         return parent::selectData($row, [['id', '=', $id]], $this->_table, null, ' LIMIT 1');
     }
 
+    /**
+     * @param $author
+     * @param string $rows
+     * @return mixed
+     */
+    public function getThreadAuthor($author, $rows = "users.id, username, posts, create_date, level, profile_picture, social")
+    {
+        $join = "LEFT JOIN access ON access.id = users.role";
+        return parent::selectData($rows.', access.name_' . LANGUAGE_CODE . ' as role', [['users.id', '=', $author]], [$this->_table, $join], null, ' LIMIT 1', null);
+    }
+
     /** select user by his email
      * @param $email
      * @param string $row
@@ -125,6 +139,10 @@ class usersAPI extends databaseAPI{
         return parent::selectData($row, [['recovery', '=', $email]], $this->_table2, null, ' LIMIT 1');
     }
 
+    public function getUserRecovery($id)
+    {
+            return parent::selectData('recovery', [ ['user_id', '=', $id] ], $this->_table2, null, ' LIMIT 1');
+    }
 
     /**
      * @param array $where
@@ -144,6 +162,9 @@ class usersAPI extends databaseAPI{
         return parent::selectData('*', [['id', '=', $id]], $this->_table3, null, ' LIMIT 1');
     }
 
+    /**
+     * @return bool
+     */
     public static function warExternal()
     {
         if (!usersAPI::isLogged())
@@ -242,6 +263,10 @@ class usersAPI extends databaseAPI{
      */
     public function closeUser($id)
     {
+        //only admins can access to this method
+        if (!accessAPI::is_admin())
+            return false;
+        //-- ## --//
         Controller::$language->load('validation/user');
         return (parent::updateData( $this->_table, ['field' => 'id', 'value' => $id], ['status' => 0])) ? Controller::$language->invokeOutput('close') : false;
     }
@@ -252,6 +277,10 @@ class usersAPI extends databaseAPI{
      */
     public function openUser($id)
     {
+        //only admins can access to this method
+        if (!accessAPI::is_admin())
+            return false;
+        //-- ## --//
         Controller::$language->load('validation/user');
         return (parent::updateData( $this->_table, ['field' => 'id', 'value' => $id], ['status' => 1])) ? Controller::$language->invokeOutput('open') : false;
     }
@@ -300,12 +329,11 @@ class usersAPI extends databaseAPI{
         if (isset($fullName[1]))
         {
             $data['last_name'] = $fullName[1];
+            $data['last_name'] .= isset($fullName[2]) ? ' '.$fullName[2] : '';
             //if the last name is too short
             if (!isset($data['last_name'][2]))
                 $errors['fullName'][] = Controller::$language->invokeOutput("fullName4");
         }
-
-        // -- check for errors
         //if user exist
         if ($this->isUsernameExist($data['username']))
             $errors['username'][] = Controller::$language->invokeOutput("username1");
@@ -340,15 +368,122 @@ class usersAPI extends databaseAPI{
         $data['password'] = Hash::generate($data['password'], $data['salt']);
         //set the default profile picture
         $data['profile_picture'] = URL.'img/bsc-icon.jpg';
+        //send a verification e-mail if needed
+        $data['hash'] = Hash::generate(time(),  Hash::salt(32));
+        $data['active'] = !(int)variablesAPI::getInstance()->getVariableValue('behaviour', 'verifyEmail');
         //create the user
         if (parent::insertData($this->_table, array_keys($data), array_values($data)))
         {
-            parent::insertData($this->_table2, ['user_id'], [Controller::$db->lastInsertId()]);
+            $id = Controller::$db->lastInsertId();
+            parent::insertData($this->_table2, ['user_id'], [$id]);
+            if ($data['active'] == 0)
+            {
+                $data['id'] = $id;
+                $send = $this->sendVerification($data);
+                if (is_string($send))
+                    return $send;
+                return $send[0];
+            }
             return Controller::$language->invokeOutput($msg);
         }
         return false;
     }
 
+    /**
+     * @param array $data
+     * @return array|bool|null|string
+     */
+    public function sendVerification($data = array())
+    {
+        $mail = new Mailer();
+        if ( $mail->send(null, $data['email'], Language::invokeOutput('verification').' '.Controller::$GLOBAL['site_name'], null, ['path' => 'verification','plain' => 'verificationPlain', 'data' => $data], true))
+            return Language::invokeOutput('verificationDone');
+        return [Language::invokeOutput('verificationFail')];
+    }
+
+    /**
+     * @param $id
+     * @return array|bool|int
+     */
+    public function resendVerification($id)
+    {
+        $getUser = usersAPI::getInstance()->getUserById($id, 'active, username, id, email, hash');
+        //if the id wrong
+        if (empty($getUser))
+            return false;
+
+        $getUser = $getUser[0];
+        //if the user already active
+        if ( (int)$getUser->active === 1 )
+            return -1;
+
+        //load the language
+        Controller::$language->load('validation/join');
+        $mail = new Mailer();
+        $data = ['id' => $id, 'username' => $getUser->username, 'email' => $getUser->email, 'hash' => $getUser->hash];
+        if ($mail->send(null, $data['email'], Language::invokeOutput('verification').' '.Controller::$GLOBAL['site_name'], null, ['path' => 'verification','plain' => 'verificationPlain', 'data' => $data], true))
+            return $data;
+        else
+            return false;
+    }
+
+    /**
+     * @param $id
+     * @param $hash
+     * @return bool|mixed
+     */
+    public function verifyUser($id, $hash)
+    {
+        $getUser = $this->getUserById($id);
+        //if the id wrong
+        if (empty($getUser))
+            return false;
+
+        $getUser = $getUser[0];
+        //if the user already active
+        if ( (int)$getUser->active === 1 )
+            return -1;
+        //if the hashes matches return the update result
+        if ($getUser->hash == $hash)
+        {
+            if (parent::updateData($this->_table, ['field' => 'id', 'value' => $id], [ 'active' => 1 ]))
+            {
+                $this->sendWelcomeMsg($getUser);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function sendWelcomeMsg($user)
+    {
+        //load the language
+        Controller::$language->load('validation/join');
+        $mail = new Mailer();
+        $data = ['id' => $user->id, 'username' => $user->username, 'email' => $user->email];
+        return ($mail->send(null, $data['email'], Language::invokeOutput('welcome').' '.Controller::$GLOBAL['site_name'], null, ['path' => 'welcome','plain' => 'welcomePlain', 'data' => $data], true));
+    }
+    /**
+     * @param array $data
+     * @return array|bool|null|string
+     */
+    public function updatePassword($data = array())
+    {
+        Controller::$language->load('validation/password');
+        if (!isset($data['password'], $data['id'], $data['re-password']))
+            return ['general' => [language::invokeOutput('missed')]];
+        //if the passwords didn't match
+        if ($data['password'] !== $data['re-password'])
+            return ['password' => [language::invokeOutput('match')]];
+        $getUser = $this->getUserById($data['id'], 'id, salt');
+        if (empty($getUser))
+            return ['general' => [language::invokeOutput('unf')]];
+        $getUser = $getUser[0];
+        //generate the new password hash
+        $password = Hash::generate($data['password'], $getUser->salt);
+        return (parent::updateData($this->_table, ['field' => 'id', 'value' => $getUser->id], ['password' => $password])) ? language::invokeOutput('password-done') : ['general' => [language::invokeOutput('frequent/wrong')]];
+    }
     /**
      * @param $data
      * @return array|bool
@@ -369,6 +504,10 @@ class usersAPI extends databaseAPI{
      */
     public function changeRole($data)
     {
+        //only admins can access to this method
+        if (!accessAPI::is_admin())
+            return false;
+        //-- ## --//
         if (empty($data)) return false;
         Controller::$language->load('validation/changeRole');
         $getUser = $this->getUserById($data['id']);
@@ -552,7 +691,7 @@ class usersAPI extends databaseAPI{
             if (Validation::isRestrictEntry($data['username']))
                 return [Controller::$language->invokeOutput("username2")];
             //if username is short
-            if (!isset($data['username'][6]))
+            if (!isset($data['username'][5]))
                 return [Controller::$language->invokeOutput("username3")];
             //add the use to change username request
             return ($this->usernameRequest(['user_id' => $getUser->id, 'old' => $getUser->username, 'new' => $data['username']])) ? Controller::$language->invokeOutput("update/usernameRequest") : false;
@@ -565,7 +704,11 @@ class usersAPI extends databaseAPI{
             //if password is short
             if (!isset($data['password'][5]))
                 return [Controller::$language->invokeOutput("password")];
+            //if current passwords didn't match
+            if (!isset($data['curr-password']) || !$this->matchPassword($getUser, $data['curr-password']))
+                return [Controller::$language->invokeOutput("curr-wrong")];
             $data['password'] = Hash::generate($data['password'], $getUser->salt);
+            unset($data['curr-password']);
         }
         //if updating email
         if (isset($data['email']))
@@ -640,6 +783,15 @@ class usersAPI extends databaseAPI{
         //if updating education
         if (isset($data['skills']) || isset($data['education']))
             $data[key($data)] = json_encode($data[key($data)]);
+        //if update social
+        if (isset($data['social']))
+        {
+
+            $socs = [];
+            foreach ($data['social'] as $k => $soc)
+                $socs[$k] = preg_replace('/(http(s)?:\/\/)?([a-zA-Z0-9.]+)(\/)?/i', '', $soc, 1);
+            $data['social'] = json_encode($socs);
+        }
         //update the user
         return (parent::updateData( $this->_table, ['field' => 'id', 'value' => $id], $data)) ? Controller::$language->invokeOutput("update/done") : ['error'];
     }
@@ -660,22 +812,21 @@ class usersAPI extends databaseAPI{
         //seek for errors
         $key = key($data);
         if ($preferences->$key == $data[$key])
-            return ['you don\'t change anything'];
+            return [ language::invokeOutput('update/no-change') ];
         if (isset($data['external']))
         {
             if (!in_array($data['external'], ['0', '1']))
-                return ['you make something wrong baby !'];
+                return [  language::invokeOutput('frequent/wrong')  ];
             $data['external'] = intval($data['external']);
         }
-
         if (isset($data['recovery']))
         {
             if ($this->isRecoveryExist($data['recovery']))
-                return ['recovery email already used !'];
+                return [  language::invokeOutput('update/rec-exist')  ];
         }
         //----->
         //update the user
-        return (parent::updateData( $this->_table2, ['field' => 'user_id', 'value' => $id], $data)) ? Controller::$language->invokeOutput("update/done") : ['error'];
+        return (parent::updateData( $this->_table2, ['field' => 'user_id', 'value' => $id], $data)) ? Controller::$language->invokeOutput("update/done") : [ language::invokeOutput('frequent/wrong')  ];
     }
 
     /**
@@ -693,7 +844,7 @@ class usersAPI extends databaseAPI{
         if (!filter_var($data['username'], FILTER_VALIDATE_EMAIL))
         {
             //fetch the wanted username
-            $getUser = $this->getUserByUserName($data['username'], "id, password, salt, status");
+            $getUser = $this->getUserByUserName($data['username'], "id, password, salt, status, active");
             //if no user match
             if (empty($getUser))
                 //show no user error
@@ -728,6 +879,12 @@ class usersAPI extends databaseAPI{
         //check if the user not closed
         if ($getUser->status == 0)
             return ['general' => [Controller::$language->invokeOutput("status")]];
+        //check if the user not deactivated
+        if ($getUser->status == 2)
+            return ['general' => [Controller::$language->invokeOutput("status2")]];
+        //check if the user is active
+        if ($getUser->active == 0)
+            return ['general' => [Language::invokeOutput("active"). ' <a href="account/resend/'.$getUser->id.'" >'.Language::invokeOutput('resend').'</a>']];
         //clear this user login attempts while he logged successfully
         attemptAPI::getInstance()->clearAttempts($getUser->id);
         //set the logging session
@@ -774,7 +931,7 @@ class usersAPI extends databaseAPI{
      */
     public static function isLogged()
     {
-        return (Session::exists(LOGIN_SESSION_NAME))? true : false ;
+        return (Session::exists(LOGIN_SESSION_NAME)) ? true : false ;
     }
 
     /** get the current logged user id
@@ -995,4 +1152,22 @@ class usersAPI extends databaseAPI{
         }
     }
 
+
+    /**
+     * @return array|bool|null|string
+     */
+    public function deactivateUser()
+    {
+        Controller::$language->load('validation/deactivate');
+        $id = usersAPI::getLoggedId();
+        $getUser = $this->getUserById($id);
+        if (empty($getUser))
+            return [ 'general' => [Language::invokeOutput('unf')] ];
+        if (parent::updateData($this->_table, ['field' => 'id', 'value' => $id], ['status' => 2]))
+        {
+            self::clearLoggedTrace();
+            return Language::invokeOutput('done');
+        }
+        return false;
+    }
 }

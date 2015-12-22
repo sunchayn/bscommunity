@@ -13,4 +13,9 @@ return [
     'deleteTickets' => '<h3>delete ticket(s)</h3><p>are you sure you want to delete this ticket(s) ?</p>',
     'approveDecline' => '<h3>approve or decline</h3><p>are you sure you want to approve or decline this request ?</p>',
     'deleteRule' => '<h3>delete a rule</h3><p>are you sure you want to delete this rule ?</p>',
+    'turnWoB' => '<h3>turn URL white / black</h3><p>are you sure you want to turn this URL White/Black ?</p>',
+    'deleteURL' => '<h3>delete URL</h3><p>are you sure you want to delete this URL ?</p>',
+    'deactivateAccount' => '<h3>deactivate account</h3><p>are you sure you want to deactivate your account ?</p>',
+    'deleteDraft' => '<h3>delete draft</h3><p>are you sure you want to delete this draft ?</p>',
+    'deleteThread' => '<h3>delete thread</h3><p>are you sure you want to delete this thread ?</p>',
 ];

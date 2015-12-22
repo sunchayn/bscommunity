@@ -19,12 +19,6 @@
                 </div>
             </div>
             <!-- end - search field -->
-            <!-- ############ -->
-            <!-- # pagination # -->
-            <div class="col-m col-12 box">
-                <?=isset_get($data, 'pages')?>
-            </div>
-            <!-- # pagination # -->
             <!-- ########## -->
             <!-- members list -->
             <div class="col-m col-12 members-list">

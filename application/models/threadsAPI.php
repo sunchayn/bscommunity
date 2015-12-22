@@ -7,6 +7,7 @@
  * @author Mazen Touati
  * @version 1.0.0
  */
+
 class threadsAPI extends databaseAPI{
     /**
      * @var  string
@@ -207,6 +208,14 @@ class threadsAPI extends databaseAPI{
     {
         Controller::$language->load('validation/thread');
         $data['author_id'] = Controller::$GLOBAL['logged']->id;
+        //get the attachments if exist
+        if (isset($data['attachments']) && !empty($data['attachments']))
+        {
+            $getFiles = json_decode(base64_decode($data['attachments']));
+            $data['attachments'] = 1;
+        }else{
+            $data['attachments'] = 0;
+        }
         //get the array of fields
         $fieldsArray = array_keys($data);
         //set the required fields
@@ -223,12 +232,10 @@ class threadsAPI extends databaseAPI{
         //array that hold errors
         $errors = [];
         // -- check for errors
+        $data['title'] = Filters::sexualContentFilter($data['title']);
         //if short title
         if (Validation::isShort($data['title']))
             $errors['title'][] =  Controller::$language->invokeOutput("title1");
-        //if title have disallowed words
-        if (Validation::isRestrictEntry($data['title'], Controller::$db))
-            $errors['title'][] =  Controller::$language->invokeOutput("title2");
         $data['content'] = HTML::clean($data['content']);
         //if short content
         if (Validation::isShort($data['content']))
@@ -250,17 +257,24 @@ class threadsAPI extends databaseAPI{
             //check if the user have a thread breaker
             $getItem = inventoryAPI::getInstance()->getActiveItem(4, $data['author_id']);
             if (!empty($getItem))
-            {
                 inventoryAPI::getInstance()->useItem($getItem[0]->id);
-            }else{
+            else
                 return ['general' => [Controller::$language->invokeOutput("exceed-limit")]];
-            }
+        }
+        //delete the draft
+        if (isset($data['draft']))
+        {
+            threadDraftAPI::getInstance()->deleteDraft($data['draft']);
+            unset($data['draft']);
         }
         //create the thread
-        $add = (parent::insertData($this->_table, $fieldsArray, array_values($data)));
+        $add = (parent::insertData($this->_table, array_keys($data), array_values($data)));
         $id = Controller::$db->lastInsertId();
         if (!empty($add))
         {
+            //save attachment to database
+            if (isset($getFiles) && is_array($getFiles))
+                $this->attachFiles($id, $getFiles);
             //increment the user posts
             usersAPI::getInstance()->updateUserPosts($data['author_id']);
             //increment forum replies
@@ -278,21 +292,38 @@ class threadsAPI extends databaseAPI{
     }
 
     /**
+     * @param $thread
+     * @param $files
+     * @return bool
+     */
+    public function attachFiles($thread, $files)
+    {
+        if (empty($files))
+            return false;
+
+        foreach ($files as $file)
+            attachmentAPI::getInstance()->addAttachment(['path' => $file->newName,'size' => $file->size, 'thread_id' => $thread]);
+    }
+
+    /**
      * @param $id
      * @param bool|true $decrement
      * @return bool
      */
     public function deleteThread($id, $decrement = true)
     {
-        $get = $this->getThreadByID($id, 'forum_id')[0]->forum_id;
-        //first of all delete all replies threads
+
+        $getThread = $this->getThreadByID($id, 'forum_id, author_id')[0];
+        if (!accessAPI::getInstance()->checkAccessToDeleteThread($getThread->author_id))
+            return false;
+        //first of all delete all thread's replies
         if (!repliesAPI::getInstance()->deleteRepliesByParent($id)) return false;
         //if process succeed delete the thread
         if (parent::deleteData($this->_table,['field'=> 'id', 'value' => $id]))
         {
             //decrement forum threads count
             if ($decrement)
-                forumsAPI::getInstance()->updateForumThreads($get, false);
+                forumsAPI::getInstance()->updateForumThreads($getThread->forum_id, false);
             return true;
         }
         return false;
@@ -304,9 +335,10 @@ class threadsAPI extends databaseAPI{
      */
     public function updateThread($data = array())
     {
+        //var_dump($data);
         Controller::$language->load('validation/thread');
         if (empty($data)) return false;
-        $getThread = $this->getThreadByID($data['id'], 'title, content, keywords, author_id');
+        $getThread = $this->getThreadByID($data['id'], 'title, content, keywords, author_id, attachments');
         if (empty($getThread))
             return ['general' => [Controller::$language->invokeOutput("frequent/wrong")]];
         $getThread = $getThread[0];
@@ -318,16 +350,13 @@ class threadsAPI extends databaseAPI{
             return ['general' => [Controller::$language->invokeOutput("frequent/no-access")]];
         if (isset($data['title']) && $data['title'] != $getThread->title)
         {
+            $data['title'] = Filters::sexualContentFilter($data['title']);
             //if short title
             if (Validation::isShort($data['title']))
                 $errors['title'][] = Controller::$language->invokeOutput("title1");
-            //if title have disallowed words
-            if (Validation::isRestrictEntry($data['title'], Controller::$db))
-                $errors['title'][] = Controller::$language->invokeOutput("title2");
             $values['title'] = $data['title'];
         }
-
-        if (isset($data['content']) && $data['content'] != $getThread->content)
+        if (isset($data['content']))
         {
             $data['content'] = HTML::clean($data['content']);
             //if short content
@@ -341,9 +370,27 @@ class threadsAPI extends databaseAPI{
                 $errors['keywords'][] = Controller::$language->invokeOutput("keywords");
             $values['keywords'] = preg_replace('/[\s]*,+[\s]*/u', ',', trim($data['keywords']));
         }
+        //delete current attachments
+        if (isset($data['delCurrAttach']))
+        {
+            attachmentAPI::getInstance()->deleteThreadAttachments($data['id']);
+            unset($data['delCurrAttach']);
+            $data['attachments'] = 0;
+        }
         //if nothing changes
         if (empty($values))
             return ['general' => [Controller::$language->invokeOutput("frequent/no-change")]];
+        //get the attachments if exist
+        if (isset($data['attachments']) && !empty($data['attachments']))
+        {
+            $getFiles = json_decode(base64_decode($data['attachments']));
+            $data['attachments'] = 1;
+            //save attachment to database
+            if (is_array($getFiles))
+                $this->attachFiles($data['id'], $getFiles);
+        }
+        //put the right value for the attachments indicator field !
+        $data['attachments'] = (isset($data['attachments'])) ? $data['attachments'] : $getThread->attachments;
         //if there's an error
         if (!empty($errors))
             return $errors;
@@ -389,5 +436,4 @@ class threadsAPI extends databaseAPI{
     {
         return parent::updateData( $this->_table, ['field' => 'id', 'value' => $id], ['last_reply' => ['NOW()'] ]);
     }
-
 }

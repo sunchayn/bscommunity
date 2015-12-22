@@ -43,6 +43,11 @@ input {
 	&[type='checkbox']:checked + label.anchorCheckLabel {
 		color: nth($colors, 7);
 	}
+
+
+	&[type=file] {
+		padding: .2em;
+	}
 }
 
 textarea {
@@ -53,6 +58,21 @@ textarea {
 	&:focus{
 		outline: none;
 		border-color: lighten($pre-black2, 40%);
+	}
+
+	&::-webkit-scrollbar {
+	    width: 12px;
+	}
+	&::-webkit-scrollbar-track {
+	    background-color: darken($color3, 5%);
+	    @include borderRadius(12px);
+	}
+	&::-webkit-scrollbar-thumb {
+	    background-color: lighten($pre-black2, 15%);
+	    @include borderRadius(12px);
+	}
+	&::-webkit-scrollbar-thumb:hover {
+	    background-color: darken($pre-black,5%);
 	}
 }
 
@@ -202,7 +222,8 @@ label {
 		& a {
 			position: absolute;
 			@if $direction == ltr{right: 1em;}@else{left: 1em;}
-			top: 35%;
+			top: 50%;
+			margin-top: -12px;
 		}
 	}
 }

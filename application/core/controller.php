@@ -1,4 +1,10 @@
 <?php
+/**
+ * bloodstone community V1.0.0
+ * @link https://www.facebook.com/Mazn.touati
+ * @author Mazen Touati
+ * @version 1.0.0
+ */
 
 class Controller {
     static $db;
@@ -15,7 +21,7 @@ class Controller {
         //rebuild the session of user
         if (Cookie::exists(REM_COOKIE_NAME) && !Session::exists(LOGIN_SESSION_NAME))
             usersAPI::createLoginSession();
-        require_once'../application/controllers/global.php';
+        require_once APP.'controllers/global.php';
         self::$language = new Language();
         globalVariable::run();
         if (self::$GLOBAL['is_close'] && !accessAPI::is_admin() && !$close)

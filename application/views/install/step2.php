@@ -3,7 +3,7 @@
         <div class="grid-section area">
             <div class="col-m col-12 a-center heading">
                 <img src="<?=URL?>img/logo.png" alt="logo" class="x-100">
-                <h3>bloodstone community V1 - alpha</h3>
+                <h3>bloodstone community V1 - beta</h3>
             </div>
             <div class="col-m col-12 steps step2">
                 <div class="col-m col-12">
@@ -24,7 +24,19 @@
                                 <small class="label-desc"><?=Language::invokeOutput('labels-desc/siteName');?></small>
                             </div>
                             <div class="col-m col-8">
-                                <input type="text" name="site_name" class="full-12" placeholder="<?=Language::invokeOutput('labels/siteName');?>">
+                                <input type="text" name="site_name_ar" class="full-12" placeholder="<?=Language::invokeOutput('labels/siteName');?>">
+                            </div>
+                        </div>
+                        <div class="col-m col-12 split"></div>
+                        <!-- end - one label -->
+                        <!-- one label -->
+                        <div class="col-m col-12 field-label">
+                            <div class="col-m col-4">
+                                <h4><?=Language::invokeOutput('labels/siteName1');?></h4>
+                                <small class="label-desc"><?=Language::invokeOutput('labels-desc/siteName1');?></small>
+                            </div>
+                            <div class="col-m col-8">
+                                <input type="text" name="site_name_en" class="full-12" placeholder="<?=Language::invokeOutput('labels/siteName1');?>">
                             </div>
                         </div>
                         <div class="col-m col-12 split"></div>
@@ -36,7 +48,19 @@
                                 <small class="label-desc"><?=Language::invokeOutput('labels-desc/siteTag');?></small>
                             </div>
                             <div class="col-m col-8">
-                                <input type="text" name="site_tag" class="full-12" placeholder="<?=Language::invokeOutput('labels/siteTag');?>">
+                                <input type="text" name="site_tag_ar" class="full-12" placeholder="<?=Language::invokeOutput('labels/siteTag');?>">
+                            </div>
+                        </div>
+                        <div class="col-m col-12 split"></div>
+                        <!-- end - one label -->
+                        <!-- one label -->
+                        <div class="col-m col-12 field-label">
+                            <div class="col-m col-4">
+                                <h4><?=Language::invokeOutput('labels/siteTag1');?></h4>
+                                <small class="label-desc"><?=Language::invokeOutput('labels-desc/siteTag1');?></small>
+                            </div>
+                            <div class="col-m col-8">
+                                <input type="text" name="site_tag_en" class="full-12" placeholder="<?=Language::invokeOutput('labels/siteTag1');?>">
                             </div>
                         </div>
                         <div class="col-m col-12 split"></div>
@@ -60,7 +84,19 @@
                                 <small class="label-desc"><?=Language::invokeOutput('labels-desc/siteDesc');?></small>
                             </div>
                             <div class="col-m col-8">
-                                <textarea name="site_desc" rows="4" class="col-12" placeholder="<?=Language::invokeOutput('labels/siteDesc');?>"></textarea>
+                                <textarea name="site_desc_ar" rows="4" class="col-12" placeholder="<?=Language::invokeOutput('labels/siteDesc');?>"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-m col-12 split"></div>
+                        <!-- end - one label -->
+                        <!-- one label -->
+                        <div class="col-m col-12 field-label">
+                            <div class="col-m col-4">
+                                <h4><?=Language::invokeOutput('labels/siteDesc1');?></h4>
+                                <small class="label-desc"><?=Language::invokeOutput('labels-desc/siteDesc1');?></small>
+                            </div>
+                            <div class="col-m col-8">
+                                <textarea name="site_desc_en" rows="4" class="col-12" placeholder="<?=Language::invokeOutput('labels/siteDesc1');?>"></textarea>
                             </div>
                         </div>
                         <div class="col-m col-12 split"></div>
@@ -102,10 +138,13 @@
                         <!-- end - one label -->
                     </div>
                     <div class="col-m col-12 links">
-                        <a href="#settings" class="save-data"><?=language::invokeOutput('step2/settings');?></a>
-                    <span class="next hidden-item">
-                         - <a href="install/step3"><?=language::invokeOutput('next');?></a>&nbsp;<i class="<?=language::invokeOutput('direction');?>"></i>
-                    </span>
+                        <div class="col-m col-4">&nbsp;</div>
+                        <div class="col-m col-8">
+                            <a href="#settings" class="save-data"><?=language::invokeOutput('step2/settings');?></a>
+                            <span class="next hidden-item">
+                                 - <a class="middle" href="install/step3"><?=language::invokeOutput('next');?></a>&nbsp;<i class="<?=language::invokeOutput('direction');?>"></i>
+                            </span>
+                        </div>
                     </div>
                 </form>
             </div>

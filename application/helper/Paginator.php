@@ -1,11 +1,19 @@
 <?php
+/**
+ * bloodstone community V1.0.0
+ * @link https://www.facebook.com/Mazn.touati
+ * @author Mazen Touati
+ * @version 1.0.0
+ */
 
 class Paginator extends databaseAPI{
-    public static $per_page = 10;
+    public static $per_page = 9;
     public $_limit = 4,
             $_table,
             $_page,
             $_pages,
+            $_next,
+            $_prev,
             $_url,
             $_data,
             $_param;
@@ -55,9 +63,10 @@ class Paginator extends databaseAPI{
      * @param null $where
      * @param string $order
      * @param string $param
+     * @param null $groupBy
      * @return $this
      */
-    public function getData($table, $url, $rows = "*", $where = null, $order = 'order by id desc', $param = '?')
+    public function getData($table, $url, $rows = "*", $where = null, $order = 'order by id desc', $param = '?', $groupBy = null)
     {
         $this->setPagesLimit($table);
         $this->_table = $table;
@@ -67,7 +76,8 @@ class Paginator extends databaseAPI{
         $this->_page = isset($page) ?((is_numeric($page)) ? $page : 0 ) : 1;
         if ($this->_page == 0) header('Location: error');
         $table = is_array($table) ? $table[0] : $table;
-        $this->_pages = (int)ceil(count(parent::selectData('*', $where, $table, null)) / self::$per_page);
+        $records = count(parent::selectData('*', $where, $table, $groupBy));
+        $this->_pages = (int)ceil($records / self::$per_page);
         $this->_pages = ($this->_pages == 0) ? $this->_pages = 1 : $this->_pages;
         $start = ($this->_page - 1) * self::$per_page;
         $this->_data = parent::selectData($rows, $where, $this->_table, $order, "LIMIT {$start} , " . self::$per_page);
@@ -87,6 +97,8 @@ class Paginator extends databaseAPI{
      */
     public function renderPages()
     {
+        $this->_next = $this->_page + 1;
+        $this->_prev = $this->_page - 1;
         $reverse = (DIRECTION == 'left') ? 'right' : 'left';
         Controller::$language->load('paginator');
         // next and previous buttons holder
@@ -96,27 +108,21 @@ class Paginator extends databaseAPI{
         if ( $this->_page == 1 || $this->isBadPage() )
             $links .= '<a href="#disabled" id="prev-page" class="disabled">'.language::invokeOutput('prev').'</a> - ';
         else
-        {
-            $links .= '<a href="'.$this->_url.$this->_param.'page="';
-            $links .= $this->_page - 1;
-            $links .= '" id="previous-page">'.language::invokeOutput('prev').'</a> - ';
-        }
+            $links .= "<a href='{$this->_url}{$this->_param}page={$this->_prev}' id='prev-page'>". language::invokeOutput('prev') ."</a> - ";
 
         //
         if ( $this->_page == $this->_pages || $this->isBadPage() )
             $links .= '<a href="#disabled" id="next-page" class="disabled">'.language::invokeOutput('next').'</a>';
         else
         {
-            $links .= '<a href="'.$this->_url.$this->_param.'page="';
-            $links .= $this->_page + 1;
-            $links .= '" id="next-page">'.language::invokeOutput('next').'</a> - ';
+            $links .= "<a href='{$this->_url}{$this->_param}page={$this->_next}' id='next-page'>". language::invokeOutput('next') ."</a>";
         }
         $links .= ' <i class="icon-'. DIRECTION .' middle"></i></div>';
         // end - next and previous buttons holder
         // ###
         // pages list
         $links .= "<div class='col-6 v-col a-center margin hide-sm'>";
-        $links .= ($this->_page == 1) ? "<a href='{$this->_url}{$this->_param}page=1' class='checked'>".language::invokeOutput('first')."</a> " : "<a href='{$this->_url}{$this->_param}page=1'>".language::invokeOutput('first')."</a> ";
+        $links .= ($this->_page == 1) ? "<a href='{$this->_url}{$this->_param}page=". $this->_page ."' class='checked'>".language::invokeOutput('first')."</a> " : "<a href='{$this->_url}{$this->_param}page=1'>".language::invokeOutput('first')."</a> ";
         if ($this->_pages > 1) {
             //set the start page in the list
             if ($this->_page == 1)

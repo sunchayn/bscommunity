@@ -7,6 +7,7 @@
  * @author Mazen Touati
  * @version 1.0.0
  */
+
 class categoryAPI extends databaseAPI{
     /**
      * @var  string
@@ -42,14 +43,16 @@ class categoryAPI extends databaseAPI{
             return parent::selectData($rows, null, $this->_table);
     }
 
+
     /**
      * @param $catTitle
      * @param string $row
+     * @param string $lang
      * @return mixed
      */
-    public function getCategoryByTitle($catTitle, $row = "*")
+    public function getCategoryByTitle($catTitle, $row = "*", $lang = '_ar')
     {
-        return parent::selectData($row, [['title', '=', $catTitle]], $this->_table, null, ' LIMIT 1');
+        return parent::selectData($row, [['title'.$lang, '=', $catTitle]], $this->_table, null, ' LIMIT 1');
     }
 
     /**
@@ -71,13 +74,16 @@ class categoryAPI extends databaseAPI{
         return (count($this->getCategoryByID($id)) == 0  ) ? false : true;
     }
 
+
     /**
      * @param $title
+     * @param string $ar
+     * @param string $rows
      * @return bool
      */
-    public function isTitleExist($title)
+    public function isTitleExist($title, $ar = "_ar", $rows = "*")
     {
-        return (count($this->getCategoryByTitle($title)) == 0  ) ? false : true;
+        return (count($this->getCategoryByTitle($title, $rows,$ar)) == 0  ) ? false : true;
     }
 
     /**
@@ -94,11 +100,15 @@ class categoryAPI extends databaseAPI{
      */
     public function createCategory($data = array())
     {
+        //only admins can access to this method
+        if (!accessAPI::is_admin())
+            return false;
+        //-- ## --//
         Controller::$language->load('validation/category');
         //get the array of fields
         $fieldsArray = array_keys($data);
         //set the required fields
-        $requireData = ['title','desc'];
+        $requireData = ['title_ar','desc_ar','title_en','desc_en'];
         //array that hold errors
         $errors = [];
         //check for errors
@@ -106,17 +116,20 @@ class categoryAPI extends databaseAPI{
             return ['general' => [Controller::$language->invokeOutput('require')]];
         // -- check for errors
         //if category title exist
-        if ($this->isTitleExist($data['title']))
-            $errors['title'][] = Controller::$language->invokeOutput('title1');
+        if ($this->isTitleExist($data['title_ar']))
+            $errors['title_ar'][] = Controller::$language->invokeOutput('title1');
+        if ($this->isTitleExist($data['title_en'], '_en'))
+            $errors['title_en'][] = Controller::$language->invokeOutput('title1-1');
         //if empty title
-        if (!isset($data['title'][1]))
-            $errors['title'][] = Controller::$language->invokeOutput('title2');
-        //if title have disallowed words
-        if (Validation::isRestrictEntry($data['title'], Controller::$db))
-            $errors['title'][] = Controller::$language->invokeOutput('title3');
+        if (!isset($data['title_ar'][1]))
+            $errors['title_ar'][] = Controller::$language->invokeOutput('title2');
+        if (!isset($data['title_en'][1]))
+            $errors['title_en'][] = Controller::$language->invokeOutput('title2-2');
         //if empty description
-        if (!isset($data['desc'][6]))
-            $errors['desc'][] = Controller::$language->invokeOutput('desc1');
+        if (!isset($data['desc_ar'][6]))
+            $errors['desc_ar'][] = Controller::$language->invokeOutput('desc1');
+        if (!isset($data['desc_en'][6]))
+            $errors['desc_en'][] = Controller::$language->invokeOutput('desc1-1');
         // -- end check for errors
         //if an error has occurred return the error array
         if (!empty($errors))
@@ -124,19 +137,15 @@ class categoryAPI extends databaseAPI{
         //get max order and add 1
         $getMaxOrder = $this->getMaxOrder() + 1;
         //handle the order of the category
-        if (isset($data['order']))
+        $data['order'] = isset($data['order'][0]) ? intval($data['order']) : $getMaxOrder;
+        $fieldsArray = array_keys($data);
+        if ($data['order'] > 0)
         {
             //if order exist swap orders
             $getOrder = parent::selectData("`id`", [ ['order', '=', $data['order']] ], $this->_table, null, 'LIMIT 1');
-            //if there's an exit order
             if (!empty($getOrder))
                 //if update old order fail return false
                 if (!parent::updateData($this->_table, ['field' => 'id', 'value' => $getOrder[0]->id], ['order' => $getMaxOrder])) return false;
-        }else{
-            //set the order of current category
-            $data['order'] = $getMaxOrder;
-            //add the element to the fields array
-            array_push($fieldsArray, 'order');
         }
         //create the user
         return (parent::insertData($this->_table, $fieldsArray, array_values($data)))? Controller::$language->invokeOutput('done') : false;
@@ -148,6 +157,10 @@ class categoryAPI extends databaseAPI{
      */
     public function deleteCategory($id)
     {
+        //only admins can access to this method
+        if (!accessAPI::is_admin())
+            return false;
+        //-- ## --//
         Controller::$language->load('validation/category');
         //first of all delete all categories forums and all forums threads
         $getForums = forumsAPI::getInstance()->getForums('id', [ ['cat_id', '=', $id] ]);
@@ -164,6 +177,10 @@ class categoryAPI extends databaseAPI{
      */
     public function updateCategory($data = array())
     {
+        //only admins can access to this method
+        if (!accessAPI::is_admin())
+            return false;
+        //-- ## --//
         if (empty($data))
             return false;
         $id = $data['id'];
@@ -177,33 +194,44 @@ class categoryAPI extends databaseAPI{
         $values = [];
         //seek for errors
         //-->update title
-        if (isset($data['title']) && $data['title'] != $cat->title){
+        if (isset($data['title_ar']) && $data['title_ar'] != $cat->title_ar){
             //if empty title
-            if (!isset($data['title'][1]))
-                $errors['title'][] = Controller::$language->invokeOutput('title2');
+            if (!isset($data['title_ar'][1]))
+                $errors['title_ar'][] = Controller::$language->invokeOutput('title2');
             //if category title exist
-            if ($this->isTitleExist($data['title']))
-                $errors['title'][] = Controller::$language->invokeOutput('title1');
-            //if title have disallowed words
-            if (Validation::isRestrictEntry($data['title'], Controller::$db))
-                $errors['title'][] = Controller::$language->invokeOutput('title3');
-            $values['title'] = $data['title'];
+            if ($this->isTitleExist($data['title_ar']))
+                $errors['title_ar'][] = Controller::$language->invokeOutput('title1');
+            $values['title_ar'] = $data['title_ar'];
+        }
+        if (isset($data['title_en']) && $data['title_en'] != $cat->title_en){
+            //if empty title
+            if (!isset($data['title_en'][1]))
+                $errors['title_en'][] = Controller::$language->invokeOutput('title2-2');
+            //if category title exist
+            if ($this->isTitleExist($data['title_en'], '_en'))
+                $errors['title_en'][] = Controller::$language->invokeOutput('title1-1');
+            $values['title_en'] = $data['title_en'];
         }
         //-->update desc
         //if empty description
-        if (isset($data['desc']) && $data['desc'] != $cat->desc)
+        if (isset($data['desc_ar']) && $data['desc_ar'] != $cat->desc_ar)
         {
             //if empty desc
-            if (!isset($data['desc'][1]))
-                $errors['desc'][]= Controller::$language->invokeOutput('desc1');
-            $values['desc'] = $data['desc'];
+            if (!isset($data['desc_ar'][1]))
+                $errors['desc_ar'][]= Controller::$language->invokeOutput('desc1');
+            $values['desc_ar'] = $data['desc_ar'];
+        }
+        if (isset($data['desc_en']) && $data['desc_en'] != $cat->desc_en)
+        {
+            //if empty desc
+            if (!isset($data['desc_en'][1]))
+                $errors['desc_en'][]= Controller::$language->invokeOutput('desc1-1');
+            $values['desc_en'] = $data['desc_en'];
         }
         //if update order
         if (isset($data['order']) && $data['order'] != $cat->order)
         {
             $values['order'] = intval($data['order']);
-            //get max order and add 1
-            $getMaxOrder = $this->getMaxOrder() + 1;
             if ($values['order'] != 0)
             {
                 //swap orders
@@ -211,9 +239,9 @@ class categoryAPI extends databaseAPI{
                 //if there's an exit order
                 if (!empty($getOrder))
                     //if update old order fail return false
-                    if (!parent::updateData($this->_table, ['field' => 'id', 'value' => $getOrder[0]->id], ['order' => $getMaxOrder])) return false;
+                    if (!parent::updateData($this->_table, ['field' => 'id', 'value' => $getOrder[0]->id], ['order' => $cat->order])) return false;
             }else{
-                $values['order'] = $getMaxOrder;
+                $values['order'] = $cat->order;
             }
           }
         if (isset($data['visibility']) && $data['visibility'] != $cat->visibility)
@@ -233,6 +261,10 @@ class categoryAPI extends databaseAPI{
      */
     public function closeCategory($id)
     {
+        //only admins can access to this method
+        if (!accessAPI::is_admin())
+            return false;
+        //-- ## --//
         Controller::$language->load('validation/category');
         return (parent::updateData( $this->_table, ['field' => 'id', 'value' => $id], ['status' => 0])) ? Controller::$language->invokeOutput('close') : false;
     }
@@ -243,6 +275,10 @@ class categoryAPI extends databaseAPI{
      */
     public function openCategory($id)
     {
+        //only admins can access to this method
+        if (!accessAPI::is_admin())
+            return false;
+        //-- ## --//
         Controller::$language->load('validation/category');
         return (parent::updateData( $this->_table, ['field' => 'id', 'value' => $id], ['status' => 1])) ? Controller::$language->invokeOutput('open') : false;
     }

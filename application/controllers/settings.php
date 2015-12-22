@@ -5,6 +5,7 @@
  * @author Mazen Touati
  * @version 1.0.0
  */
+
 class settings extends Controller
 {
     /**
@@ -310,6 +311,42 @@ class settings extends Controller
                 $this->loadView('header', $data);
                 //load this page view
                 $this->loadView('settings/follow', $data);
+                //load the footer view
+                $this->loadView('footer', $data);
+            } else {
+                //if the ID not found => show 404 error
+                header('Location: ../error');
+            }
+        } else {
+            //if no params is passed
+            header('Location: ../error');
+        }
+    }
+
+    /**
+     *
+     */
+    public function contact()
+    {
+        if (usersAPI::isLogged()){
+            $getUser = usersAPI::getInstance()->getUserById(usersAPI::getLoggedId());
+            if (!empty($getUser)) {
+                //prepare the language
+                self::$language->load('settings');
+                //get the first record
+                $getUser = $getUser[0];
+                $id = $getUser->id;
+                //set the view data array
+                $data = [];
+                $data['page-title'] = $getUser->username;
+                $data['title'] = $getUser->username;
+                $data['selected']['contact'] = "id='checked-setting'";
+                $data['user'] = $getUser;
+                $data['social'] = json_decode($getUser->social);
+                //load the header view
+                $this->loadView('header', $data);
+                //load this page view
+                $this->loadView('settings/contact', $data);
                 //load the footer view
                 $this->loadView('footer', $data);
             } else {

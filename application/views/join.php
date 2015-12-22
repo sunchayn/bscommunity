@@ -29,7 +29,6 @@
                         <div class="col-12">
                             <ul class="input-rules have-arrow">
                                 <li><?=Language::invokeOutput('inp-rules/name/0');?></li>
-                                <li><?=Language::invokeOutput('inp-rules/name/1');?></li>
                             </ul>
                         </div>
                     </div>
@@ -51,7 +50,6 @@
                             <ul class="input-rules have-arrow">
                                 <li><?=Language::invokeOutput('inp-rules/nickname/0');?></li>
                                 <li><?=Language::invokeOutput('inp-rules/nickname/1');?></li>
-                                <li><?=Language::invokeOutput('inp-rules/nickname/2');?></li>
                             </ul>
                         </div>
                     </div>

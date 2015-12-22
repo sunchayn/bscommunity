@@ -40,7 +40,6 @@ return [
                                         "heading" => 'statistics',
                                         "users" => 'users',
                                         "threads" => 'threads',
-                                        "replies" => 'repleis',
                                     ],
                    ]
 ];

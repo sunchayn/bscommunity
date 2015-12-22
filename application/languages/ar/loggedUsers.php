@@ -2,7 +2,8 @@
 return [
     "user-panel" => [
                         'profile' => 'الملف الشخصي',
-                        'settings' => 'الإعدادات',
+                        'settings' => 'إعدادات الحساب',
+                        'draft' => 'مسودة المواضيع',
                         'logout' => 'تسجيل الخروج',
                         'inbox' => 'الرسائل',
                         'support' => 'الدعم',

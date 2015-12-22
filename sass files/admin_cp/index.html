@@ -1,0 +1,303 @@
+<!-- bloostone community V1 beta !-->
+<!DOCTYPE html>
+<html>
+<head>
+	<title>index - bloodstone comm.</title>
+	 <meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="description" content="" />
+	<link rel="icon" type="image/png" href="" />
+	<link rel="stylesheet" href="css/global.css" media="screen" />
+	<!--[if lt IE 9]>
+	    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+</head>
+<body>
+	<!-- # Wrapper # -->
+	<div class="wrapper">
+		<!-- header -->
+		<header>
+			<div class="nav-bar grid-section">
+				<div class="scroll-up hide-sm">
+					<i class="icon-up-dir"></i>
+				</div>
+				<div class="scroll-up-res">
+					<i class="icon-up-dir"></i>
+				</div>				
+				<div class="sub-wrapper">
+					<div class="col-m col-12">
+						<div class="col-m col-2 page-title">
+							<h3>admin panel</h3>
+						</div>
+						<div class="col-m col-10 pure-nav no-margin">
+							<span class="col-12">
+								<nav>
+									<span>
+										welcome 
+										<h3 class="inline-b">
+											<a href="#">username</a>
+										</h3>
+									</span>
+									<span>
+										<a href="#" class="icon-mail"></a>
+									</span>
+									<span>
+										<a href="#" class="icon-bell"></a>
+									</span>
+									<span class="f-right">
+										<a href="#" class="icon-off">&nbsp;Logout</a>
+									</span>
+								</nav>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</header>
+		<!-- end header -->
+		<!-- ###### -->
+		<!-- cp-index-page start -->
+		<div class="cp-index-page">
+			<div class="sub-wrapper">
+				<div class="grid-section">
+						<div class="flexbox">
+							<!-- start menu -->
+							<div class="col-m col-2 cp-menu no-margin">
+								<span>
+									<img src="../img/logo.png" alt="logo" class="x-50">
+								</span>
+								<nav>
+									<a href="#" class="checked">
+										<i class="icon-home"></i> <br />
+										general
+									</a>
+									<div class="sub-menu">
+										<a href="#">
+											<i class="icon-cog-1"></i> <br />
+											<span class="middle">settings</span>
+											<i class="icon-angle-down toggle"></i>
+										</a>
+										<nav>
+											<a href="#">general settings</a>
+											<a href="#">global variables</a>
+											<a href="#">words filter</a>
+										</nav>
+									</div>
+									<div class="sub-menu">
+										<a href="#">
+											<i class="icon-th"></i> <br />
+											<span class="middle">categories</span>
+											<i class="icon-angle-down toggle"></i>
+										</a>
+										<nav>
+											<a href="#">manage categories</a>
+											<a href="#">manage forums</a>
+										</nav>
+									</div>
+									<div class="sub-menu">
+										<a href="#">
+											<i class="icon-users"></i> <br />
+											<span class="middle">users</span>
+											<i class="icon-angle-down toggle"></i>
+										</a>
+										<nav>
+											<a href="#">manage users</a>
+											<a href="#">manage roles</a>
+										</nav>
+									</div>
+									<a href="#">
+										<i class="icon-lock-open-alt"></i> <br />
+										edit rules
+									</a>
+									<a href="#" class="new-msg">
+										<i class="icon-help"></i> <br />
+										support center
+									</a>
+									<a href="#">
+										<i class="icon-minus"></i> <br />
+										SEO helper
+									</a>
+									<a href="#">
+										<i class="icon-code"></i> <br />
+										about version
+									</a>
+								</nav>
+							</div>
+							<!-- end menu -->
+							<!-- ###### -->
+							<!-- start display -->
+							<div class="col-m col-10 cp-display no-margin">
+								<div class="col-m col-12">
+									<a href="#">admin panel</a>
+									<i class="icon-angle-right"></i>
+									<a href="#">general</a>
+								</div>
+							<div class="col-m col-12 split"></div>	
+								<!-- stats start-->
+								<div class="col-m col-12 content-wrapper">
+									<div class="col-m col-12">
+										<h3>stats :</h3>
+									</div>
+									<div class="col-m col-12 general-stats">
+										<div class="col-m col-2">
+											<span>xxx</span>
+											users
+										</div>
+										<div class="col-m col-2">
+											<span>xxx</span>
+											categories
+										</div>
+										<div class="col-m col-2">
+											<span>xxx</span>
+											forums
+										</div>
+										<div class="col-m col-2">
+											<span>xxx</span>
+											threads
+										</div>
+										<div class="col-m col-2">
+											<span>xxx</span>
+											replies
+										</div>
+										<div class="col-m col-2">
+											<span>xxx</span>
+											visit
+										</div>
+									</div>
+								</div>
+								<!-- end stats -->
+								<!-- ####### -->
+								<!-- activity track -->
+								<div class="col-m col-12">
+									<h3>last 10 days activity :</h3>
+								</div>
+								<div class="col-m col-12">
+									<canvas id="monthlyActivity"></canvas>
+								</div>
+								<div class="col-m col-12">
+									the peak was <span class="color-5">xxxx</span> activities recorded on 22 Jan 1996 .
+								</div>
+								<!-- end - activity track -->
+								<!-- ####### -->
+								<!-- alexa rank -->
+								<div class="col-m col-12">
+									<h3>alexa rank :</h3>
+								</div>
+								<div class="col-m col-12">
+									<small>alexa rank here</small>
+								</div>
+								<!-- end -  alexa rank -->
+								<!-- ####### -->
+								<!-- ####### -->
+								<!-- recent activities -->
+								<div class="col-m col-12">
+									<h3>recent activities :</h3>
+								</div>
+								<div class="col-m col-12 recentActivities">
+									<!-- one acitvity -->
+									<div class="col-m col-12">
+										<a href="#">username</a> post a new thread <br />
+										<a href="#">thread title</a>
+									</div>
+									<!-- end - one acitvity -->
+									<!-- ######## -->
+									<!-- one acitvity -->
+									<div class="col-m col-12">
+										<a href="#">username</a> reply to a thread <br />
+										<a href="#">thread title</a>
+									</div>
+									<!-- end - one acitvity -->
+									<!-- ######## -->
+								</div>
+								<!-- end -  recent activities -->
+								<!-- ####### -->
+								<!-- Browser Usage -->
+								<div class="col-m col-12">
+									<!-- browser usage -->
+									<div class="col-m col-6 browserUsage">
+										<div class="col-m col-12 box">
+											<h3>Browser Usage :</h3>
+										</div>
+										<div class="col-m col-12">
+											<div class="col-m col-6">										
+												<canvas id="browserUsage"></canvas>
+											</div>
+											<div class="col-m col-6">
+												<ul>
+													<li><i class="pieColor1"></i>google chrome</li>
+													<li><i class="pieColor2"></i>mozilla firefox</li>
+													<li><i class="pieColor3"></i>ios browser</li>
+													<li><i class="pieColor4"></i>other</li>
+												</ul>
+											</div>											
+										</div>	
+									</div>
+									<!-- end - browser usage -->
+									<!-- ####### -->
+									<!-- top visiting countries -->
+									<div class="col-m col-6">
+										<div class="col-m col-12 box">
+											<h3>Top Visiting Countries :</h3>
+										</div>
+										<div class="col-m col-12 topVisiting">
+											<div><strong>40%</strong> - Tunisia</div>
+											<div><strong>20%</strong> - Algeria</div>
+											<div><strong>15%</strong> - Morroco</div>
+											<div><strong>7%</strong> - Yamen</div>
+											<small>depending on IP that visit your site .</small>
+										</div>										
+									</div>
+									<!-- end - top visiting countries -->
+									<!-- ####### -->
+								</div>
+								<!-- end -  Browser Usage -->
+								<!-- ####### -->
+								<!-- server usage -->
+								<div class="col-m col-12">
+									<h3>server Usage :</h3>
+								</div>
+								<div class="col-m col-12">
+										80% ( 5 Go used of 6 Go )
+								</div>
+								<div class="col-m col-12 skill-master">
+									<div class="col-m col-12 bar">
+										<div class="full-10"></div>
+									</div>
+								</div>
+								<!-- end - server usage -->
+								<!-- ####### -->								
+								<!-- home page -->
+								<div class="col-m col-12">
+									<a href="../index.php">visit the home page</a>
+									<i class="icon-right"></i><br />
+									<span>
+										- please for any issue or suggestion contact the porgrammer <a href="#" class="color-5">mazen touati</a> .
+									</span>
+								</div>
+								<!-- end -   home page -->
+								<!-- ####### -->
+							</div>
+							<!-- end display -->
+							<!-- ###### -->
+					</div>
+					<div class="col-m col-12 copyright">
+						&copy; 2015 bloodstone community v1-beta, all rights reserved. desgined & developped by Mazen Touati.
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- cp-index-page end -->
+		<!-- ###### -->
+	</div>
+	<!-- √ END Wrapper √ -->
+	<!-- bloostone community V1 beta -->
+	<!-- # Javascript Area # -->
+	<script src="../vendor/jquery.js"></script>
+	<script src="../js/functions.js"></script>
+	<script src="../js/style.js"></script>
+	<script src="../vendor/Chart.min.js"></script>
+	<script src="js/global.js"></script>
+	<!-- √ END Javascript Area √ -->
+</body>
+</html>
