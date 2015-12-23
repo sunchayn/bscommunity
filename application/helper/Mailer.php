@@ -11,7 +11,7 @@ class Mailer{
     public $mailer;
     public $isFine;
     //default view path
-    private $viewPath = ROOT.'application/views/mails/';
+    private $viewPath;
 
     /**
      * @throws Exception
@@ -39,6 +39,9 @@ class Mailer{
 
         //return the result of initialisation
         $this->isFine = $this->mailer->smtpConnect();
+
+        //set the view path
+        $this->viewPath = ROOT.'application/views/mails/';
     }
 
     /**
